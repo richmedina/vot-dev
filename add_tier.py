@@ -1,9 +1,10 @@
 #import praatio
 #from praatio import tgio
 
-def addTier(tg, stops=allStops, startPadding=0, endPadding=0):
+def addTier(tg, stops=[], startPadding=0, endPadding=0):
 	
-	allStops = ['p', 'b', 't', 'd', 'k', 'g', 'ʈ', 'ɖ', 'c', 'ɟ', 'q', 'ɢ', 'ʔ']
+	if len(stops) == 0:
+		stops = ['p', 'b', 't', 'd', 'k', 'g', 'ʈ', 'ɖ', 'c', 'ɟ', 'q', 'ɢ', 'ʔ']
 
 #	name, ext = os.path.splitext(tg) # add file check to make sure it's a TG file?
 #	if ext != '.TextGrid':
