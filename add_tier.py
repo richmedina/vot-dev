@@ -45,7 +45,7 @@ def addTier(tg, stops=[], startPadding=0, endPadding=0):
 
 	tg.addTier(stopTier)        
 
-    #tg.save(path?/tg?) #add
+    #tg.save(path?/tg?) #remove
 
 	return tg
 
