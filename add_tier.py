@@ -1,7 +1,7 @@
 import praatio
 from praatio import tgio
 
-def addTier(tg, stops=[], startPadding=0, endPadding=0):
+def addTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 	
 	if len(stops) == 0:
 		stops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', 
@@ -9,11 +9,11 @@ def addTier(tg, stops=[], startPadding=0, endPadding=0):
 
 	voicedStops = ['b', 'd', 'ɖ', 'ɟ', 'g', 'ɢ', 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 
-#	name, ext = os.path.splitext(tg) # add file check to make sure it's a TG file?
+#	name, ext = os.path.splitext(TextGrid) # add file check to make sure it's a TG file?
 #	if ext != '.TextGrid':
 #		print("The file must be a TextGrid") # leave outside of func
 
-	tg = tgio.openTextgrid(tg)
+	tg = tgio.openTextgrid(TextGrid)
 
 	potentialWordTiers = [tierName for tierName in tg.tierNameList if 'word' in tierName.lower()]
 	if len(potentialWordTiers) == 0:
@@ -57,7 +57,7 @@ def addTier(tg, stops=[], startPadding=0, endPadding=0):
 
 	tg.addTier(stopTier)        
 
-	tg.save('test_output.TextGrid')
+	tg.save("test_output.TextGrid")
 
 	return
 
