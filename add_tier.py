@@ -1,5 +1,5 @@
-#import praatio
-#from praatio import tgio
+import praatio
+from praatio import tgio
 
 def addTier(tg, stops=[], startPadding=0, endPadding=0):
 	
@@ -8,7 +8,7 @@ def addTier(tg, stops=[], startPadding=0, endPadding=0):
 
 #	name, ext = os.path.splitext(tg) # add file check to make sure it's a TG file?
 #	if ext != '.TextGrid':
-#		print("The file must be a TextGrid")
+#		print("The file must be a TextGrid") # leave outside of func
 
 	tg = tgio.openTextgrid(tg)
 
@@ -48,3 +48,7 @@ def addTier(tg, stops=[], startPadding=0, endPadding=0):
     #tg.save(path?/tg?)
 
 	return tg
+
+
+addTier('test.TextGrid',['p'])
+
