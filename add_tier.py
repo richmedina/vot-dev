@@ -4,7 +4,10 @@ from praatio import tgio
 def addTier(tg, stops=[], startPadding=0, endPadding=0):
 	
 	if len(stops) == 0:
-		stops = ['p', 'b', 't', 'd', 'k', 'g', 'ʈ', 'ɖ', 'c', 'ɟ', 'q', 'ɢ', 'ʔ']
+		stops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', 
+		"p'", "t'", "k'", 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
+
+	voicedStops = ['b', 'd', 'ɖ', 'ɟ', 'g', 'ɢ', 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 
 #	name, ext = os.path.splitext(tg) # add file check to make sure it's a TG file?
 #	if ext != '.TextGrid':
@@ -22,7 +25,7 @@ def addTier(tg, stops=[], startPadding=0, endPadding=0):
 	else:
 		wordTier = tg.tierDict[potentialWordTiers[0]]
 
-	wordStartTimes = [entry[0] for entry in wordTier]
+	wordStartTimes = [entry[0] for entry in wordTier.entryList]
 
 	potentialPhoneTiers = [tierName for tierName in tg.tierNameList if 'phone' in tierName.lower()]
 	if len(potentialPhoneTiers) == 0:
@@ -33,8 +36,17 @@ def addTier(tg, stops=[], startPadding=0, endPadding=0):
 		return
 	else:
 		phoneTier = tg.tierDict[potentialPhoneTiers[0]]
+	
+	stopEntryList,voicedTokens = [],[]
+	for entry in phoneTier.entryList:
+		if entry[-1].lower() in voicedStops:
+			voicedTokens.append(entry[-1].lower())
+		if entry[-1].lower() in stops and entry[0] in wordStartTimes:
+			stopEntryList.append(entry)
 
-	stopEntryList = [entry for entry in phoneTier.entryList if entry[-1].lower() in stops if entry[0] in wordStartTimes]
+	if len(voicedTokens) > 0:
+		print("***Warning: You're trying to get VOT calculations of the following voiced stops: ",list(set(voicedTokens)))
+		print("Note that AutoVOT's current model only works on voiceless stops; prevoicing may result in inaccurate calculations.")
 
 	extendedEntryList = []
 
@@ -45,10 +57,10 @@ def addTier(tg, stops=[], startPadding=0, endPadding=0):
 
 	tg.addTier(stopTier)        
 
-    #tg.save(path?/tg?) #trying
+	tg.save('test_output.TextGrid')
 
-	return tg
+	return
 
 
-addTier('test.TextGrid',['p'])
+addTier('test.TextGrid',[], 0, 0.02)
 
