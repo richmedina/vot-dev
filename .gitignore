@@ -129,3 +129,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .Rhistory
+.DS_Store
