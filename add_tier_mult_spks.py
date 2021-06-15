@@ -123,7 +123,7 @@ def fileCheck(TextGrid):
 		return
 
 
-addStopTier('test.TextGrid')
+addStopTier('test1.TextGrid')
 
 
 
