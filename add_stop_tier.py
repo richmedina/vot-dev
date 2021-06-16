@@ -1,5 +1,4 @@
 import os
-import praatio
 from praatio import tgio
 
 def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
@@ -124,10 +123,6 @@ def fileCheck(TextGrid):
 
 
 addStopTier('test1.TextGrid')
-
-
-
-
 
 
 
