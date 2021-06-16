@@ -3,22 +3,26 @@ from praatio import tgio
 
 def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 
-	fileCheck(TextGrid)
+	fileCheck(TextGrid) #??
 
+	# open textgrid and turn the tier labels to lowercase strings
 	tg = tgio.openTextgrid(TextGrid)
 	tg.tierNameList = [tier.lower() for tier in tg.tierNameList]
-	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items()) 
+	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items())
 
+	# collect all word tiers and terminate process if none exists
 	allWordTiers = [tierName for tierName in tg.tierNameList if 'word' in tierName]
 	if len(allWordTiers) == 0:
 		print("This TextGrid file does not contain a tier named 'Words'.\n")
 		return
-	
+
+	# collect all phone tiers and terminate process if none exists
 	allPhoneTiers = [tierName for tierName in tg.tierNameList if 'phone' in tierName]
 	if len(allPhoneTiers) == 0:
 		print("This TextGrid file does not contain a tier named 'Phones'.\n")
 		return
-	
+
+	# verify that an equal number of word and phone tiers exists to continue
 	if len(allWordTiers) == len(allPhoneTiers):
 
 		voicedTokens =[]
@@ -58,6 +62,7 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 		return
 		#stop
 
+	# save the new textgrid with a 'stop' tier
 	saveName = TextGrid.split(".TextGrid")[0]
 	tg.save(saveName+"_output.TextGrid")
 	
@@ -66,10 +71,12 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 
 def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, startPadding, endPadding, voicedTokens, voicedWarning): 
 
+	# specify stop categories
 	ipaStops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 	voicelessStops = ['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'"]
 	voicedStops = ['b', 'd', 'ɖ', 'ɟ', 'g', 'ɢ', 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 
+	# define stops of interest
 	if len(stops) == 0:
 		stops = voicelessStops
 	else:
@@ -81,6 +88,7 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, sta
 				print("'"+stopSymbol+"'","is not a stop sound. This symbol will be ignored.\n")
 		stops = tempStops
 
+	# identify stops of interest
 	stopEntryList = []
 	for entry in phoneTier.entryList:
 		if entry[-1].lower() in stops and entry[0] in wordStartTimes:
@@ -88,12 +96,13 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, sta
 			if entry[-1].lower() in voicedStops:
 				voicedTokens.append(entry[-1].lower())
 
+	# apply padding
 	extendedEntryList = []
 	for start, stop, label in stopEntryList:
 		extendedEntryList.append([start+startPadding, stop+endPadding, label])
 
+	# check for length requirements and resolve overlapping conflicts
 	fileName = TextGrid
-
 	for interval in range(len(extendedEntryList)-1):
 		if extendedEntryList[interval][1]-extendedEntryList[interval][0] < 0.025:
 			extendedEntryList[interval][1] = extendedEntryList[interval][0] + 0.025
@@ -118,11 +127,13 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, sta
 			print("The issue with overlapping times could be an issue resulting from:",\
 				"\n(1) very fast speech, \n(2) two tokens very close to each other, or \n(3) too much 'padding'.\n")
 
+	# provide warning for voiced tokens
 	if len(voicedTokens) > 0 and voicedWarning:
 		print("***Warning: You're trying to obtain VOT calculations of the following voiced stops: ",list(set(voicedTokens)),".")
 		print("Note that AutoVOT's current model only works on voiceless stops; "\
 			"prevoicing in the productions may result in inaccurate calculations.\n")
 
+	# construct the stop tier
 	stopTier = phoneTier.new(name = speakerName+"stops", entryList = extendedEntryList)
 
 	return stopTier
