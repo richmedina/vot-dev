@@ -69,7 +69,13 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, sta
 	if len(stops) == 0:
 		stops = voicelessStops
 	else:
-		stops = [stopSymbol for stopSymbol in stops if stopSymbol.lower() in ipaStops]
+		tempStops = []
+		for stopSymbol in stops:
+			if stopSymbol.lower() in ipaStops:
+				tempStops.append(stopSymbol)
+			else:
+				print(stopSymbol,"is not a stop sound. This symbol will be ignored.\n")
+		stops = tempStops
 
 	stopEntryList = []
 	for entry in phoneTier.entryList:
