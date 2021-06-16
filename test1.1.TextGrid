@@ -1,0 +1,80 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 64.80648526077097 
+tiers? <exists> 
+size = 4 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "spk1-words" 
+        xmin = 0 
+        xmax = 64.80648526077097 
+        intervals: size = 3 
+        intervals [1]:
+            xmin = 0 
+            xmax = 1.8424547800226105 
+            text = "" 
+        intervals [2]:
+            xmin = 1.8424547800226105 
+            xmax = 4.998246561438665 
+            text = "word" 
+        intervals [3]:
+            xmin = 4.998246561438665 
+            xmax = 64.80648526077097 
+            text = "" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "spk1-Phones" 
+        xmin = 0 
+        xmax = 64.80648526077097 
+        intervals: size = 3 
+        intervals [1]:
+            xmin = 0 
+            xmax = 1.8424547800226105 
+            text = "" 
+        intervals [2]:
+            xmin = 1.8424547800226105 
+            xmax = 2.190326301648237 
+            text = "g" 
+        intervals [3]:
+            xmin = 2.190326301648237 
+            xmax = 64.80648526077097 
+            text = "" 
+    item [3]:
+        class = "IntervalTier" 
+        name = "spk2-words" 
+        xmin = 0 
+        xmax = 64.80648526077097 
+        intervals: size = 3 
+        intervals [1]:
+            xmin = 0 
+            xmax = 8.608799396066079 
+            text = "" 
+        intervals [2]:
+            xmin = 8.608799396066079 
+            xmax = 11.08165037931528 
+            text = "word" 
+        intervals [3]:
+            xmin = 11.08165037931528 
+            xmax = 64.80648526077097 
+            text = "" 
+    item [4]:
+        class = "IntervalTier" 
+        name = "spk2-pHones" 
+        xmin = 0 
+        xmax = 64.80648526077097 
+        intervals: size = 3 
+        intervals [1]:
+            xmin = 0 
+            xmax = 8.608799396066079 
+            text = "" 
+        intervals [2]:
+            xmin = 8.608799396066079 
+            xmax = 8.888793547618413 
+            text = "b" 
+        intervals [3]:
+            xmin = 8.888793547618413 
+            xmax = 64.80648526077097 
+            text = "" 

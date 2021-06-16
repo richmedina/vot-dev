@@ -6,13 +6,15 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 	fileCheck(TextGrid)
 
 	tg = tgio.openTextgrid(TextGrid)
+	tg.tierNameList = [tier.lower() for tier in tg.tierNameList]
+	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items()) 
 
-	allWordTiers = [tierName.lower() for tierName in tg.tierNameList if 'word' in tierName.lower()]
+	allWordTiers = [tierName for tierName in tg.tierNameList if 'word' in tierName]
 	if len(allWordTiers) == 0:
 		print("This TextGrid file does not contain a tier named 'Words'.\n")
 		return
 	
-	allPhoneTiers = [tierName.lower() for tierName in tg.tierNameList if 'phone' in tierName.lower()]
+	allPhoneTiers = [tierName for tierName in tg.tierNameList if 'phone' in tierName]
 	if len(allPhoneTiers) == 0:
 		print("This TextGrid file does not contain a tier named 'Phones'.\n")
 		return
@@ -20,17 +22,17 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 	if len(allWordTiers) == len(allPhoneTiers):
 
 		voicedTokens =[]
-		totalSpeakers = len(allWordTiers)
+		totalSpeakers = len(allPhoneTiers)
 		currentSpeaker = 0
-		voicedWarning = False
+		voicedWarning =	False
 
-		for tier in allWordTiers:
+		for tier in allPhoneTiers:
 			currentSpeaker += 1
-			if 'word' in tier and tier.replace('word', 'phone') in allPhoneTiers:
-				speakerName = tier.split("word")[0]
-				wordTier = tg.tierDict[tier]
+			if 'phone' in tier and tier.replace('phone', 'word') in allWordTiers:
+				speakerName = tier.split("phone")[0]
+				phoneTier = tg.tierDict[tier]
+				wordTier = tg.tierDict[tier.replace('phone','word')]
 				wordStartTimes = [entry[0] for entry in wordTier.entryList]
-				phoneTier = tg.tierDict[tier.replace('word','phone')]
 				if totalSpeakers == currentSpeaker:
 					voicedWarning = True
 				tg.addTier(
@@ -48,11 +50,13 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 					)
 			
 			else:
-				print("The names of the 'word' and 'phone' tiers are inconsistent in file",TextGrid,".\n")
+				print("The names of the 'word' and 'phone' tiers are inconsistent in file",TextGrid+".","Fix the issue before continuing.\n")
 				return
+				#stop
 	else:
-		print("Error: There isn't an even number of 'phone' and 'word' tiers per speaker in file",TextGrid,".\n")
+		print("Error: There isn't an even number of 'phone' and 'word' tiers per speaker in file",TextGrid,". Fix the issue before continuing.\n")
 		return
+		#stop
 
 	saveName = TextGrid.split(".TextGrid")[0]
 	tg.save(saveName+"_output.TextGrid")
@@ -133,7 +137,7 @@ def fileCheck(TextGrid):
 		return
 
 
-addStopTier('test1.TextGrid')
+addStopTier('test1.1.TextGrid',['k','b','g'])
 
 
 
