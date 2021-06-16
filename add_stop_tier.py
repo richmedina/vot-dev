@@ -61,10 +61,15 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 
 
 def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, startPadding, endPadding, voicedTokens, voicedWarning): 
-	if len(stops) == 0:
-		stops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 
+	ipaStops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
+	voicelessStops = ['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'"]
 	voicedStops = ['b', 'd', 'ɖ', 'ɟ', 'g', 'ɢ', 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
+
+	if len(stops) == 0:
+		stops = voicelessStops
+	else:
+		stops = [stopSymbol for stopSymbol in stops if stopSymbol.lower() in ipaStops]
 
 	stopEntryList = []
 	for entry in phoneTier.entryList:
