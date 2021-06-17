@@ -1,43 +1,24 @@
 import parselmouth
-from parselmouth.praat import call as pcall
-from praatio import tgio
+import tgt
 
 def calculateVOT(wav, TextGrid):
 
+	# process the data
 	psnd = parselmouth.Sound(wav)
+	ptg = parselmouth.TextGrid.from_tgt(tgt.read_textgrid(TextGrid))
 
-	tg = tgio.openTextgrid(TextGrid)
-	tgOriginalTiers = tg.tierNameList
-	tgTiers = ''.join([tierName.replace(" ", "")+" " for tierName in tgOriginalTiers])
-
-	ptg = pcall(psnd, "To TextGrid", tgTiers,"")  #this creates an empty textgrid
-	print(ptg)
-	var = ptg.object name
-	print(var)
-	# ptg.save("myTG.TextGrid")
-
-	# print("...")
-	# tg2 = tgio.openTextgrid(TextGrid)  #this creates a praatio.tgio.Textgrid object
-	# print(tg2)
-
-	## The code below applies to functions from Praat plugins
-	# parselmouth.praat.run_file([psnd,tg], 
-	# 	"autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/autovot.praat", 
-	# 	"stops", 
-	# 	"*", 
-	# 	"mono", 
-	# 	5, 
-	# 	500, 
-	# 	"models/vot_predictor.amanda.max_num_instances_1000.model")
-
-	## The code below only applies to Praat's native functions
-	# new_tg = pcall([psnd, tg], "AutoVOT", 
-	# 	"stops", 
-	# 	"*", 
-	# 	"mono", 
-	# 	5, 
-	# 	500, 
-	# 	"models/vot_predictor.amanda.max_num_instances_1000.model")
+	# apply AutoVOT
+	obj = parselmouth.praat.run_file([psnd,ptg],
+		# "Users/ernesto/Library/Preferences/Praat\ Prefs/plugin_autovot/autovot.praat", # file on local machine # how to use this line instead of the following line?
+		"autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/autovot.praat", # file on repository
+		# "utt - stops", 
+		# "*", 
+		# "mono", 
+		# 5, 
+		# 500, 
+		# "models/vot_predictor.amanda.max_num_instances_1000.model"
+		)
+	print("hello world")
 
 	return
 

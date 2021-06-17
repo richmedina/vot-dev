@@ -148,7 +148,7 @@ def fileCheck(TextGrid):
 		return
 
 
-addStopTier('test1.1.TextGrid',['k','b','g'])
+addStopTier('test1.TextGrid',['k','b','g'])
 
 
 
