@@ -58,7 +58,7 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 			
 			else:
 				print("The names of the 'word' and 'phone' tiers are inconsistent in file",\
-					TextGrid+".","Fix the issue before continuing.\n")
+					TextGrid+". Fix the issue before continuing.\n")
 				return False #return False
 	
 	else:
@@ -81,16 +81,32 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 	voicedStops = ['b', 'd', 'ɖ', 'ɟ', 'g', 'ɢ', 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 
 	# define stops of interest
-	if len(stops) == 0:
+	if len(stops) == 0: # move these outside of this func?
 		stops = voicelessStops
 	else:
-		tempStops = []
+		vettedStops, nonStops = [],[]
 		for stopSymbol in stops:
 			if stopSymbol.lower() in ipaStops:
-				tempStops.append(stopSymbol)
+				vettedStops.append(stopSymbol)
 			else:
-				print("'"+stopSymbol+"'","is not a stop sound. This symbol will be ignored.\n")
-		stops = tempStops
+				nonStops.append(stopSymbol)
+
+		if len(nonStops) == 1: # move these outside of this func?
+			print("'"+nonStops[0]+"' is not a stop sound. This symbol will be ignored.\n")
+		elif len(nonStops) > 1:
+			print("'"+", ".join(nonStops)+"'","are not stop sounds. These symbols will be ignored for file",TextGrid+".\n")
+
+		if len(vettedStops) == 0: # move these outside of this func?
+			if len(stops) == 1:
+				print("The sound you entered is not considered a stop sound by the IPA.") # move these outside of this func?
+			elif len(stops) == 2:
+				print("Neither of the sounds you entered is considered a stop sound by the IPA.")
+			else:
+				print("None of the sounds you entered is considered a stop sound by the IPA.")
+			print("The program will continue by analyzing all voiceless stops recognized by the IPA.\n")
+			stops = voicelessStops
+		else:
+			stops = vettedStops
 
 	# identify stops of interest in the TextGrid
 	stopEntryList = []
@@ -105,33 +121,40 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 	for start, stop, label in stopEntryList:
 		extendedEntryList.append([start+startPadding, stop+endPadding, label])
 
-	# check for length requirements and resolve overlapping conflicts
+	# check for and resolve length requirements and timing conflicts
 	for interval in range(len(extendedEntryList)-1):
-		#intA = current interval
-		#intB = next interval
-		if extendedEntryList[interval][1]-extendedEntryList[interval][0] < 0.025:
-			extendedEntryList[interval][1] = extendedEntryList[interval][0] + 0.025
-			if extendedEntryList[interval+1][0] < extendedEntryList[interval][1]:
-				if extendedEntryList[interval+1][0] - extendedEntryList[interval][1] > 0.075:
-					print("Error: there is a significant overlap between two phone segments at time:",\
-						extendedEntryList[interval][1],"in file:",TextGrid,". Fix the issue before continuing.\n")
-					#stop function -- too big of a shift
-				# 	return # sys.exit()
-				# print("Error: There are two segments in file:",TextGrid,"around time:",extendedEntryList[interval][1],\
-				# 	"that either overlap with each other, or are too short to calculate VOT. Fix the issue before continuing.")
-				# print("This could be an issue resulting from:"\
-				# 	"\n(1) very fast speech, \n(2) two tokens very close to each other, or \n(3) too much 'padding'.\n")
-				# #stop function -- too much of an overlap
-				return
+		currentPhone = extendedEntryList[interval]
+		nextPhone = extendedEntryList[interval+1]
+		startTime, endTime = 0, 1
+
+		if currentPhone[endTime] > nextPhone[startTime]:  # if nextPhone starts before currentPhone ends, there's an overlap
+			if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
+				if currentPhone[endTime] - nextPhone[startTime] > 50:
+					print("Error: in file",TextGrid+",","the segment starting at",currentPhone[startTime],"sec shows two timing conflicts:",\
+						"\n(1) it is shorter than 25 ms. \n(2) it overlaps with the segment starting at",nextPhone[startTime]+".",\
+						"\nYou migh have to decrease the amount of padding and/or manually increase the segment length to solve the conflicts.")
+					sys.exit() ## check out this termination method ?
+				else:
+					nextPhone[startTime] = currentPhone[endTime]
+					print("Warning: in file",TextGrid+",","the segment starting at",nextPhone[startTime],"sec was shifted forward to resolve a",\
+						"timing conflict (two overlapping segment). Please, verify manually that the shifted window still captures the segment.")
 			else:
-				print("Note: the segment in file:",TextGrid,"at time:",extendedEntryList[interval][0],\
+				if currentPhone[endTime] - nextPhone[startTime] > 50:
+					print("Error: in file",TextGrid+",","the segment starting at",currentPhone[startTime],\
+						"sec overlaps with the segment starting at",nextPhone[startTime],"sec by more than 50 ms.",\
+						"You might have to decrease the amount of padding and/or manually decrease the segment length to solve this conflict.")
+				else:
+					nextPhone[startTime] = currentPhone[endTime]
+					print("Warning: in file",TextGrid+",","the segment starting at",nextPhone[startTime],"sec was shifted forward to resolve a",\
+						"timing conflict (two overlapping segment). Please, verify manually that the shifted window still captures the segment.")
+		else:
+			if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
+				currentPhone[endTime] = currentPhone[startTime] + 0.025  # shift currentPhone's endTime to be 25 ms after startTime
+				print("Note: the segment in file:",TextGrid,"at time:",currentPhone[startTime],\
 				"was automatically elongated because it was shorter than the required 25 ms.\n")
-		if extendedEntryList[interval+1][0] < extendedEntryList[interval][1]:
-			extendedEntryList[interval+1][0] = extendedEntryList[interval][1]
-			print("Note: the start time for the segment in file:",TextGrid,"at time:",extendedEntryList[interval+1][0],\
-				"was shifted back to resolve an issue with overlapping segments.")
-			print("The issue with overlapping times could be an issue resulting from:",\
-				"\n(1) very fast speech, \n(2) two tokens very close to each other, or \n(3) too much 'padding'.\n")
+
+		if interval == len(extendedEntryList)-1 and nextPhone[endTime] - nextPhone[startTime] < 0.025:  # if the last segment is too short
+			nextPhone[endTime] = nextPhone[startTime] + 0.025  # shift currentPhone's endTime to be 25 ms after startTime
 
 	# provide warning for voiced tokens
 	if len(voicedTokens) > 0 and lastSpeaker:
@@ -149,7 +172,7 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 	else:
 		return
 
-addStopTier('test1.1.TextGrid')
+addStopTier('test1.1.TextGrid',['a','i','o'])
 
 
 
