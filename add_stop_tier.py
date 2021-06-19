@@ -48,6 +48,7 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 						startPadding, 
 						endPadding, 
 						voicedTokens, 
+						currentSpeaker, 
 						lastSpeaker
 						)
 				if newTier:
@@ -73,7 +74,7 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 	return
 
 
-def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, populatedTiers, startPadding, endPadding, voicedTokens, lastSpeaker): 
+def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, populatedTiers, startPadding, endPadding, voicedTokens, currentSpeaker, lastSpeaker): 
 
 	# specify stop categories
 	ipaStops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
@@ -91,18 +92,18 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 			else:
 				nonStops.append(stopSymbol)
 
-		if len(nonStops) == 1: # move these outside of this func?
+		if len(nonStops) == 1 and currentSpeaker == 1: # move these outside of this func?
 			print("'"+nonStops[0]+"' is not a stop sound. This symbol will be ignored.\n")
-		elif len(nonStops) > 1:
+		elif len(nonStops) > 1 and currentSpeaker == 1:
 			print("'"+", ".join(nonStops)+"'","are not stop sounds. These symbols will be ignored for file",TextGrid+".\n")
 
-		if len(vettedStops) == 0: # move these outside of this func?
+		if len(vettedStops) == 0 and currentSpeaker == 1: # move these outside of this func?
 			if len(stops) == 1:
-				print("The sound you entered is not considered a stop sound by the IPA.") # move these outside of this func?
+				print("The only sound you entered is not classified as a stop sound by the IPA.") # move these outside of this func?
 			elif len(stops) == 2:
-				print("Neither of the sounds you entered is considered a stop sound by the IPA.")
+				print("Neither of the sounds you entered is classified as a stop sound by the IPA.")
 			else:
-				print("None of the sounds you entered is considered a stop sound by the IPA.")
+				print("None of the sounds you entered is classified as a stop sound by the IPA.")
 			print("The program will continue by analyzing all voiceless stops recognized by the IPA.\n")
 			stops = voicelessStops
 		else:
@@ -157,8 +158,12 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 			nextPhone[endTime] = nextPhone[startTime] + 0.025  # shift currentPhone's endTime to be 25 ms after startTime
 
 	# provide warning for voiced tokens
-	if len(voicedTokens) > 0 and lastSpeaker:
-		print("***Warning: You're trying to obtain VOT calculations of the following voiced stops: ",list(set(voicedTokens)))
+	if len(list(set(voicedTokens))) == 1 and lastSpeaker:
+		print("***Warning: You're trying to obtain VOT calculations of the following voiced stop: ",*list(set(voicedTokens)))
+		print("Note that AutoVOT's current model only works on voiceless stops; "\
+			"prevoicing in the productions may result in inaccurate calculations.\n")
+	elif len(list(set(voicedTokens))) > 1 and lastSpeaker:
+		print("***Warning: You're trying to obtain VOT calculations of the following voiced stops: ","'"+", ".join(list(set(voicedTokens)))+"'")
 		print("Note that AutoVOT's current model only works on voiceless stops; "\
 			"prevoicing in the productions may result in inaccurate calculations.\n")
 
@@ -172,7 +177,7 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 	else:
 		return
 
-addStopTier('test1.1.TextGrid',['a','i','o'])
+addStopTier('test1.1.TextGrid',['b','g'])
 
 
 
