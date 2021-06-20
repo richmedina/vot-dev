@@ -6,17 +6,18 @@ import os
 def calculateVOT(wav, TextGrid):
 
 	# verify file format
-	if not fileCheck(wav, TextGrid):
-		return
+	# if not fileCheck(wav, TextGrid):
+	# 	return
 
-	# process the data
+	# process the dataz
 	psnd = parselmouth.Sound(wav)
+	print(psnd)
 	# ptg = parselmouth.TextGrid.from_tgt(tgt.read_textgrid(TextGrid))
-	ptg = parselmouth.praat.call("Read from file", TextGrid)
-	# print(type(ptg))
-	# print(ptg)
+	ptg = parselmouth.praat.call("Read from file", TextGrid)[0] #expects a collection and creates a list
+	# ptg = parselmouth.read(TextGrid) #expects only one file
 
-	# apply AutoVOT
+
+	# # apply AutoVOT
 	obj = parselmouth.praat.run_file([psnd,ptg],
 		# "/Users/ernesto/Library/Preferences/Praat\ Prefs/plugin_autovot/autovot.praat", 
 		# file on local machine # how to use this line instead of the following line?
@@ -51,7 +52,7 @@ def fileCheck(wav, TextGrid):
 
 
 
-calculateVOT('test.wav', "test_output.TextGrid")
+calculateVOT('sounds', "test1_output.TextGrid")
 
 
 
