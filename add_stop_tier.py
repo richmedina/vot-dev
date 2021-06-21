@@ -177,7 +177,7 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 	else:
 		return
 
-addStopTier('test1.1.TextGrid',['b','g'])
+addStopTier('test1.TextGrid')
 
 
 

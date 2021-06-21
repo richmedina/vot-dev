@@ -1,7 +1,6 @@
 # https://billdthompson.github.io/assets/output/Jadoul2018.pdf
 import parselmouth
 import os
-# import tgt
 
 def calculateVOT(wav, TextGrid):
 
@@ -9,27 +8,28 @@ def calculateVOT(wav, TextGrid):
 	# if not fileCheck(wav, TextGrid):
 	# 	return
 
+	# moduleName = "autovot-0.94"
+	# importlib.import_module(moduleName)
+
+	# add loop to iterate through files
+
 	# process the dataz
 	psnd = parselmouth.Sound(wav)
-	print(psnd)
-	# ptg = parselmouth.TextGrid.from_tgt(tgt.read_textgrid(TextGrid))
-	ptg = parselmouth.praat.call("Read from file", TextGrid)[0] #expects a collection and creates a list
-	# ptg = parselmouth.read(TextGrid) #expects only one file
+	ptg = parselmouth.read(TextGrid)
 
 
-	# # apply AutoVOT
+	# apply AutoVOT
 	obj = parselmouth.praat.run_file([psnd,ptg],
 		# "/Users/ernesto/Library/Preferences/Praat\ Prefs/plugin_autovot/autovot.praat", 
-		# file on local machine # how to use this line instead of the following line?
 		# add initial slash
 		# try one dot ./
-		"autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/autovot.praat", # file on repository
-		# "utt - stops", 
-		# "*", 
-		# "mono", 
-		# 5, 
-		# 500, 
-		# "models/vot_predictor.amanda.max_num_instances_1000.model"
+		"autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/autovot_form.praat", # file on repository
+		"utt - stops", 
+		"*", 
+		"mono", 
+		5, 
+		500, 
+		"models/vot_predictor.amanda.max_num_instances_1000.model"
 		)
 	print("hello world")
 
@@ -52,7 +52,7 @@ def fileCheck(wav, TextGrid):
 
 
 
-calculateVOT('sounds', "test1_output.TextGrid")
+calculateVOT('test.wav', "test1_output.TextGrid")
 
 
 
