@@ -30,7 +30,7 @@ import os
 import tempfile
 import shutil
 import csv
-from itertools import izip
+# from itertools import izip
 import numpy as np
 
 from auto_vot_extract_features import *
@@ -202,7 +202,7 @@ if __name__ == "__main__":
         k = 0
         feature_filelist = [line.strip() for line in open(features_filename)]
         vot_predictions = [line.strip() for line in open(preds_filename)]
-        for feature_filename, vot_prediction in izip(feature_filelist, vot_predictions):
+        for feature_filename, vot_prediction in zip(feature_filelist, vot_predictions):
             (confidence, xmin, xmax) = vot_prediction.split()
             xmin = float(xmin)
             xmax = float(xmax)

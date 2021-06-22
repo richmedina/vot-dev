@@ -186,7 +186,7 @@ def textgrid2front_end(textgrid_list, wav_list, input_filename, features_filenam
             # if the window tier is empty and not decoding, fix window information
             if definitions.window_tier == "":
                 logging.debug("--window_tier and --window_mark were not given - using defaults.")
-                for i in xrange(1, len(instances) - 1):
+                for i in range(1, len(instances) - 1):
                     # check if window_min is less than the previous vot_max
                     if instances[i].window_min < instances[i - 1].vot_max:
                         instances[i].window_min = max(instances[i].vot_min - 0.02, instances[i - 1].vot_max + 0.02)

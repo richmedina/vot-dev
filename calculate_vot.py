@@ -1,38 +1,32 @@
 # https://billdthompson.github.io/assets/output/Jadoul2018.pdf
 import parselmouth
 import subprocess
-import importlib
 import os
 
 def calculateVOT(wav, TextGrid):
-
-	moduleName = input('/Users/erneto/Desktop/Projects/vot-cp/vot-dev/autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/auto_vot_decode.py')
-	importlib.import_module(moduleName)
-	print(moduleName)  #prints
-		# ValueError: Empty module name
 
 	# process the data
 	# psnd = parselmouth.Sound(wav)
 	# ptg = parselmouth.read(TextGrid)
 
-	# suggested by RM
-	# subprocess.run(['python', 'autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/auto_vot_decode.py', '-h'])
-	# print("hello world")  #prints
-		# ImportError: cannot import name 'izip' from 'itertools' (unknown location)
+	#resample audio files at 16khz
+	#check for number of channels and extract first if multiple
+	#
 
-	# found online: https://www.fon.hum.uva.nl/praat/manual/Scripting_6_9__Calling_from_the_command_line.html
-	# subprocess.call(["/Applications/Praat.app/Contents/MacOS/Praat", 
-	# 	"--run", 
-	# 	"autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/autovot_form.praat",
-	# 	wav,TextGrid,
-	# 	"utt - stops", 
-	# 	"*", 
-	# 	"mono", 
-	# 	5, 
-	# 	500, 
-	# 	"models/vot_predictor.amanda.max_num_instances_1000.model"])
-	# print("hello world")  #doesn't print
-		# TypeError: expected str, bytes or os.PathLike object, not int
+	# run the process as a child process
+	# subprocess.run(['python', 'autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/auto_vot_decode.py', '-h'])
+	subprocess.run([
+		'python', 
+		'autovot_shortcut/auto_vot_decode.py', 
+		'--vot_tier', 'AutoVOT', # so these are two different arguments?
+		'--vot_mark', 't', 
+		'test_16.wav', 
+		'test1_output.TextGrid', 
+		'autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model'
+		])
+	#error when reading the textgrid; have contact AutoVOT dev's to figure out what's going on.
+	print("hello world")  #prints
+
 
 	# praat plugin
 	# parselmouth.praat.run_file([psnd,ptg],

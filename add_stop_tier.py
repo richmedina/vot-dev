@@ -69,7 +69,7 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 
 	# save the new textgrid with a 'stop' tier
 	saveName = TextGrid.split(".TextGrid")[0]
-	tg.save(saveName+"_output.TextGrid") #add output directory to store temp tg?
+	tg.save(saveName+"_output.TextGrid",useShortForm=False) #add output directory to store temp tg?
 	
 	return
 
@@ -134,7 +134,7 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 					print("Error: in file",TextGrid+",","the segment starting at",currentPhone[startTime],"sec shows two timing conflicts:",\
 						"\n(1) it is shorter than 25 ms. \n(2) it overlaps with the segment starting at",nextPhone[startTime]+".",\
 						"\nYou migh have to decrease the amount of padding and/or manually increase the segment length to solve the conflicts.")
-					sys.exit() ## check out this termination method ?
+					sys.exit("Process for",TextGrid,"incomplete.") #indicate abnormal termination
 				else:
 					nextPhone[startTime] = currentPhone[endTime]
 					print("Warning: in file",TextGrid+",","the segment starting at",nextPhone[startTime],"sec was shifted forward to resolve a",\
