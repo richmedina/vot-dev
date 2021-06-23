@@ -5,6 +5,10 @@ import os
 
 def calculateVOT(wav, TextGrid):
 
+	# verify file format
+	if not fileCheck(wav, TextGrid):
+		return
+
 	# process the data
 	psnd = parselmouth.Sound(wav)
 	psndName = wav.split(".wav")[0]
@@ -46,39 +50,18 @@ def calculateVOT(wav, TextGrid):
 
 	return
 
+
+def fileCheck(wav, TextGrid):
+
+	wavName, wavExt = os.path.splitext(wav)
+	textgridName, textgridExt = os.path.splitext(TextGrid)
+
+	if wavExt != '.wav' and textgridExt != '.TextGrid':
+		sys.exit(wav,"must be a wav file and",TextGrid,"must be a TextGrid file. One or both files do not meet format requirements.")
+
+	else:
+		print("All is good with the format of files",wav,"and",TextGrid+".\n")
+		return True
+
+
 calculateVOT('test-temp.wav', "test1_output.TextGrid")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def fileCheck(wav, TextGrid):
-
-# 	wavName, wavExt = os.path.splitext(wav)
-# 	textgridName, textgridExt = os.path.splitext(TextGrid)
-
-# 	if wavExt != '.wav' and textgridExt != '.TextGrid':
-# 		print("The files",wav,"and",TextGrid,"do not meet format requirements;",\
-# 			wav,"must be a wav file, and",TextGrid,"must be a TextGrid file.\n")
-# 		return False
-
-# 	else:
-# 		print("All is good with the format of files",wav,"and",TextGrid+".\n")
-# 		return True
-		#sys.exit() 0=no issue, 1=exit with error
-
-
-
-	# verify file format
-	# if not fileCheck(wav, TextGrid):
-	# 	return
