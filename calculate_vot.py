@@ -13,13 +13,22 @@ def calculateVOT(wav, TextGrid):
 	#check for number of channels and extract first if multiple
 	#
 
+	## Terminal code
+	#python 
+	# autovot_shortcut/auto_vot_decode.py 
+	# --vot_tier utt\ -\ stops  #check if I need to remove spaces from tiern name
+	# --vot_mark k 
+	# test_16.wav 
+	# test1_output.TextGrid 
+	# autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model
+	
 	# run the process as a child process
 	# subprocess.run(['python', 'autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/auto_vot_decode.py', '-h'])
 	subprocess.run([
 		'python', 
 		'autovot_shortcut/auto_vot_decode.py', 
 		'--vot_tier', 'AutoVOT', # so these are two different arguments?
-		'--vot_mark', 't', 
+		'--vot_mark', 'k', 
 		'test_16.wav', 
 		'test1_output.TextGrid', 
 		'autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model'
