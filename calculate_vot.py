@@ -6,34 +6,28 @@ import os
 def calculateVOT(wav, TextGrid):
 
 	# process the data
-	# psnd = parselmouth.Sound(wav)
+	psnd = parselmouth.Sound(wav)
+	psndName = wav.split(".wav")[0]
+	print(psndName)
+	if psnd.get_sampling_frequency() != 16000:
+		psnd.resample(16000).save(wav, "WAV")
+	psnd = parselmouth.Sound(wav)
+	if psnd.get_number_of_channels() != 1:
+		psnd.extract_channel(1).save(wav, "WAV")
+
 	# ptg = parselmouth.read(TextGrid)
-
-	#resample audio files at 16khz
-	#check for number of channels and extract first if multiple
-	#
-
-	## Terminal code
-	#python 
-	# autovot_shortcut/auto_vot_decode.py 
-	# --vot_tier utt\ -\ stops  #check if I need to remove spaces from tiern name
-	# --vot_mark k 
-	# test_16.wav 
-	# test1_output.TextGrid 
-	# autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model
 	
-	# run the process as a child process
+	# run VOT predictor
 	# subprocess.run(['python', 'autovot-0.94/autovot/praat_plugin/AutoVOT_Praat_plugin_v0.94/plugin_autovot/auto_vot_decode.py', '-h'])
 	subprocess.run([
 		'python', 
 		'autovot_shortcut/auto_vot_decode.py', 
-		'--vot_tier', 'AutoVOT', # so these are two different arguments?
-		'--vot_mark', 'k', 
-		'test_16.wav', 
-		'test1_output.TextGrid', 
+		'--vot_tier', 'utt - stops', # so these are two different arguments?
+		'--vot_mark', '*', 
+		wav, 
+		TextGrid, 
 		'autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model'
 		])
-	#error when reading the textgrid; have contact AutoVOT dev's to figure out what's going on.
 	print("hello world")  #prints
 
 
@@ -52,7 +46,7 @@ def calculateVOT(wav, TextGrid):
 
 	return
 
-calculateVOT('test.wav', "test1_output.TextGrid")
+calculateVOT('test-temp.wav', "test1_output.TextGrid")
 
 
 
