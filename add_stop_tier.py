@@ -74,6 +74,7 @@ def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 	stopTier = tg.tierNameList[-1]
 
 	# save the new textgrid with a 'stop' tier
+	TextGrid = TextGrid.split("/")[1] #delete
 	saveName = TextGrid.split(".TextGrid")[0]+"_output.TextGrid"
 	tg.save(os.path.join(outputPath,saveName),useShortForm=False)
 	

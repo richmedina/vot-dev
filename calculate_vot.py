@@ -14,6 +14,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 	if not fileCheck(wav, TextGrid):
 		return
 
+	# create directory to output files
 	outputPath = os.path.join(os.getcwd(),outputDirectory)
 	if not os.path.exists(outputPath):
 		os.mkdir(outputPath)
@@ -22,7 +23,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 	stopTier, saveName = addStopTier(TextGrid, outputPath, stops, startPadding, endPadding)
 	annotatedTextgrid = os.path.join(outputDirectory, saveName)
 
-	# make temporary directory
+	# make temporary directory to process predictions
 	with tempfile.TemporaryDirectory() as tempDirectory:
 
 		# process the sound file
@@ -57,13 +58,12 @@ def fileCheck(wav, TextGrid):
 
 	if wavExt != '.wav' and textgridExt != '.TextGrid':
 		sys.exit(wav,"must be a wav file and",TextGrid,"must be a TextGrid file. One or both files do not meet format requirements.")
-
 	else:
-		print("\nProcessing", wav.split(".wav")[0]+"...\n")
+		print("\nProcessing",wav,"and",TextGrid+"...\n")
 		return True
 
 
-calculateVOT('test.wav', "test1.TextGrid")
+calculateVOT('test.wav', "testing/test1.TextGrid")
 
 
 
