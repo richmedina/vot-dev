@@ -1,10 +1,15 @@
 from praatio import tgio
+import os
 
-def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
+def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 
 	# open textgrid and turn the tier labels to lowercase strings
 	tg = tgio.openTextgrid(TextGrid)
-	tg.tierNameList = [tier.lower() for tier in tg.tierNameList]
+	for tierName in tg.tierNameList:
+		if tierName == "AutoVOT":
+			print("Warning: a tier named 'AutoVOT' already exists. Said tier will be renamed as 'autovot - original' to avoid a naming conflict.\n")
+			tg.renameTier("AutoVOT", "AutoVOT - original")
+	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
 	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items())
 
 	# collect all word tiers and terminate process if none exists
@@ -66,11 +71,13 @@ def addStopTier(TextGrid, stops=[], startPadding=0, endPadding=0):
 			TextGrid,". Fix the issue before continuing.\n")
 		return False #return False
 
+	stopTier = tg.tierNameList[-1]
+
 	# save the new textgrid with a 'stop' tier
-	saveName = TextGrid.split(".TextGrid")[0]
-	tg.save(saveName+"_output.TextGrid",useShortForm=False) #add output directory to store temp tg?
+	saveName = TextGrid.split(".TextGrid")[0]+"_output.TextGrid"
+	tg.save(os.path.join(outputPath,saveName),useShortForm=False)
 	
-	return
+	return stopTier, saveName
 
 
 def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, populatedTiers, startPadding, endPadding, voicedTokens, currentSpeaker, lastSpeaker): 
@@ -176,7 +183,7 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 	else:
 		return
 
-addStopTier('test1.TextGrid')
+# addStopTier('test1.TextGrid')
 
 
 
