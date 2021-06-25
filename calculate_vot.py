@@ -55,7 +55,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 			newTG = []
 			tierNumber = 0
 			for line in TG:
-				if "AutoVOT" in line:
+				if "AutoVOT" in line and if "original" not in line:
 					line = line.replace("AutoVOT",stopTiers[tierNumber].split("stops")[0]+"AutoVOT")
 					tierNumber += 1
 				newTG.append(line)
