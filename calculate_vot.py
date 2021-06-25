@@ -1,6 +1,6 @@
 # https://billdthompson.github.io/assets/output/Jadoul2018.pdf
 from add_stop_tier import *
-from praatio import tgio
+# from praatio import tgio
 import parselmouth
 import subprocess
 import tempfile
@@ -20,7 +20,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 		os.mkdir(outputPath)
 
 	# create tier annotated with tokens of interest
-	stopTier, saveName = addStopTier(TextGrid, outputPath, stops, startPadding, endPadding)
+	stopTiers, saveName, multipleSpeakers = addStopTier(TextGrid, outputPath, stops, startPadding, endPadding)
 	annotatedTextgrid = os.path.join(outputDirectory, saveName)
 
 	# make temporary directory to process predictions
@@ -39,15 +39,29 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 		psnd.save(tempSound, "WAV")
 		
 		# run VOT predictor
-		subprocess.run([
-			'python', 'autovot_shortcut/auto_vot_decode.py', 
-			'--vot_tier', stopTier,
-			'--vot_mark', '*', 
-			tempSound, 
-			annotatedTextgrid, 
-			'autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model'
-			])
+		for tierName in stopTiers:
+			subprocess.run([
+				'python', 'autovot_shortcut/auto_vot_decode.py', 
+				'--vot_tier', tierName,
+				'--vot_mark', '*', 
+				tempSound, 
+				annotatedTextgrid, 
+				'autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model',
+				'--ignore_existing_tiers'
+				])
 
+	# rename repeated labels of AutoVOT prediction tiers
+	if multipleSpeakers:
+		with open(annotatedTextgrid, "r") as TG:
+			newTG = []
+			tierNumber = 0
+			for line in TG:
+				if "AutoVOT" in line:
+					line = line.replace("AutoVOT",stopTiers[tierNumber].split("stops")[0]+"AutoVOT")
+					tierNumber += 1
+				newTG.append(line)
+		with open(annotatedTextgrid, "w") as TG:
+			TG.writelines(newTG)
 	return
 
 
@@ -57,13 +71,14 @@ def fileCheck(wav, TextGrid):
 	textgridName, textgridExt = os.path.splitext(TextGrid)
 
 	if wavExt != '.wav' and textgridExt != '.TextGrid':
-		sys.exit(wav,"must be a wav file and",TextGrid,"must be a TextGrid file. One or both files do not meet format requirements.")
+		sys.exit(wav,"must be a wav file and",TextGrid,"must be a TextGrid file.",\
+			"One or both files do not meet format requirements.")
 	else:
 		print("\nProcessing",wav,"and",TextGrid+"...\n")
 		return True
 
 
-calculateVOT('test.wav', "testing/test1.TextGrid")
+calculateVOT('test.wav', "testing/test1.TextGrid", ['k','d'])
 
 
 

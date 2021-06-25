@@ -71,14 +71,14 @@ def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 			TextGrid,". Fix the issue before continuing.\n")
 		return False #return False
 
-	stopTier = tg.tierNameList[-1]
+	stopTiers = [tierName for tierName in tg.tierNameList if tierName[-5:] == "stops"]
 
 	# save the new textgrid with a 'stop' tier
 	TextGrid = TextGrid.split("/")[1] #delete
 	saveName = TextGrid.split(".TextGrid")[0]+"_output.TextGrid"
 	tg.save(os.path.join(outputPath,saveName),useShortForm=False)
 	
-	return stopTier, saveName
+	return stopTiers, saveName, (totalSpeakers > 1)
 
 
 def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, populatedTiers, startPadding, endPadding, voicedTokens, currentSpeaker, lastSpeaker): 
