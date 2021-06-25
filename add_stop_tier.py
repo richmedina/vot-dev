@@ -138,23 +138,23 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 		if currentPhone[endTime] > nextPhone[startTime]:  # if nextPhone starts before currentPhone ends, there's an overlap
 			if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
 				if currentPhone[endTime] - nextPhone[startTime] > 50:
-					print("Error: in file",TextGrid+",","the segment starting at",currentPhone[startTime],"sec shows two timing conflicts:",\
+					sys.exit("Error: in file",TextGrid+",","the segment starting at",currentPhone[startTime],"sec shows two timing conflicts:",\
 						"\n(1) it is shorter than 25 ms. \n(2) it overlaps with the segment starting at",nextPhone[startTime]+".",\
 						"\nYou migh have to decrease the amount of padding and/or manually increase the segment length to solve the conflicts.")
 					sys.exit("Process for",TextGrid,"incomplete.") #indicate abnormal termination
 				else:
 					nextPhone[startTime] = currentPhone[endTime]
 					print("Warning: in file",TextGrid+",","the segment starting at",nextPhone[startTime],"sec was shifted forward to resolve a",\
-						"timing conflict (two overlapping segment). Please, verify manually that the shifted window still captures the segment.")
+						"timing conflict (two overlapping segment). Please, verify manually that the shifted window still captures the segment.\n")
 			else:
 				if currentPhone[endTime] - nextPhone[startTime] > 50:
-					print("Error: in file",TextGrid+",","the segment starting at",currentPhone[startTime],\
+					sys.exit("Error: in file",TextGrid+",","the segment starting at",currentPhone[startTime],\
 						"sec overlaps with the segment starting at",nextPhone[startTime],"sec by more than 50 ms.",\
 						"You might have to decrease the amount of padding and/or manually decrease the segment length to solve this conflict.")
 				else:
 					nextPhone[startTime] = currentPhone[endTime]
 					print("Warning: in file",TextGrid+",","the segment starting at",nextPhone[startTime],"sec was shifted forward to resolve a",\
-						"timing conflict (two overlapping segment). Please, verify manually that the shifted window still captures the segment.")
+						"timing conflict (two overlapping segment). Please, verify manually that the shifted window still captures the segment.\n")
 		else:
 			if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
 				currentPhone[endTime] = currentPhone[startTime] + 0.025  # shift currentPhone's endTime to be 25 ms after startTime

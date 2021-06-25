@@ -55,7 +55,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 			newTG = []
 			tierNumber = 0
 			for line in TG:
-				if "AutoVOT" in line and if "original" not in line:
+				if "AutoVOT" in line:
 					line = line.replace("AutoVOT",stopTiers[tierNumber].split("stops")[0]+"AutoVOT")
 					tierNumber += 1
 				newTG.append(line)
@@ -77,7 +77,9 @@ def fileCheck(wav, TextGrid):
 		return True
 
 
-calculateVOT('test.wav', "testing/test1.TextGrid", ['k','d'])
+calculateVOT('test.wav', "testing/test13.TextGrid")
+
+#add warning that a tier with "stops" already exists -- stop program
 
 
 
