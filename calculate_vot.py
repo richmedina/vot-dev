@@ -1,6 +1,5 @@
 # https://billdthompson.github.io/assets/output/Jadoul2018.pdf
 from add_stop_tier import *
-# from praatio import tgio
 import parselmouth
 import subprocess
 import tempfile
