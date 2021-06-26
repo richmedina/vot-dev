@@ -162,7 +162,7 @@ class TestVOT(unittest.TestCase):
 	# 	self.assertEqual(tgTokenNumber, 7)
 	# 	self.assertEqual(tgTokens, ['g','p'])
 
-	# def test_oneSpeakerVoiced(self):
+	# def test_oneSpeakerShort(self):
 	# 	calculateVOT("test.wav", "testing/test1.TextGrid",["b"])
 	# 	tg = tgio.openTextgrid("output/test1_output.TextGrid")
 	# 	tgTierNumber = len(tg.tierNameList)
@@ -173,6 +173,40 @@ class TestVOT(unittest.TestCase):
 	# 	self.assertEqual(tgTiers, ['utt - words', 'utt - phones', 'utt - stops', 'AutoVOT'])
 	# 	self.assertEqual(tgTokenNumber, 9)
 	# 	self.assertEqual(tgTokens, ['b'])
+
+	# def test_twoSpeakerDistinctVoiceless(self):
+	# 	calculateVOT("test.wav", "testing/test4.TextGrid",["p","t"])
+	# 	tg = tgio.openTextgrid("output/test4_output.TextGrid")
+	# 	tgTierNumber = len(tg.tierNameList)
+	# 	tgTiers = tg.tierNameList
+	# 	tgTokenNumberP = len(tg.tierDict[tgTiers[-4]].entryList)
+	# 	tgTokenNumberT = len(tg.tierDict[tgTiers[-3]].entryList)
+	# 	tgTokensP = list(set([label for start,end,label in tg.tierDict[tgTiers[-4]].entryList]))
+	# 	tgTokensT = list(set([label for start,end,label in tg.tierDict[tgTiers[-3]].entryList]))
+	# 	self.assertEqual(tgTierNumber, 8)
+	# 	self.assertEqual(tgTiers, ['utt - words','utt - phones','utt 2 - words','utt 2 - phones',
+	# 		'utt - stops','utt 2 - stops','utt - AutoVOT','utt 2 - AutoVOT'])
+	# 	self.assertEqual(tgTokenNumberP, 6)
+	# 	self.assertEqual(tgTokenNumberT, 5)
+	# 	self.assertEqual(tgTokensP, ['p'])
+	# 	self.assertEqual(tgTokensT, ['t'])
+
+	def test_twoSpeakerDistinctVoiced(self):
+		calculateVOT("test.wav", "testing/test5.TextGrid",["b","d"])
+		tg = tgio.openTextgrid("output/test5_output.TextGrid")
+		tgTierNumber = len(tg.tierNameList)
+		tgTiers = tg.tierNameList
+		tgTokenNumberD = len(tg.tierDict[tgTiers[-4]].entryList)
+		tgTokenNumberB = len(tg.tierDict[tgTiers[-3]].entryList)
+		tgTokensD = list(set([label for start,end,label in tg.tierDict[tgTiers[-4]].entryList]))
+		tgTokensB = list(set([label for start,end,label in tg.tierDict[tgTiers[-3]].entryList]))
+		self.assertEqual(tgTierNumber, 8)
+		self.assertEqual(tgTiers, ['utt - words','utt - phones','utt 2 - words','utt 2 - phones',
+			'utt - stops','utt 2 - stops','utt - AutoVOT','utt 2 - AutoVOT'])
+		self.assertEqual(tgTokenNumberD, 13)
+		self.assertEqual(tgTokenNumberB, 14)
+		self.assertEqual(tgTokensD, ['d'])
+		self.assertEqual(tgTokensB, ['b'])
 
 
 if __name__ == '__main__':
