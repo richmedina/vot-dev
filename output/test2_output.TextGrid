@@ -4747,129 +4747,57 @@ item []:
 		name = "utt - stops"
 		xmin = 0.000000
 		xmax = 64.806500
-		intervals: size = 31
+		intervals: size = 13
 			intervals [1]:
 				xmin = 0.000000
-				xmax = 8.857896
-				text = ""
-			intervals [2]:
-				xmin = 8.857896
-				xmax = 8.958634
-				text = "b"
-			intervals [3]:
-				xmin = 8.958634
 				xmax = 11.360000
 				text = ""
-			intervals [4]:
+			intervals [2]:
 				xmin = 11.360000
 				xmax = 11.441845
 				text = "p"
-			intervals [5]:
+			intervals [3]:
 				xmin = 11.441845
 				xmax = 16.728520
 				text = ""
-			intervals [6]:
+			intervals [4]:
 				xmin = 16.728520
 				xmax = 16.841092
 				text = "p"
-			intervals [7]:
+			intervals [5]:
 				xmin = 16.841092
-				xmax = 17.434592
-				text = ""
-			intervals [8]:
-				xmin = 17.434592
-				xmax = 17.459592
-				text = "b"
-			intervals [9]:
-				xmin = 17.459592
-				xmax = 25.740000
-				text = ""
-			intervals [10]:
-				xmin = 25.740000
-				xmax = 25.790000
-				text = "b"
-			intervals [11]:
-				xmin = 25.790000
 				xmax = 31.062888
 				text = ""
-			intervals [12]:
+			intervals [6]:
 				xmin = 31.062888
 				xmax = 31.150189
 				text = "p"
-			intervals [13]:
+			intervals [7]:
 				xmin = 31.150189
-				xmax = 33.290000
-				text = ""
-			intervals [14]:
-				xmin = 33.290000
-				xmax = 33.364725
-				text = "b"
-			intervals [15]:
-				xmin = 33.364725
 				xmax = 36.640000
 				text = ""
-			intervals [16]:
+			intervals [8]:
 				xmin = 36.640000
 				xmax = 36.713939
 				text = "p"
-			intervals [17]:
+			intervals [9]:
 				xmin = 36.713939
-				xmax = 42.160000
-				text = ""
-			intervals [18]:
-				xmin = 42.160000
-				xmax = 42.200000
-				text = "b"
-			intervals [19]:
-				xmin = 42.200000
 				xmax = 43.825240
 				text = ""
-			intervals [20]:
+			intervals [10]:
 				xmin = 43.825240
 				xmax = 43.876242
 				text = "p"
-			intervals [21]:
+			intervals [11]:
 				xmin = 43.876242
-				xmax = 45.242884
-				text = ""
-			intervals [22]:
-				xmin = 45.242884
-				xmax = 45.296642
-				text = "b"
-			intervals [23]:
-				xmin = 45.296642
-				xmax = 50.219078
-				text = ""
-			intervals [24]:
-				xmin = 50.219078
-				xmax = 50.304078
-				text = "b"
-			intervals [25]:
-				xmin = 50.304078
-				xmax = 56.140000
-				text = ""
-			intervals [26]:
-				xmin = 56.140000
-				xmax = 56.170000
-				text = "b"
-			intervals [27]:
-				xmin = 56.170000
 				xmax = 57.507620
 				text = ""
-			intervals [28]:
+			intervals [12]:
 				xmin = 57.507620
 				xmax = 57.554487
 				text = "p"
-			intervals [29]:
+			intervals [13]:
 				xmin = 57.554487
-				xmax = 58.190000
-				text = ""
-			intervals [30]:
-				xmin = 58.190000
-				xmax = 58.256960
-				text = "b"
-			intervals [31]:
-				xmin = 58.256960
 				xmax = 64.806500
 				text = ""
 	item [6]:
@@ -4877,129 +4805,57 @@ item []:
 		name = "utt 2 - stops"
 		xmin = 0.000000
 		xmax = 64.806500
-		intervals: size = 31
+		intervals: size = 13
 			intervals [1]:
 				xmin = 0.000000
-				xmax = 8.857896
-				text = ""
-			intervals [2]:
-				xmin = 8.857896
-				xmax = 8.958634
-				text = "b"
-			intervals [3]:
-				xmin = 8.958634
 				xmax = 11.360000
 				text = ""
-			intervals [4]:
+			intervals [2]:
 				xmin = 11.360000
 				xmax = 11.441845
 				text = "p"
-			intervals [5]:
+			intervals [3]:
 				xmin = 11.441845
 				xmax = 16.728520
 				text = ""
-			intervals [6]:
+			intervals [4]:
 				xmin = 16.728520
 				xmax = 16.841092
 				text = "p"
-			intervals [7]:
+			intervals [5]:
 				xmin = 16.841092
-				xmax = 17.434592
-				text = ""
-			intervals [8]:
-				xmin = 17.434592
-				xmax = 17.459592
-				text = "b"
-			intervals [9]:
-				xmin = 17.459592
-				xmax = 25.740000
-				text = ""
-			intervals [10]:
-				xmin = 25.740000
-				xmax = 25.790000
-				text = "b"
-			intervals [11]:
-				xmin = 25.790000
 				xmax = 31.062888
 				text = ""
-			intervals [12]:
+			intervals [6]:
 				xmin = 31.062888
 				xmax = 31.150189
 				text = "p"
-			intervals [13]:
+			intervals [7]:
 				xmin = 31.150189
-				xmax = 33.290000
-				text = ""
-			intervals [14]:
-				xmin = 33.290000
-				xmax = 33.364725
-				text = "b"
-			intervals [15]:
-				xmin = 33.364725
 				xmax = 36.640000
 				text = ""
-			intervals [16]:
+			intervals [8]:
 				xmin = 36.640000
 				xmax = 36.713939
 				text = "p"
-			intervals [17]:
+			intervals [9]:
 				xmin = 36.713939
-				xmax = 42.160000
-				text = ""
-			intervals [18]:
-				xmin = 42.160000
-				xmax = 42.200000
-				text = "b"
-			intervals [19]:
-				xmin = 42.200000
 				xmax = 43.825240
 				text = ""
-			intervals [20]:
+			intervals [10]:
 				xmin = 43.825240
 				xmax = 43.876242
 				text = "p"
-			intervals [21]:
+			intervals [11]:
 				xmin = 43.876242
-				xmax = 45.242884
-				text = ""
-			intervals [22]:
-				xmin = 45.242884
-				xmax = 45.296642
-				text = "b"
-			intervals [23]:
-				xmin = 45.296642
-				xmax = 50.219078
-				text = ""
-			intervals [24]:
-				xmin = 50.219078
-				xmax = 50.304078
-				text = "b"
-			intervals [25]:
-				xmin = 50.304078
-				xmax = 56.140000
-				text = ""
-			intervals [26]:
-				xmin = 56.140000
-				xmax = 56.170000
-				text = "b"
-			intervals [27]:
-				xmin = 56.170000
 				xmax = 57.507620
 				text = ""
-			intervals [28]:
+			intervals [12]:
 				xmin = 57.507620
 				xmax = 57.554487
 				text = "p"
-			intervals [29]:
+			intervals [13]:
 				xmin = 57.554487
-				xmax = 58.190000
-				text = ""
-			intervals [30]:
-				xmin = 58.190000
-				xmax = 58.256960
-				text = "b"
-			intervals [31]:
-				xmin = 58.256960
 				xmax = 64.806500
 				text = ""
 	item [7]:
@@ -5007,129 +4863,57 @@ item []:
 		name = "utt - AutoVOT"
 		xmin = 0.000000
 		xmax = 64.806500
-		intervals: size = 31
+		intervals: size = 13
 			intervals [1]:
 				xmin = 0.000000
-				xmax = 8.808000
-				text = ""
-			intervals [2]:
-				xmin = 8.808000
-				xmax = 8.823000
-				text = "pred"
-			intervals [3]:
-				xmin = 8.823000
 				xmax = 11.417000
 				text = ""
-			intervals [4]:
+			intervals [2]:
 				xmin = 11.417000
 				xmax = 11.433000
 				text = "pred"
-			intervals [5]:
+			intervals [3]:
 				xmin = 11.433000
 				xmax = 16.829000
 				text = ""
-			intervals [6]:
+			intervals [4]:
 				xmin = 16.829000
-				xmax = 16.844000
+				xmax = 17.056000
 				text = "pred"
-			intervals [7]:
-				xmin = 16.844000
-				xmax = 17.385000
-				text = ""
-			intervals [8]:
-				xmin = 17.385000
-				xmax = 17.400000
-				text = "pred"
-			intervals [9]:
-				xmin = 17.400000
-				xmax = 25.690000
-				text = ""
-			intervals [10]:
-				xmin = 25.690000
-				xmax = 25.705000
-				text = "pred"
-			intervals [11]:
-				xmin = 25.705000
+			intervals [5]:
+				xmin = 17.056000
 				xmax = 31.117000
 				text = ""
-			intervals [12]:
+			intervals [6]:
 				xmin = 31.117000
 				xmax = 31.144000
 				text = "pred"
-			intervals [13]:
+			intervals [7]:
 				xmin = 31.144000
-				xmax = 33.348000
-				text = ""
-			intervals [14]:
-				xmin = 33.348000
-				xmax = 33.449000
-				text = "pred"
-			intervals [15]:
-				xmin = 33.449000
 				xmax = 36.696000
 				text = ""
-			intervals [16]:
+			intervals [8]:
 				xmin = 36.696000
 				xmax = 36.711000
 				text = "pred"
-			intervals [17]:
+			intervals [9]:
 				xmin = 36.711000
-				xmax = 42.207000
-				text = ""
-			intervals [18]:
-				xmin = 42.207000
-				xmax = 42.248000
-				text = "pred"
-			intervals [19]:
-				xmin = 42.248000
 				xmax = 43.853000
 				text = ""
-			intervals [20]:
+			intervals [10]:
 				xmin = 43.853000
 				xmax = 43.869000
 				text = "pred"
-			intervals [21]:
+			intervals [11]:
 				xmin = 43.869000
-				xmax = 45.392000
-				text = ""
-			intervals [22]:
-				xmin = 45.392000
-				xmax = 45.642000
-				text = "pred"
-			intervals [23]:
-				xmin = 45.642000
-				xmax = 50.293000
-				text = ""
-			intervals [24]:
-				xmin = 50.293000
-				xmax = 50.518000
-				text = "pred"
-			intervals [25]:
-				xmin = 50.518000
-				xmax = 56.211000
-				text = ""
-			intervals [26]:
-				xmin = 56.211000
-				xmax = 56.244000
-				text = "pred"
-			intervals [27]:
-				xmin = 56.244000
 				xmax = 57.533000
 				text = ""
-			intervals [28]:
+			intervals [12]:
 				xmin = 57.533000
 				xmax = 57.550000
 				text = "pred"
-			intervals [29]:
+			intervals [13]:
 				xmin = 57.550000
-				xmax = 58.140000
-				text = ""
-			intervals [30]:
-				xmin = 58.140000
-				xmax = 58.155000
-				text = "pred"
-			intervals [31]:
-				xmin = 58.155000
 				xmax = 64.806500
 				text = ""
 	item [8]:
@@ -5137,128 +4921,56 @@ item []:
 		name = "utt 2 - AutoVOT"
 		xmin = 0.000000
 		xmax = 64.806500
-		intervals: size = 31
+		intervals: size = 13
 			intervals [1]:
 				xmin = 0.000000
-				xmax = 8.808000
-				text = ""
-			intervals [2]:
-				xmin = 8.808000
-				xmax = 8.823000
-				text = "pred"
-			intervals [3]:
-				xmin = 8.823000
 				xmax = 11.417000
 				text = ""
-			intervals [4]:
+			intervals [2]:
 				xmin = 11.417000
 				xmax = 11.433000
 				text = "pred"
-			intervals [5]:
+			intervals [3]:
 				xmin = 11.433000
 				xmax = 16.829000
 				text = ""
-			intervals [6]:
+			intervals [4]:
 				xmin = 16.829000
-				xmax = 16.844000
+				xmax = 17.056000
 				text = "pred"
-			intervals [7]:
-				xmin = 16.844000
-				xmax = 17.385000
-				text = ""
-			intervals [8]:
-				xmin = 17.385000
-				xmax = 17.400000
-				text = "pred"
-			intervals [9]:
-				xmin = 17.400000
-				xmax = 25.690000
-				text = ""
-			intervals [10]:
-				xmin = 25.690000
-				xmax = 25.705000
-				text = "pred"
-			intervals [11]:
-				xmin = 25.705000
+			intervals [5]:
+				xmin = 17.056000
 				xmax = 31.117000
 				text = ""
-			intervals [12]:
+			intervals [6]:
 				xmin = 31.117000
 				xmax = 31.144000
 				text = "pred"
-			intervals [13]:
+			intervals [7]:
 				xmin = 31.144000
-				xmax = 33.348000
-				text = ""
-			intervals [14]:
-				xmin = 33.348000
-				xmax = 33.449000
-				text = "pred"
-			intervals [15]:
-				xmin = 33.449000
 				xmax = 36.696000
 				text = ""
-			intervals [16]:
+			intervals [8]:
 				xmin = 36.696000
 				xmax = 36.711000
 				text = "pred"
-			intervals [17]:
+			intervals [9]:
 				xmin = 36.711000
-				xmax = 42.207000
-				text = ""
-			intervals [18]:
-				xmin = 42.207000
-				xmax = 42.248000
-				text = "pred"
-			intervals [19]:
-				xmin = 42.248000
 				xmax = 43.853000
 				text = ""
-			intervals [20]:
+			intervals [10]:
 				xmin = 43.853000
 				xmax = 43.869000
 				text = "pred"
-			intervals [21]:
+			intervals [11]:
 				xmin = 43.869000
-				xmax = 45.392000
-				text = ""
-			intervals [22]:
-				xmin = 45.392000
-				xmax = 45.642000
-				text = "pred"
-			intervals [23]:
-				xmin = 45.642000
-				xmax = 50.293000
-				text = ""
-			intervals [24]:
-				xmin = 50.293000
-				xmax = 50.518000
-				text = "pred"
-			intervals [25]:
-				xmin = 50.518000
-				xmax = 56.211000
-				text = ""
-			intervals [26]:
-				xmin = 56.211000
-				xmax = 56.244000
-				text = "pred"
-			intervals [27]:
-				xmin = 56.244000
 				xmax = 57.533000
 				text = ""
-			intervals [28]:
+			intervals [12]:
 				xmin = 57.533000
 				xmax = 57.550000
 				text = "pred"
-			intervals [29]:
+			intervals [13]:
 				xmin = 57.550000
-				xmax = 58.140000
-				text = ""
-			intervals [30]:
-				xmin = 58.140000
-				xmax = 58.155000
-				text = "pred"
-			intervals [31]:
-				xmin = 58.155000
 				xmax = 64.806500
 				text = ""
