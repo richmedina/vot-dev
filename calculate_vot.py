@@ -77,7 +77,7 @@ def fileCheck(wav, TextGrid):
 		return True
 
 
-calculateVOT('test.wav', "testing/test13.TextGrid")
+# calculateVOT('test.wav', "testing/test13.TextGrid")
 
 #add warning that a tier with "stops" already exists -- stop program
 

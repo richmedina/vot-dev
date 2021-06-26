@@ -2379,169 +2379,65 @@ item []:
 		name = "utt - stops"
 		xmin = 0.000000
 		xmax = 64.806500
-		intervals: size = 41
+		intervals: size = 15
 			intervals [1]:
 				xmin = 0.000000
-				xmax = 12.629038
+				xmax = 11.360000
 				text = ""
 			intervals [2]:
-				xmin = 12.629038
-				xmax = 12.774233
-				text = "k"
+				xmin = 11.360000
+				xmax = 11.441845
+				text = "p"
 			intervals [3]:
-				xmin = 12.774233
-				xmax = 13.040000
+				xmin = 11.441845
+				xmax = 16.728520
 				text = ""
 			intervals [4]:
-				xmin = 13.040000
-				xmax = 13.080000
-				text = "d"
+				xmin = 16.728520
+				xmax = 16.841092
+				text = "p"
 			intervals [5]:
-				xmin = 13.080000
-				xmax = 15.761851
+				xmin = 16.841092
+				xmax = 31.062888
 				text = ""
 			intervals [6]:
-				xmin = 15.761851
-				xmax = 15.825259
-				text = "k"
+				xmin = 31.062888
+				xmax = 31.150189
+				text = "p"
 			intervals [7]:
-				xmin = 15.825259
-				xmax = 20.059128
+				xmin = 31.150189
+				xmax = 35.131174
 				text = ""
 			intervals [8]:
-				xmin = 20.059128
-				xmax = 20.172618
-				text = "k"
+				xmin = 35.131174
+				xmax = 35.189987
+				text = "g"
 			intervals [9]:
-				xmin = 20.172618
-				xmax = 21.754551
+				xmin = 35.189987
+				xmax = 36.640000
 				text = ""
 			intervals [10]:
-				xmin = 21.754551
-				xmax = 21.831284
-				text = "k"
+				xmin = 36.640000
+				xmax = 36.713939
+				text = "p"
 			intervals [11]:
-				xmin = 21.831284
-				xmax = 23.047376
+				xmin = 36.713939
+				xmax = 43.825240
 				text = ""
 			intervals [12]:
-				xmin = 23.047376
-				xmax = 23.104811
-				text = "k"
+				xmin = 43.825240
+				xmax = 43.876242
+				text = "p"
 			intervals [13]:
-				xmin = 23.104811
-				xmax = 23.199922
+				xmin = 43.876242
+				xmax = 57.507620
 				text = ""
 			intervals [14]:
-				xmin = 23.199922
-				xmax = 23.316629
-				text = "k"
+				xmin = 57.507620
+				xmax = 57.554487
+				text = "p"
 			intervals [15]:
-				xmin = 23.316629
-				xmax = 27.023403
-				text = ""
-			intervals [16]:
-				xmin = 27.023403
-				xmax = 27.122046
-				text = "k"
-			intervals [17]:
-				xmin = 27.122046
-				xmax = 27.823644
-				text = ""
-			intervals [18]:
-				xmin = 27.823644
-				xmax = 27.928864
-				text = "k"
-			intervals [19]:
-				xmin = 27.928864
-				xmax = 29.667285
-				text = ""
-			intervals [20]:
-				xmin = 29.667285
-				xmax = 29.781744
-				text = "k"
-			intervals [21]:
-				xmin = 29.781744
-				xmax = 34.866056
-				text = ""
-			intervals [22]:
-				xmin = 34.866056
-				xmax = 34.973574
-				text = "k"
-			intervals [23]:
-				xmin = 34.973574
-				xmax = 36.957057
-				text = ""
-			intervals [24]:
-				xmin = 36.957057
-				xmax = 37.044300
-				text = "k"
-			intervals [25]:
-				xmin = 37.044300
-				xmax = 41.467923
-				text = ""
-			intervals [26]:
-				xmin = 41.467923
-				xmax = 41.585546
-				text = "k"
-			intervals [27]:
-				xmin = 41.585546
-				xmax = 51.183623
-				text = ""
-			intervals [28]:
-				xmin = 51.183623
-				xmax = 51.258977
-				text = "k"
-			intervals [29]:
-				xmin = 51.258977
-				xmax = 54.314234
-				text = ""
-			intervals [30]:
-				xmin = 54.314234
-				xmax = 54.370000
-				text = "d"
-			intervals [31]:
-				xmin = 54.370000
-				xmax = 55.200000
-				text = ""
-			intervals [32]:
-				xmin = 55.200000
-				xmax = 55.322545
-				text = "d"
-			intervals [33]:
-				xmin = 55.322545
-				xmax = 55.614253
-				text = ""
-			intervals [34]:
-				xmin = 55.614253
-				xmax = 55.718782
-				text = "k"
-			intervals [35]:
-				xmin = 55.718782
-				xmax = 57.871979
-				text = ""
-			intervals [36]:
-				xmin = 57.871979
-				xmax = 57.976740
-				text = "k"
-			intervals [37]:
-				xmin = 57.976740
-				xmax = 60.138900
-				text = ""
-			intervals [38]:
-				xmin = 60.138900
-				xmax = 60.211957
-				text = "d"
-			intervals [39]:
-				xmin = 60.211957
-				xmax = 62.716478
-				text = ""
-			intervals [40]:
-				xmin = 62.716478
-				xmax = 62.840000
-				text = "d"
-			intervals [41]:
-				xmin = 62.840000
+				xmin = 57.554487
 				xmax = 64.806500
 				text = ""
 	item [4]:
@@ -2549,168 +2445,64 @@ item []:
 		name = "AutoVOT"
 		xmin = 0.000000
 		xmax = 64.806500
-		intervals: size = 41
+		intervals: size = 15
 			intervals [1]:
 				xmin = 0.000000
-				xmax = 12.721000
+				xmax = 11.417000
 				text = ""
 			intervals [2]:
-				xmin = 12.721000
-				xmax = 12.772000
+				xmin = 11.417000
+				xmax = 11.433000
 				text = "pred"
 			intervals [3]:
-				xmin = 12.772000
-				xmax = 13.085000
+				xmin = 11.433000
+				xmax = 16.829000
 				text = ""
 			intervals [4]:
-				xmin = 13.085000
-				xmax = 13.309000
+				xmin = 16.829000
+				xmax = 17.056000
 				text = "pred"
 			intervals [5]:
-				xmin = 13.309000
-				xmax = 15.768000
+				xmin = 17.056000
+				xmax = 31.117000
 				text = ""
 			intervals [6]:
-				xmin = 15.768000
-				xmax = 15.821000
+				xmin = 31.117000
+				xmax = 31.144000
 				text = "pred"
 			intervals [7]:
-				xmin = 15.821000
-				xmax = 20.130000
+				xmin = 31.144000
+				xmax = 35.228000
 				text = ""
 			intervals [8]:
-				xmin = 20.130000
-				xmax = 20.165000
+				xmin = 35.228000
+				xmax = 35.334000
 				text = "pred"
 			intervals [9]:
-				xmin = 20.165000
-				xmax = 21.778000
+				xmin = 35.334000
+				xmax = 36.696000
 				text = ""
 			intervals [10]:
-				xmin = 21.778000
-				xmax = 21.828000
+				xmin = 36.696000
+				xmax = 36.711000
 				text = "pred"
 			intervals [11]:
-				xmin = 21.828000
-				xmax = 23.067000
+				xmin = 36.711000
+				xmax = 43.853000
 				text = ""
 			intervals [12]:
-				xmin = 23.067000
-				xmax = 23.101000
+				xmin = 43.853000
+				xmax = 43.869000
 				text = "pred"
 			intervals [13]:
-				xmin = 23.101000
-				xmax = 23.260000
+				xmin = 43.869000
+				xmax = 57.533000
 				text = ""
 			intervals [14]:
-				xmin = 23.260000
-				xmax = 23.309000
+				xmin = 57.533000
+				xmax = 57.550000
 				text = "pred"
 			intervals [15]:
-				xmin = 23.309000
-				xmax = 27.065000
-				text = ""
-			intervals [16]:
-				xmin = 27.065000
-				xmax = 27.115000
-				text = "pred"
-			intervals [17]:
-				xmin = 27.115000
-				xmax = 27.877000
-				text = ""
-			intervals [18]:
-				xmin = 27.877000
-				xmax = 27.924000
-				text = "pred"
-			intervals [19]:
-				xmin = 27.924000
-				xmax = 29.747000
-				text = ""
-			intervals [20]:
-				xmin = 29.747000
-				xmax = 29.776000
-				text = "pred"
-			intervals [21]:
-				xmin = 29.776000
-				xmax = 34.933000
-				text = ""
-			intervals [22]:
-				xmin = 34.933000
-				xmax = 34.972000
-				text = "pred"
-			intervals [23]:
-				xmin = 34.972000
-				xmax = 37.037000
-				text = ""
-			intervals [24]:
-				xmin = 37.037000
-				xmax = 37.052000
-				text = "pred"
-			intervals [25]:
-				xmin = 37.052000
-				xmax = 41.547000
-				text = ""
-			intervals [26]:
-				xmin = 41.547000
-				xmax = 41.580000
-				text = "pred"
-			intervals [27]:
-				xmin = 41.580000
-				xmax = 51.218000
-				text = ""
-			intervals [28]:
-				xmin = 51.218000
-				xmax = 51.254000
-				text = "pred"
-			intervals [29]:
-				xmin = 51.254000
-				xmax = 54.436000
-				text = ""
-			intervals [30]:
-				xmin = 54.436000
-				xmax = 54.685000
-				text = "pred"
-			intervals [31]:
-				xmin = 54.685000
-				xmax = 55.252000
-				text = ""
-			intervals [32]:
-				xmin = 55.252000
-				xmax = 55.319000
-				text = "pred"
-			intervals [33]:
-				xmin = 55.319000
-				xmax = 55.672000
-				text = ""
-			intervals [34]:
-				xmin = 55.672000
-				xmax = 55.716000
-				text = "pred"
-			intervals [35]:
-				xmin = 55.716000
-				xmax = 57.918000
-				text = ""
-			intervals [36]:
-				xmin = 57.918000
-				xmax = 57.973000
-				text = "pred"
-			intervals [37]:
-				xmin = 57.973000
-				xmax = 60.288000
-				text = ""
-			intervals [38]:
-				xmin = 60.288000
-				xmax = 60.516000
-				text = "pred"
-			intervals [39]:
-				xmin = 60.516000
-				xmax = 62.838000
-				text = ""
-			intervals [40]:
-				xmin = 62.838000
-				xmax = 62.919000
-				text = "pred"
-			intervals [41]:
-				xmin = 62.919000
+				xmin = 57.550000
 				xmax = 64.806500
 				text = ""

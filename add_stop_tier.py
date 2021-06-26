@@ -127,7 +127,7 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 	# apply padding
 	extendedEntryList = []
 	for start, stop, label in stopEntryList:
-		extendedEntryList.append([start+startPadding, stop+endPadding, label])
+		extendedEntryList.append([start+startPadding, stop+endPadding, label.lower()])
 
 	# check for and resolve length requirements and timing conflicts
 	for interval in range(len(extendedEntryList)-1):
