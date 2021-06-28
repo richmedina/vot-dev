@@ -50,7 +50,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 				])
 
 	# rename repeated labels of AutoVOT prediction tiers
-	if multipleSpeakers:
+	if multipleSpeakers:  #have it out here or incorporate it into the for loop?
 		with open(annotatedTextgrid, "r") as TG:
 			newTG = []
 			tierNumber = 0
@@ -77,7 +77,7 @@ def fileCheck(wav, TextGrid):
 		return True
 
 
-# calculateVOT('test.wav', "testing/test13.TextGrid")
+# calculateVOT('test.wav', "testing/test7.TextGrid")
 
 #add warning that a tier with "stops" already exists -- stop program
 

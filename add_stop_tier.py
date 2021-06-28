@@ -1,5 +1,7 @@
 from praatio import tgio
+from os.path import join
 import os
+import sys
 
 def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 
@@ -12,17 +14,20 @@ def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
 	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items())
 
+	# remove directory from TG name
+	TextGrid = TextGrid.split("/")[1] #delete
+
 	# collect all word tiers and terminate process if none exists
 	allWordTiers = [tierName for tierName in tg.tierNameList if 'word' in tierName]
 	if len(allWordTiers) == 0:
 		print(TextGrid,"does not contain any tier named 'Words'.\n")
-		return False #return False
+		return False
 
 	# collect all phone tiers and terminate process if none exists
 	allPhoneTiers = [tierName for tierName in tg.tierNameList if 'phone' in tierName]
 	if len(allPhoneTiers) == 0:
 		print(TextGrid,"does not contain any tier named 'Phones'.\n")
-		return False #return False
+		return False
 
 	# verify that an equal number of word and phone tiers exists before continuing
 	if len(allWordTiers) == len(allPhoneTiers):
@@ -74,14 +79,24 @@ def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 	stopTiers = [tierName for tierName in tg.tierNameList if tierName[-5:] == "stops"]
 
 	# save the new textgrid with a 'stop' tier
-	TextGrid = TextGrid.split("/")[1] #delete
 	saveName = TextGrid.split(".TextGrid")[0]+"_output.TextGrid"
 	tg.save(os.path.join(outputPath,saveName),useShortForm=False)
 	
 	return stopTiers, saveName, (totalSpeakers > 1)
 
-
-def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, populatedTiers, startPadding, endPadding, voicedTokens, currentSpeaker, lastSpeaker): 
+def processStopTier(
+	TextGrid, 
+	speakerName, 
+	phoneTier, 
+	wordStartTimes, 
+	stops, 
+	populatedTiers, 
+	startPadding, 
+	endPadding, 
+	voicedTokens, 
+	currentSpeaker, 
+	lastSpeaker
+	): 
 
 	# specify stop categories
 	ipaStops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
@@ -179,8 +194,7 @@ def processStopTier(TextGrid, speakerName, phoneTier, wordStartTimes, stops, pop
 		stopTier = phoneTier.new(name = speakerName+"stops", entryList = extendedEntryList)
 		return stopTier
 	elif lastSpeaker and populatedTiers == 0:
-		print("There were no voiceless stops found in",TextGrid+".\n")
-		return False
+		sys.exit("There were no voiceless stops found in "+TextGrid+".\n")
 	else:
 		return
 
