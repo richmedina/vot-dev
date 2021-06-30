@@ -11,7 +11,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 
 	# verify file format
 	if not fileCheck(wav, TextGrid):
-		return
+		pass #??
 
 	# create directory to output files
 	outputPath = os.path.join(os.getcwd(),outputDirectory)
@@ -56,7 +56,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 			tierNumber = 0
 			for line in TG:
 				if "AutoVOT" in line:
-					line = line.replace("AutoVOT",stopTiers[tierNumber].split("stops")[0]+"AutoVOT")
+					line = line.replace("AutoVOT",stopTiers[tierNumber].split("stops")[0]+"AutoVOT") # relies on naming of tiers as "stops"
 					tierNumber += 1
 				newTG.append(line)
 		with open(annotatedTextgrid, "w") as TG:
@@ -69,11 +69,11 @@ def fileCheck(wav, TextGrid):
 	wavName, wavExt = os.path.splitext(wav)
 	textgridName, textgridExt = os.path.splitext(TextGrid)
 
-	if wavExt != '.wav' and textgridExt != '.TextGrid':
-		sys.exit(wav,"must be a wav file and",TextGrid,"must be a TextGrid file.",\
-			"One or both files do not meet format requirements.")
+	if wavExt != '.wav' or textgridExt != '.TextGrid':
+		sys.exit("\n{} must be a wav file and {} must be a TextGrid file. "\
+			"One or both files do not meet format requirements.\n".format(wav,TextGrid))
 	else:
-		print("\nProcessing",wav,"and",TextGrid+"...\n")
+		print("\nProcessing {} and {}...\n".format(wav,TextGrid))
 		return True
 
 

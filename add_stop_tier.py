@@ -1,16 +1,36 @@
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+formatter = logging.Formatter('%(levelname)s:%(message)s')
+
+file_handler = logging.FileHandler('stop_tier.log')
+file_handler.setFormatter(formatter)
+
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
+
+
 from praatio import tgio
 from os.path import join
 import os
 import sys
 
+
 def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 
-	# open textgrid and turn the tier labels to lowercase strings
+	# open textgrid, turn the tier labels to lowercase strings, verify that no 'stops' tier exists
 	tg = tgio.openTextgrid(TextGrid)
 	for tierName in tg.tierNameList:
 		if tierName == "AutoVOT":
-			print("Warning: a tier named 'AutoVOT' already exists. Said tier will be renamed as 'autovot - original' to avoid a naming conflict.\n")
+			logger.warning(" A tier named 'AutoVOT' already exists. Said tier will be renamed as 'autovot - original' to avoid a naming conflict.\n")
 			tg.renameTier("AutoVOT", "AutoVOT - original")
+		elif tierName[-5:] == 'stops':
+			sys.exit("There is a tier with the word 'stops' in {}. You must relabel said tier before continuing.".format(TextGrid))
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
 	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items())
 
@@ -20,14 +40,12 @@ def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 	# collect all word tiers and terminate process if none exists
 	allWordTiers = [tierName for tierName in tg.tierNameList if 'word' in tierName]
 	if len(allWordTiers) == 0:
-		print(TextGrid,"does not contain any tier named 'Words'.\n")
-		return False
+		sys.exit("Error:{} does not contain any tier named 'words'.\n".format(TextGrid))
 
 	# collect all phone tiers and terminate process if none exists
 	allPhoneTiers = [tierName for tierName in tg.tierNameList if 'phone' in tierName]
 	if len(allPhoneTiers) == 0:
-		print(TextGrid,"does not contain any tier named 'Phones'.\n")
-		return False
+		sys.exit("Error:{} does not contain any tier named 'phones'.\n".format(TextGrid))
 
 	# verify that an equal number of word and phone tiers exists before continuing
 	if len(allWordTiers) == len(allPhoneTiers):
@@ -67,14 +85,10 @@ def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 					continue
 			
 			else:
-				print("The names of the 'word' and 'phone' tiers are inconsistent in file",\
-					TextGrid+". Fix the issue before continuing.\n")
-				return False #return False
+				sys.exit("Error:The names of the 'word' and 'phone' tiers are inconsistent in file {}. Fix the issue before continuing.\n".format(TextGrid))
 	
 	else:
-		print("Error: There isn't an even number of 'phone' and 'word' tiers per speaker in file",\
-			TextGrid,". Fix the issue before continuing.\n")
-		return False #return False
+		sys.exit("Error:There isn't an even number of 'phone' and 'word' tiers per speaker in file {}. Fix the issue before continuing.\n".format(TextGrid))
 
 	stopTiers = [tierName for tierName in tg.tierNameList if tierName[-5:] == "stops"]
 
@@ -98,6 +112,20 @@ def processStopTier(
 	lastSpeaker
 	): 
 
+	# adjust long padding values
+	if startPadding > 0.025:
+		logger.info("A startPadding of {} sec exceeds the maximum. It was adjusted to 0.025 sec.".format(startPadding))
+		startPadding = 0.025
+	elif startPadding < -0.025:
+		logger.info("A startPadding of {} sec exceeds the minimum. It was adjusted to -0.025 sec.".format(startPadding))
+		startPadding = -0.025
+	if endPadding > 0.025:
+		logger.info("An endPadding of {} sec exceeds the maximum. It was adjusted to 0.025 sec.".format(endPadding))
+		endPadding = 0.025
+	elif endPadding < -0.025:
+		logger.info("An endPadding of {} sec exceeds the minimum. It was adjusted to -0.025 sec.".format(endPadding))
+		endPadding = -0.025
+
 	# specify stop categories
 	ipaStops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 	voicelessStops = ['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'"]
@@ -115,18 +143,18 @@ def processStopTier(
 				nonStops.append(stopSymbol)
 
 		if len(nonStops) == 1 and currentSpeaker == 1: # move these outside of this func?
-			print("'"+nonStops[0]+"' is not a stop sound. This symbol will be ignored.\n")
+			logger.info("'{}' is not a stop sound. This symbol will be ignored in file {}.\n".format(nonStops[0],TextGrid))
 		elif len(nonStops) > 1 and currentSpeaker == 1:
-			print("'"+", ".join(nonStops)+"'","are not stop sounds. These symbols will be ignored for file",TextGrid+".\n")
+			logger.info("'{}' are not stop sounds. These symbols will be ignored in file {}.\n".format(", ".join(nonStops),TextGrid))
 
 		if len(vettedStops) == 0 and currentSpeaker == 1: # move these outside of this func?
 			if len(stops) == 1:
-				print("The only sound you entered is not classified as a stop sound by the IPA.") # move these outside of this func?
+				logger.warning("The only sound you entered is not classified as a stop sound by the IPA.") # move these outside of this func?
 			elif len(stops) == 2:
-				print("Neither of the sounds you entered is classified as a stop sound by the IPA.")
+				logger.warning("Neither of the sounds you entered is classified as a stop sound by the IPA.")
 			else:
-				print("None of the sounds you entered is classified as a stop sound by the IPA.")
-			print("The program will continue by analyzing all voiceless stops recognized by the IPA.\n")
+				logger.warning("None of the sounds you entered is classified as a stop sound by the IPA.")
+			logger.info("The program will continue by analyzing all voiceless stops recognized by the IPA.\n")
 			stops = voicelessStops
 		else:
 			stops = vettedStops
@@ -150,43 +178,73 @@ def processStopTier(
 		nextPhone = extendedEntryList[interval+1]
 		startTime, endTime = 0, 1
 
-		if currentPhone[endTime] > nextPhone[startTime]:  # if nextPhone starts before currentPhone ends, there's an overlap
-			if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
-				if currentPhone[endTime] - nextPhone[startTime] > 50:
-					sys.exit("Error: in file",TextGrid+",","the segment starting at",currentPhone[startTime],"sec shows two timing conflicts:",\
-						"\n(1) it is shorter than 25 ms. \n(2) it overlaps with the segment starting at",nextPhone[startTime]+".",\
-						"\nYou migh have to decrease the amount of padding and/or manually increase the segment length to solve the conflicts.")
-					sys.exit("Process for",TextGrid,"incomplete.") #indicate abnormal termination
-				else:
-					nextPhone[startTime] = currentPhone[endTime]
-					print("Warning: in file",TextGrid+",","the segment starting at",nextPhone[startTime],"sec was shifted forward to resolve a",\
-						"timing conflict (two overlapping segment). Please, verify manually that the shifted window still captures the segment.\n")
+		if currentPhone[endTime] > nextPhone[startTime]:  # check if there is an overlap
+			# try:
+			sys.exit("Error:In file {}, after adding padding, the segment starting at {} sec overlaps with the segment starting at {}."\
+			"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to solve the conflicts."\
+			"\n\nProcess incomplete.\n".format(TextGrid, round(currentPhone[startTime],3), round(nextPhone[startTime],3))) #how to do sys.exit()??
+		elif currentPhone[endTime] - currentPhone[startTime] < 0.025:  # check if currentPhone is under 25ms
+			if nextPhone[startTime] - currentPhone[endTime] <= 0.020:  # check if nextPhone is within 20ms
+				currentPhone[endTime] = currentPhone[startTime] + 0.025  # make currentPhone 25ms long
+				nextPhone[startTime] = currentPhone[endTime] + 0.021  # shift nextPhone 21ms after new endTime of currentPhone
+				logger.warning("In File {}, the phone starting at {} was elongaged to 25 ms because it did not meet length "\
+					"requirements, and the phone starting at {} was shifter forward due to a proximity issue. "\
+					"Please, verify manually that the modified windows still captures the segments accurately."\
+					.format(TextGrid,round(currentPhone[startTime],3),round(nextPhone[startTime],3)))
 			else:
-				if currentPhone[endTime] - nextPhone[startTime] > 50:
-					sys.exit("Error: in file",TextGrid+",","the segment starting at",currentPhone[startTime],\
-						"sec overlaps with the segment starting at",nextPhone[startTime],"sec by more than 50 ms.",\
-						"You might have to decrease the amount of padding and/or manually decrease the segment length to solve this conflict.")
-				else:
-					nextPhone[startTime] = currentPhone[endTime]
-					print("Warning: in file",TextGrid+",","the segment starting at",nextPhone[startTime],"sec was shifted forward to resolve a",\
-						"timing conflict (two overlapping segment). Please, verify manually that the shifted window still captures the segment.\n")
+				currentPhone[endTime] = currentPhone[startTime] + 0.025  # make currentPhone 25ms long
+				logger.warning("In File {}, the phone starting at {} was elongaged to 25 ms because it did not meet length "\
+						"requirements."\
+						.format(TextGrid,round(currentPhone[startTime],3)))
 		else:
-			if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
-				currentPhone[endTime] = currentPhone[startTime] + 0.025  # shift currentPhone's endTime to be 25 ms after startTime
-				print("Note: the segment in file:",TextGrid,"at time:",currentPhone[startTime],\
-				"was automatically elongated because it was shorter than the required 25 ms.\n")
+			if nextPhone[startTime] - currentPhone[endTime] <= 0.020:  # check if nextPhone is within 20ms
+				nextPhone[startTime] = currentPhone[endTime] + 0.021  # shift nextPhone 21ms after new endTime of currentPhone
+				logger.warning("In File {}, the phone starting at {} was shifted forward due to a proximity issue."\
+						.format(TextGrid,round(nextPhone[startTime],3)))
+
+		# if currentPhone[endTime] > nextPhone[startTime]:  # if nextPhone starts before currentPhone ends, there's an overlap
+		# 	if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
+		# 		if currentPhone[endTime] - nextPhone[startTime] > 50:
+		# 			try:
+		# 				sys.exit("Error: in file",TextGrid+",","the segment starting at {} sec shows two timing conflicts:",\
+		# 				"\n(1) it is shorter than 25 ms. \n(2) it overlaps with the segment starting at {}.",\
+		# 				"\nYou migh have to decrease the amount of padding and/or manually increase the segment length to solve the conflicts."\
+		# 				"\nProcess for {} incomplete.".format(currentPhone[startTime], nextPhone[startTime], TextGrid))
+		# 			except SystemExit as e:
+		# 				logger.error(str(e))
+		# 		else:
+		# 			nextPhone[startTime] = currentPhone[endTime]
+		# 			logger.warning("In file {},the segment starting at {} sec was shifted forward to resolve atiming conflict (two overlapping segment).",\
+		# 				"Please, verify manually that the shifted window still captures the segment.\n".format(TextGrid,nextPhone[startTime]))
+		# 	else:
+		# 		if currentPhone[endTime] - nextPhone[startTime] > 50:
+		# 			try:
+		# 				sys.exit("Error: in file {}, the segment starting at {} sec overlaps with the segment starting at {} sec by more than 50 ms.",\
+		# 				"You might have to decrease the amount of padding and/or manually decrease the segment length to solve this conflict."\
+		# 				.format(TextGrid,currentPhone[startTime],nextPhone[startTime]))
+		# 			except SystemExit as e:
+		# 				logger.error(str(e))
+		# 		else:
+		# 			nextPhone[startTime] = currentPhone[endTime] + 0.005 # shift next phone's start boundary to 5ms after current phone
+		# 			logger.warning("In file {}, the segment starting at sec was shifted forward to resolve a timing conflict (two overlapping segment).",\
+		# 				"Please, verify manually that the shifted window still captures the segment.\n".format(TextGrid,nextPhone[startTime]))
+		# else:
+		# 	if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
+		# 		currentPhone[endTime] = currentPhone[startTime] + 0.025  # shift currentPhone's endTime to be 25 ms after startTime
+		# 		logger.info("the segment in file {} at time {} was automatically elongated "\
+		# 		"because it was shorter than the required 25 ms.\n".format(TextGrid, currentPhone[startTime]))
 
 		if interval == len(extendedEntryList)-1 and nextPhone[endTime] - nextPhone[startTime] < 0.025:  # if the last segment is too short
 			nextPhone[endTime] = nextPhone[startTime] + 0.025  # shift currentPhone's endTime to be 25 ms after startTime
 
 	# provide warning for voiced tokens
 	if len(list(set(voicedTokens))) == 1 and lastSpeaker:
-		print("***Warning: You're trying to obtain VOT calculations of the following voiced stop: ",*list(set(voicedTokens)))
-		print("Note that AutoVOT's current model only works on voiceless stops; "\
+		logger.warning(" You're trying to obtain VOT calculations of the following voiced stop: '{}'".format(*list(set(voicedTokens))))
+		logger.info("Note that AutoVOT's current model only works on voiceless stops; "\
 			"prevoicing in the productions may result in inaccurate calculations.\n")
 	elif len(list(set(voicedTokens))) > 1 and lastSpeaker:
-		print("***Warning: You're trying to obtain VOT calculations of the following voiced stops: ","'"+", ".join(list(set(voicedTokens)))+"'")
-		print("Note that AutoVOT's current model only works on voiceless stops; "\
+		logger.warning("You're trying to obtain VOT calculations of the following voiced stops: '{}'".format("', '".join(list(set(voicedTokens)))))
+		logger.info("Note that AutoVOT's current model only works on voiceless stops; "\
 			"prevoicing in the productions may result in inaccurate calculations.\n")
 
 	# construct the stop tier if stops were identified
@@ -194,7 +252,12 @@ def processStopTier(
 		stopTier = phoneTier.new(name = speakerName+"stops", entryList = extendedEntryList)
 		return stopTier
 	elif lastSpeaker and populatedTiers == 0:
-		sys.exit("There were no voiceless stops found in "+TextGrid+".\n")
+		sys.exit("Error:There were no voiceless stops found in {}.\n".format(TextGrid))
+		# try:
+		# 	sys.exit("Error:There were no voiceless stops found in {}.\n".format(TextGrid))
+		# except SystemExit as e:
+		# 	# logger.exception('No voiceless tokens found in file')
+		# 	logger.error(str(e))
 	else:
 		return
 

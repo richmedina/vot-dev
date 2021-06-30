@@ -1,23 +1,20 @@
 import unittest
-from unittest.mock import patch
 from calculate_vot import *
 from praatio import tgio
 
 class TestVOT(unittest.TestCase):
 
-	# @patch('builtins.print')
-	def test_oneSpeakerVoiceless(self):  #1
-		calculateVOT("test.wav", "testing/test1-1.TextGrid",["p"])
-		# mock_print.assert_called_with("Processing ",test.wav," and ",TextGrid+"...")
-		tg = tgio.openTextgrid("output/test1-1_output.TextGrid")
-		tgTierNumber = len(tg.tierNameList)
-		tgTiers = tg.tierNameList
-		tgTokenNumber = len(tg.tierDict[tgTiers[-2]].entryList)
-		tgTokens = list(set([label for start,end,label in tg.tierDict[tgTiers[-2]].entryList]))
-		self.assertEqual(tgTierNumber, 4)
-		self.assertEqual(tgTiers, ['utt - words', 'utt - phones', 'utt - stops', 'AutoVOT'])
-		self.assertEqual(tgTokenNumber, 6)
-		self.assertEqual(tgTokens, ['p'])
+	# def test_oneSpeakerVoiceless(self):  #1
+	# 	calculateVOT("test.wav", "testing/test1-1.TextGrid",["p"])
+	# 	tg = tgio.openTextgrid("output/test1-1_output.TextGrid")
+	# 	tgTierNumber = len(tg.tierNameList)
+	# 	tgTiers = tg.tierNameList
+	# 	tgTokenNumber = len(tg.tierDict[tgTiers[-2]].entryList)
+	# 	tgTokens = list(set([label for start,end,label in tg.tierDict[tgTiers[-2]].entryList]))
+	# 	self.assertEqual(tgTierNumber, 4)
+	# 	self.assertEqual(tgTiers, ['utt - words', 'utt - phones', 'utt - stops', 'AutoVOT'])
+	# 	self.assertEqual(tgTokenNumber, 6)
+	# 	self.assertEqual(tgTokens, ['p'])
 
 	# def test_oneSpeakerVoiced(self):  #2
 	# 	calculateVOT("test.wav", "testing/test1-2.TextGrid",["g"])
@@ -66,8 +63,6 @@ class TestVOT(unittest.TestCase):
 	# 	self.assertEqual(tgTiers, ['utt - words', 'utt - phones', 'utt - stops', 'AutoVOT'])
 	# 	self.assertEqual(tgTokenNumber, 9)
 	# 	self.assertEqual(tgTokens, ['b'])
-
-	### Add print statements
 
 	# def test_twoSpeakerVoiceless(self):  #6
 	# 	calculateVOT("test.wav", "testing/test2-1.TextGrid",["p"])
@@ -236,7 +231,74 @@ class TestVOT(unittest.TestCase):
 	# 	path = ("output/test8_output.TextGrid") # check that a file was not created
 	# 	self.assertIs(os.path.exists(path),False)
 
-	# ...
+	# def test_oneSpeakerExtraPadding(self):  #19
+	# 	with self.assertLogs() as captured:
+	# 		calculateVOT("test.wav", "testing/test9-1.TextGrid",['p'],endPadding=0.03)
+	# 	self.assertEqual(len(captured.records), 1)
+	# 	self.assertEqual(captured.records[0].getMessage(), "An endPadding of 0.03 sec exceeds the maximum. "\
+	# 		"It was adjusted to 0.025 sec.")
+
+	# def test_oneSpeakerProximity(self):  #20
+	# 	with self.assertLogs() as captured:
+	# 		calculateVOT("test.wav", "testing/test9-2.TextGrid",['k'],endPadding=0.025)
+	# 	self.assertEqual(len(captured.records), 1)
+	# 	self.assertEqual(captured.records[0].getMessage(), "In File test9-2.TextGrid, the phone starting at 23.201 "\
+	# 		"was shifted forward due to a proximity issue.")
+
+	# def test_oneSpeakerOverlapping(self):  #21
+	# 	with self.assertRaises(SystemExit) as cm: # check that the program stops
+	# 		calculateVOT("test.wav", "testing/test9-3.TextGrid",['k'],endPadding=0.025)
+
+	# def test_twoSpeakerProximity(self):  #22
+	# 	with self.assertLogs() as captured:
+	# 		calculateVOT("test.wav", "testing/test10.TextGrid",['k'])
+	# 	self.assertEqual(len(captured.records), 1)
+	# 	self.assertEqual(captured.records[0].getMessage(), "In File test10.TextGrid, the phone starting at 23.201 "\
+	# 		"was shifted forward due to a proximity issue.")
+
+	# def test_oneSpeakerOverlapping(self):  #23
+	# 	with self.assertRaises(SystemExit) as cm: # check that the program stops
+	# 		calculateVOT("test.wav", "testing/test10.TextGrid",['k'],endPadding=0.025)
+
+	# def test_twoSpeakerProximity(self):  #24
+	# 	with self.assertLogs() as captured:
+	# 		calculateVOT("test.wav", "testing/test11.TextGrid",['k'])
+	# 	self.assertEqual(len(captured.records), 1)
+	# 	self.assertEqual(captured.records[0].getMessage(), "In File test11.TextGrid, the phone starting at 23.201 "\
+	# 		"was shifted forward due to a proximity issue.")
+
+	# def test_oneSpeakerOverlapping(self):  #25
+	# 	with self.assertRaises(SystemExit) as cm: # check that the program stops
+	# 		calculateVOT("test.wav", "testing/test11.TextGrid",['k'],endPadding=0.025)
+
+	# def test_inconsistentCapitalization(self):  #26
+	# 	calculateVOT("test.wav", "testing/test12.TextGrid",["p"])
+	# 	tg = tgio.openTextgrid("output/test12_output.TextGrid")
+	# 	tgTierNumber = len(tg.tierNameList)
+	# 	tgTiers = tg.tierNameList
+	# 	tgTokenNumber = len(tg.tierDict[tgTiers[-1]].entryList)
+	# 	tgTokens = list(set([label for start,end,label in tg.tierDict[tgTiers[-3]].entryList]))
+	# 	self.assertEqual(tgTierNumber, 8)
+	# 	self.assertEqual(tgTiers, ['utt - words','utt - phones','utt 2 - words','utt 2 - phones',
+	# 		'utt - stops','utt 2 - stops','utt - AutoVOT','utt 2 - AutoVOT'])
+	# 	self.assertEqual(tgTokenNumber, 6)
+	# 	self.assertEqual(tgTokens, ['p'])
+
+	# def test_mismatchedTiers(self):  #27
+	# 	with self.assertRaises(SystemExit) as cm:
+	# 		calculateVOT("test.wav", "testing/test13.TextGrid")
+
+	# def test_noPhoneTier(self):  #28
+	# 	with self.assertRaises(SystemExit) as cm:
+	# 		calculateVOT("test.wav", "testing/test14.TextGrid")
+
+	# def test_fileFormatError(self):  #29
+	# 	with self.assertRaises(SystemExit) as cm:
+	# 		calculateVOT("test.wav", "testing/test15.txt")
+
+	def test_stopsTierPresent(self):  #30
+		with self.assertRaises(SystemExit) as cm:
+			calculateVOT("test.wav", "testing/test16.TextGrid")
 
 
 
