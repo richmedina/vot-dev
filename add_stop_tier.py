@@ -71,7 +71,6 @@ def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 						phoneTier, 
 						wordStartTimes, 
 						stops, 
-						populatedTiers, 
 						startPadding, 
 						endPadding, 
 						voicedTokens, 
@@ -90,6 +89,8 @@ def addStopTier(TextGrid, outputPath, stops, startPadding, endPadding):
 	else:
 		sys.exit("Error:There isn't an even number of 'phone' and 'word' tiers per speaker in file {}. Fix the issue before continuing.\n".format(TextGrid))
 
+	if populatedTiers == 0:
+		sys.exit("Error:There were no voiceless stops found in {}.\n".format(TextGrid))
 	stopTiers = [tierName for tierName in tg.tierNameList if tierName[-5:] == "stops"]
 
 	# save the new textgrid with a 'stop' tier
@@ -104,7 +105,6 @@ def processStopTier(
 	phoneTier, 
 	wordStartTimes, 
 	stops, 
-	populatedTiers, 
 	startPadding, 
 	endPadding, 
 	voicedTokens, 
@@ -202,38 +202,6 @@ def processStopTier(
 				logger.warning("In File {}, the phone starting at {} was shifted forward due to a proximity issue."\
 						.format(TextGrid,round(nextPhone[startTime],3)))
 
-		# if currentPhone[endTime] > nextPhone[startTime]:  # if nextPhone starts before currentPhone ends, there's an overlap
-		# 	if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
-		# 		if currentPhone[endTime] - nextPhone[startTime] > 50:
-		# 			try:
-		# 				sys.exit("Error: in file",TextGrid+",","the segment starting at {} sec shows two timing conflicts:",\
-		# 				"\n(1) it is shorter than 25 ms. \n(2) it overlaps with the segment starting at {}.",\
-		# 				"\nYou migh have to decrease the amount of padding and/or manually increase the segment length to solve the conflicts."\
-		# 				"\nProcess for {} incomplete.".format(currentPhone[startTime], nextPhone[startTime], TextGrid))
-		# 			except SystemExit as e:
-		# 				logger.error(str(e))
-		# 		else:
-		# 			nextPhone[startTime] = currentPhone[endTime]
-		# 			logger.warning("In file {},the segment starting at {} sec was shifted forward to resolve atiming conflict (two overlapping segment).",\
-		# 				"Please, verify manually that the shifted window still captures the segment.\n".format(TextGrid,nextPhone[startTime]))
-		# 	else:
-		# 		if currentPhone[endTime] - nextPhone[startTime] > 50:
-		# 			try:
-		# 				sys.exit("Error: in file {}, the segment starting at {} sec overlaps with the segment starting at {} sec by more than 50 ms.",\
-		# 				"You might have to decrease the amount of padding and/or manually decrease the segment length to solve this conflict."\
-		# 				.format(TextGrid,currentPhone[startTime],nextPhone[startTime]))
-		# 			except SystemExit as e:
-		# 				logger.error(str(e))
-		# 		else:
-		# 			nextPhone[startTime] = currentPhone[endTime] + 0.005 # shift next phone's start boundary to 5ms after current phone
-		# 			logger.warning("In file {}, the segment starting at sec was shifted forward to resolve a timing conflict (two overlapping segment).",\
-		# 				"Please, verify manually that the shifted window still captures the segment.\n".format(TextGrid,nextPhone[startTime]))
-		# else:
-		# 	if currentPhone[endTime] - currentPhone[startTime] < 0.025:  # each phone window must be at least 25 ms in length
-		# 		currentPhone[endTime] = currentPhone[startTime] + 0.025  # shift currentPhone's endTime to be 25 ms after startTime
-		# 		logger.info("the segment in file {} at time {} was automatically elongated "\
-		# 		"because it was shorter than the required 25 ms.\n".format(TextGrid, currentPhone[startTime]))
-
 		if interval == len(extendedEntryList)-1 and nextPhone[endTime] - nextPhone[startTime] < 0.025:  # if the last segment is too short
 			nextPhone[endTime] = nextPhone[startTime] + 0.025  # shift currentPhone's endTime to be 25 ms after startTime
 
@@ -250,16 +218,9 @@ def processStopTier(
 	# construct the stop tier if stops were identified
 	if len(extendedEntryList) > 0:
 		stopTier = phoneTier.new(name = speakerName+"stops", entryList = extendedEntryList)
-		return stopTier
-	elif lastSpeaker and populatedTiers == 0:
-		sys.exit("Error:There were no voiceless stops found in {}.\n".format(TextGrid))
-		# try:
-		# 	sys.exit("Error:There were no voiceless stops found in {}.\n".format(TextGrid))
-		# except SystemExit as e:
-		# 	# logger.exception('No voiceless tokens found in file')
-		# 	logger.error(str(e))
+		return stopTier		
 	else:
-		return
+		return False
 
 # addStopTier('test1.TextGrid')
 
