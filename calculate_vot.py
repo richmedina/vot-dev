@@ -326,9 +326,11 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 	# apply AutoVOT prediction calculations
 	applyAutoVOT(wav, stopTiers, annotatedTextgrid)
 
+	logger.info("Process for {} and {} is complete.\n".format(wav,TextGrid))
+
 	return
 
-calculateVOT("test.wav", "testing/test14.TextGrid")
+# calculateVOT("test.wav", "testing/test14.TextGrid")
 
 # if __name__ == '__main__':
 # 	unittest.main()
