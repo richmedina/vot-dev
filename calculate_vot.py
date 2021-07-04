@@ -274,11 +274,8 @@ def applyAutoVOT(wav, stopTiers, annotatedTextgrid):
 		tempSound = os.path.join(tempDirectory,wav)
 		if psnd.get_sampling_frequency() != 16000:
 			psnd = psnd.resample(16000)
-			if psnd.get_number_of_channels() != 1:
-				psnd = psnd.extract_channel(1)
-		else:
-			if psnd.get_number_of_channels() != 1:
-				psnd = psnd.extract_channel(1)
+		if psnd.get_number_of_channels() != 1:
+			psnd = psnd.extract_channel(1)
 		psnd.save(tempSound, "WAV")
 		
 		# run VOT predictor
@@ -334,7 +331,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 
 	return
 
-# calculateVOT("test.wav", "testing/test14.TextGrid")
+
 
 # if __name__ == '__main__':
 # 	unittest.main()
