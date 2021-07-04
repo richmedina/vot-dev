@@ -256,7 +256,7 @@ class TestVOT(unittest.TestCase):
 		The program should print a warning message indicating readjustment to 25ms.'''
 		with self.assertLogs() as captured:
 			calculateVOT("test.wav", "testing/test9-1.TextGrid",['p'],endPadding=0.03)
-		self.assertEqual(len(captured.records), 2)
+		self.assertEqual(len(captured.records), 3)
 		self.assertEqual(captured.records[1].getMessage(), "An endPadding of 0.03 sec exceeds the maximum. "\
 			"It was adjusted to 0.025 sec.\n")
 
@@ -267,8 +267,8 @@ class TestVOT(unittest.TestCase):
 		with self.assertLogs() as captured:
 			calculateVOT("test.wav", "testing/test9-2.TextGrid",['k'],endPadding=0.025)
 		self.assertEqual(len(captured.records), 3)
-		self.assertEqual(captured.records[1].getMessage(), "In File test9-2.TextGrid, the phone starting at 23.201 "\
-			"was shifted forward due to a proximity issue.\n")
+		self.assertEqual(captured.records[1].getMessage(), "In File test9-2.TextGrid, the phone "\
+			"starting at 23.201 was shifted forward due to a proximity issue.\n")
 
 	def test_oneSpeakerOverlapping(self):  #21
 		'''Test program implementation on 1 speaker with a 16kHz wav file and two overlapping tokens.
@@ -283,12 +283,12 @@ class TestVOT(unittest.TestCase):
 		with self.assertLogs() as captured:
 			calculateVOT("test.wav", "testing/test10.TextGrid",['k'])
 		self.assertEqual(len(captured.records), 3)
-		self.assertEqual(captured.records[1].getMessage(), "In File test10.TextGrid, the phone starting at 23.201 "\
-			"was shifted forward due to a proximity issue.\n")
+		self.assertEqual(captured.records[1].getMessage(), "In File test10.TextGrid, the phone "\
+			"starting at 23.201 was shifted forward due to a proximity issue.\n")
 
 	def test_twoSpeakersFirstOverlapping(self):  #23
-		'''Test program implementation on 2 speakers with a 16kHz wav file and two overlapping tokens for
-		the first speaker. The program should raise a SystemExit error and terminate the process.'''
+		'''Test program implementation on 2 speakers with a 16kHz wav file and two overlapping tokens
+		for the first speaker. The program should raise a SystemExit error and terminate the process.'''
 		with self.assertRaises(SystemExit) as cm: # check that the program stops
 			calculateVOT("test.wav", "testing/test10.TextGrid",['k'],endPadding=0.025)
 
@@ -299,8 +299,8 @@ class TestVOT(unittest.TestCase):
 		with self.assertLogs() as captured:
 			calculateVOT("test.wav", "testing/test11.TextGrid",['k'])
 		self.assertEqual(len(captured.records), 3)
-		self.assertEqual(captured.records[1].getMessage(), "In File test11.TextGrid, the phone starting at 23.201 "\
-			"was shifted forward due to a proximity issue.\n")
+		self.assertEqual(captured.records[1].getMessage(), "In File test11.TextGrid, the phone "\
+			"starting at 23.201 was shifted forward due to a proximity issue.\n")
 
 	def test_oneSpeakerSecondOverlapping(self):  #25
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two overlapping tokens for
@@ -381,18 +381,57 @@ class TestVOT(unittest.TestCase):
 		The program should remove the element from the list and continue.'''
 		with self.assertLogs() as captured:
 			calculateVOT("test.wav", "testing/test19.TextGrid",['p','a'])
-		self.assertEqual(len(captured.records), 2)
-		self.assertEqual(captured.records[1].getMessage(), "'a' is not a stop sound. This symbol will be ignored in file {}.\n")
+		self.assertEqual(len(captured.records), 3)
+		self.assertEqual(captured.records[1].getMessage(), "'a' is not a stop sound. "\
+			"This symbol will be ignored in file test19.TextGrid.\n")
 
-	def test_onlyStopNonStop(self):  #33
+	def test_twoNonStops(self):  #34
+		'''Test program implementation on 1 speaker where one element in the stops list is not a stop.
+		The program should remove the element from the list and continue.'''
+		with self.assertLogs() as captured:
+			calculateVOT("test.wav", "testing/test20.TextGrid",['p','a','e'])
+		self.assertEqual(len(captured.records), 3)
+		self.assertEqual(captured.records[1].getMessage(), "'a', 'e' are not stop sounds. "\
+			"These symbols will be ignored in file test20.TextGrid.\n")
+
+	def test_onlySoundNonStop(self):  #35
 		'''Test program implementation on 1 speaker where the only element in the stops list is not a stop.
 		The program should remove the element from the list and continue analyzing all voiceless stops.'''
 		with self.assertLogs() as captured:
-			calculateVOT("test.wav", "testing/test19.TextGrid",['a'])
-		self.assertEqual(len(captured.records), 4)
-		self.assertEqual(captured.records[1].getMessage(), "'a' is not a stop sound. This symbol will be ignored in file {}.\n")
-		self.assertEqual(captured.records[2].getMessage(), "The sound you entered is not classified as a stop sound by the IPA.")
-		self.assertEqual(captured.records[3].getMessage(), "The program will continue by analyzing all voiceless stops recognized by the IPA.\n")
+			calculateVOT("test.wav", "testing/test21.TextGrid",['a'])
+		self.assertEqual(len(captured.records), 5)
+		self.assertEqual(captured.records[1].getMessage(), "'a' is not a stop sound. This symbol will "\
+			"be ignored in file test21.TextGrid.\n")
+		self.assertEqual(captured.records[2].getMessage(), "The sound you entered is not classified as "\
+			"a stop sound by the IPA.")
+		self.assertEqual(captured.records[3].getMessage(), "The program will continue by analyzing all "\
+			"voiceless stops recognized by the IPA.\n")
+
+	def test_onlyTwoSoundsNonStop(self):  #36
+		'''Test program implementation on 1 speaker where the only element in the stops list is not a stop.
+		The program should remove the element from the list and continue analyzing all voiceless stops.'''
+		with self.assertLogs() as captured:
+			calculateVOT("test.wav", "testing/test22.TextGrid",['a','e'])
+		self.assertEqual(len(captured.records), 5)
+		self.assertEqual(captured.records[1].getMessage(), "'a', 'e' are not stop sounds. These symbols "\
+			"will be ignored in file test22.TextGrid.\n")
+		self.assertEqual(captured.records[2].getMessage(), "Neither of the sounds you entered is classified "\
+			"as a stop sound by the IPA.")
+		self.assertEqual(captured.records[3].getMessage(), "The program will continue by analyzing all "\
+			"voiceless stops recognized by the IPA.\n")
+
+	def test_onlyThreeSoundsNonStop(self):  #37
+		'''Test program implementation on 1 speaker where the only element in the stops list is not a stop.
+		The program should remove the element from the list and continue analyzing all voiceless stops.'''
+		with self.assertLogs() as captured:
+			calculateVOT("test.wav", "testing/test23.TextGrid",['a','e','i'])
+		self.assertEqual(len(captured.records), 5)
+		self.assertEqual(captured.records[1].getMessage(), "'a', 'e', 'i' are not stop sounds. These "\
+			"symbols will be ignored in file test23.TextGrid.\n")
+		self.assertEqual(captured.records[2].getMessage(), "None of the sounds you entered is classified "\
+			"as a stop sound by the IPA.")
+		self.assertEqual(captured.records[3].getMessage(), "The program will continue by analyzing all "\
+			"voiceless stops recognized by the IPA.\n")
 
 
 

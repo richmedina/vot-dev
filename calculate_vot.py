@@ -33,18 +33,17 @@ def fileCheck(wav, TextGrid):
 	textgridName, textgridExt = os.path.splitext(TextGrid)
 
 	if wavExt != '.wav' or textgridExt != '.TextGrid':
-		sys.exit("\n{} must be a wav file and {} must be a TextGrid file. "\
+		logger.error("\n{} must be a wav file and {} must be a TextGrid file. "\
 			"One or both files do not meet format requirements.\n".format(wav,TextGrid))
-		# try:
-		# 	sys.exit(...)
-		# except SystemExit as e:
-		# 	logger.error(str(e))
-		# exit()
+		sys.exit()
 	else:
 		print()
 		logger.info("Processing {} and {}...\n".format(wav,TextGrid))
 
-def processParameters(startPadding, endPadding, stops): 
+def processParameters(startPadding, endPadding, stops, TextGrid): 
+
+	# remove directory from TG name
+	TextGrid = TextGrid.split("/")[1] #delete
 
 	# adjust long padding values
 	if startPadding > 0.025:
@@ -101,10 +100,13 @@ def addStopTier(TextGrid, startPadding, endPadding, stops, outputPath):
 	# verify that no 'AutoVOT' or 'stops' tiers exist
 	for tierName in tg.tierNameList:
 		if tierName == "AutoVOT":
-			logger.warning("A tier named 'AutoVOT' already exists. Said tier will be renamed as 'autovot - original' to avoid a naming conflict.\n")
+			logger.warning("A tier named 'AutoVOT' already exists. Said tier will be renamed as "\
+				"'autovot - original' to avoid a naming conflict.\n")
 			tg.renameTier("AutoVOT", "autovot - original")
 		elif tierName[-5:] == 'stops':
-			sys.exit("Error: There is a tier with the word 'stops' in its label in {}. You must relabel said tier before continuing.".format(TextGrid))
+			logger.error("Error: There is a tier with the word 'stops' in its label in {}. You must "\
+				"relabel said tier before continuing.".format(TextGrid))
+			sys.exit()
 	
 	# convert tier labels to lowercase
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
@@ -116,17 +118,14 @@ def addStopTier(TextGrid, startPadding, endPadding, stops, outputPath):
 	# collect all word tiers and terminate process if none exists
 	allWordTiers = [tierName for tierName in tg.tierNameList if 'word' in tierName]
 	if len(allWordTiers) == 0:
-		sys.exit("Error: {} does not contain any tier labeled 'words'.\n".format(TextGrid))
+		logger.error("Error: {} does not contain any tier labeled 'words'.\n".format(TextGrid))
+		sys.exit()
 
 	# collect all phone tiers and terminate process if none exists
 	allPhoneTiers = [tierName for tierName in tg.tierNameList if 'phone' in tierName]
 	if len(allPhoneTiers) == 0:
-		sys.exit("Error: {} does not contain any tier labeled 'phones'.\n".format(TextGrid))
-		# try:
-		# 	sys.exit("Error: {} does not contain any tier labeled 'phones'.\n".format(TextGrid))
-		# except SystemExit as e:
-		# 	logger.error(str(e))
-		# exit()
+		logger.error("Error: {} does not contain any tier labeled 'phones'.\n".format(TextGrid))
+		sys.exit()
 
 	# verify that an equal number of word and phone tiers exists before continuing
 	if len(allWordTiers) == len(allPhoneTiers):
@@ -165,15 +164,18 @@ def addStopTier(TextGrid, startPadding, endPadding, stops, outputPath):
 					continue
 			
 			else:
-				sys.exit("Error: The names of the 'word' and 'phone' tiers are inconsistent in file {}. "\
+				logger.error("Error: The names of the 'word' and 'phone' tiers are inconsistent in file {}. "\
 					"Fix the issue before continuing.\n".format(TextGrid))
+				sys.exit()
 	
 	else:
-		sys.exit("Error: There isn't an even number of 'phone' and 'word' tiers per speaker in file {}. "\
+		logger.error("Error: There isn't an even number of 'phone' and 'word' tiers per speaker in file {}. "\
 			"Fix the issue before continuing.\n".format(TextGrid))
+		sys.exit()
 
 	if populatedTiers == 0:
-		sys.exit("Error: There were no voiceless stops found in {}.\n".format(TextGrid))
+		logger.error("Error: There were no voiceless stops found in {}.\n".format(TextGrid))
+		sys.exit()
 
 	# generate list of all stop tiers created
 	stopTiers = [tierName for tierName in tg.tierNameList if tierName[-5:] == "stops"]
@@ -219,9 +221,10 @@ def processStopTier(
 		startTime, endTime = 0, 1
 
 		if currentPhone[endTime] > nextPhone[startTime]:  # check if there is an overlap between phones
-			sys.exit("Error: In file {} (after adding padding), the segment starting at {} sec overlaps with the segment starting at {}."\
+			logger.error("Error: In file {} (after adding padding), the segment starting at {} sec overlaps with the segment starting at {}."\
 			"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to solve the conflicts."\
-			"\n\nProcess incomplete.\n".format(TextGrid, round(currentPhone[startTime],3), round(nextPhone[startTime],3))) #how to do sys.exit()??
+			"\n\nProcess incomplete.\n".format(TextGrid, round(currentPhone[startTime],3), round(nextPhone[startTime],3)))
+			sys.exit()
 		elif currentPhone[endTime] - currentPhone[startTime] < 0.025:  # check if currentPhone is under 25ms
 			if nextPhone[startTime] - currentPhone[endTime] <= 0.020:  # check if nextPhone is within 20ms
 				currentPhone[endTime] = currentPhone[startTime] + 0.025  # make currentPhone 25ms long
@@ -310,7 +313,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 	fileCheck(wav, TextGrid)
 
 	# process variable parameters
-	startPadding, endPadding, stops = processParameters(startPadding, endPadding, stops)
+	startPadding, endPadding, stops = processParameters(startPadding, endPadding, stops, TextGrid)
 
 	# create directory to output files
 	outputPath = os.path.join(os.getcwd(),outputDirectory)
@@ -326,6 +329,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory='output', startPadding
 	# apply AutoVOT prediction calculations
 	applyAutoVOT(wav, stopTiers, annotatedTextgrid)
 
+	print()
 	logger.info("Process for {} and {} is complete.\n".format(wav,TextGrid))
 
 	return
