@@ -382,14 +382,14 @@ item []:
             text = "t" 
         intervals [93]:
             xmin = 8.865243608926402 
-            xmax = 8.937000004427175 
+            xmax = 8.937000004427174 
             text = "a" 
         intervals [94]:
-            xmin = 8.937000004427175 
-            xmax = 9.021335075419295 
+            xmin = 8.937000004427174 
+            xmax = 9.021335075419294 
             text = "s" 
         intervals [95]:
-            xmin = 9.021335075419295 
+            xmin = 9.021335075419294 
             xmax = 9.1104560635311 
             text = "t" 
         intervals [96]:
@@ -683,7 +683,7 @@ item []:
         xmax = 15.26 
         intervals: size = 26 
         intervals [1]:
-            xmin = 0.0 
+            xmin = 0 
             xmax = 0.09 
             text = "sil" 
         intervals [2]:
@@ -788,7 +788,7 @@ item []:
             text = "sil" 
     item [3]:
         class = "IntervalTier" 
-        name = "" 
+        name = "smthg" 
         xmin = 0 
         xmax = 15.26 
         intervals: size = 11 

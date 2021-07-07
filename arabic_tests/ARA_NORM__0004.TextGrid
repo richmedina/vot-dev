@@ -366,18 +366,18 @@ item []:
             text = "l" 
         intervals [89]:
             xmin = 8.392696394257118 
-            xmax = 8.471638658201727 
+            xmax = 8.471638658201726 
             text = "i0" 
         intervals [90]:
-            xmin = 8.471638658201727 
+            xmin = 8.471638658201726 
             xmax = 8.642723600436794 
             text = "E" 
         intervals [91]:
             xmin = 8.642723600436794 
-            xmax = 8.687537255221058 
+            xmax = 8.687537255221057 
             text = "a'" 
         intervals [92]:
-            xmin = 8.687537255221058 
+            xmin = 8.687537255221057 
             xmax = 8.745887171368832 
             text = "d" 
         intervals [93]:
@@ -599,7 +599,7 @@ item []:
         xmax = 13.945 
         intervals: size = 23 
         intervals [1]:
-            xmin = 0.0 
+            xmin = 0 
             xmax = 0.0836462526245 
             text = "sil" 
         intervals [2]:
@@ -692,7 +692,7 @@ item []:
             text = "sil" 
     item [3]:
         class = "IntervalTier" 
-        name = "" 
+        name = "smthg" 
         xmin = 0 
         xmax = 13.945 
         intervals: size = 9 
