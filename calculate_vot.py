@@ -122,7 +122,7 @@ def addStopTier(
 		elif tierName == "":
 			logger.error("At least one tier in file {} has no name. Fix the issue before continuing.\n"\
 				.format(TextGrid))
-			sys.exit()  # exit or rename?
+			sys.exit()
 	
 	# convert tier labels to lowercase
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
@@ -221,7 +221,7 @@ def processStopTier(
 	stopEntryList = []
 	for entry in phoneTier.entryList:
 		entryStart = int(entry[0]*100000)
-		if entry[-1].lower() in stops and entryStart in wordStartTimes:
+		if (entry[-1].lower() in stops or entry[-1] in stops) and entryStart in wordStartTimes:
 			stopEntryList.append(entry)
 			if entry[-1].lower() in voicedStops:
 				voicedTokens.append(entry[-1].lower())
