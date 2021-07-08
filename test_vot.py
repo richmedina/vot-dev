@@ -6,7 +6,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_oneSpeakerVoiceless(self):  #1
 		'''Test program implementation on 1 speaker with a 16kHz wav file and one voiceless stop.'''
-		calculateVOT("testing/test.wav", "testing/test1-1.TextGrid",["p"])
+		calculateVOT("tests/test.wav", "tests/test1-1.TextGrid",["p"])
 		tg = tgio.openTextgrid("output/test1-1_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -19,7 +19,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_oneSpeakerVoiced(self):  #2
 		'''Test program implementation on 1 speaker with a 16kHz wav file and one voiced stop.'''
-		calculateVOT("testing/test.wav", "testing/test1-2.TextGrid",["g"])
+		calculateVOT("tests/test.wav", "tests/test1-2.TextGrid",["g"])
 		tg = tgio.openTextgrid("output/test1-2_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -32,7 +32,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_oneSpeakerNone(self):  #3
 		'''Test program implementation on 1 speaker with a 16kHz wav file and no stop tokens.'''
-		calculateVOT("testing/test.wav", "testing/test1-3.TextGrid")
+		calculateVOT("tests/test.wav", "tests/test1-3.TextGrid")
 		tg = tgio.openTextgrid("output/test1-3_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -45,7 +45,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_oneSpeakerBoth(self):  #4
 		'''Test program implementation on 1 speaker with a 16kHz wav file and voiceless and voiced stops.'''
-		calculateVOT("testing/test.wav", "testing/test1-4.TextGrid",['p','g'])
+		calculateVOT("tests/test.wav", "tests/test1-4.TextGrid",['p','g'])
 		tg = tgio.openTextgrid("output/test1-4_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -58,7 +58,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_oneSpeakerShort(self):  #5
 		'''Test program implementation on 1 speaker with one token shorter than 25ms.'''
-		calculateVOT("testing/test.wav", "testing/test1-5.TextGrid",["b"])
+		calculateVOT("tests/test.wav", "tests/test1-5.TextGrid",["b"])
 		tg = tgio.openTextgrid("output/test1-5_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -71,7 +71,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_twoSpeakerVoiceless(self):  #6
 		'''Test program implementation on 2 speakers with a 16kHz wav file and one voiceless stop.'''
-		calculateVOT("testing/test.wav", "testing/test2-1.TextGrid",["p"])
+		calculateVOT("tests/test.wav", "tests/test2-1.TextGrid",["p"])
 		tg = tgio.openTextgrid("output/test2-1_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -85,7 +85,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_twoSpeakerVoiced(self):  #7
 		'''Test program implementation on 2 speakers with a 16kHz wav file and one voiced stop.'''
-		calculateVOT("testing/test.wav", "testing/test2-2.TextGrid",["g"])
+		calculateVOT("tests/test.wav", "tests/test2-2.TextGrid",["g"])
 		tg = tgio.openTextgrid("output/test2-2_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -99,7 +99,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_twoSpeakerNone(self):  #8
 		'''Test program implementation on 2 speakers with a 16kHz wav file and no stop tokens.'''
-		calculateVOT("testing/test.wav", "testing/test2-3.TextGrid")
+		calculateVOT("tests/test.wav", "tests/test2-3.TextGrid")
 		tg = tgio.openTextgrid("output/test2-3_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -113,7 +113,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_twoSpeakerBoth(self):  #9
 		'''Test program implementation on 2 speakers with a 16kHz wav file and voiceless and voiced stops.'''
-		calculateVOT("testing/test.wav", "testing/test2-4.TextGrid",['p','g'])
+		calculateVOT("tests/test.wav", "tests/test2-4.TextGrid",['p','g'])
 		tg = tgio.openTextgrid("output/test2-4_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -127,7 +127,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_threeSpeakerVoiceless(self):  #10
 		'''Test program implementation on 3 speakers with a 16kHz wav file and one voiceless stop.'''
-		calculateVOT("testing/test.wav", "testing/test3-1.TextGrid",["p"])
+		calculateVOT("tests/test.wav", "tests/test3-1.TextGrid",["p"])
 		tg = tgio.openTextgrid("output/test3-1_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -142,7 +142,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_threeSpeakerVoiced(self):  #11
 		'''Test program implementation on 3 speakers with a 16kHz wav file and one voiced stop.'''
-		calculateVOT("testing/test.wav", "testing/test3-2.TextGrid",["g"])
+		calculateVOT("tests/test.wav", "tests/test3-2.TextGrid",["g"])
 		tg = tgio.openTextgrid("output/test3-2_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -157,7 +157,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_threeSpeakerNone(self):  #12
 		'''Test program implementation on 3 speakers with a 16kHz wav file and no stop tokens.'''
-		calculateVOT("testing/test.wav", "testing/test3-3.TextGrid")
+		calculateVOT("tests/test.wav", "tests/test3-3.TextGrid")
 		tg = tgio.openTextgrid("output/test3-3_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -172,7 +172,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_threeSpeakerBoth(self):  #13
 		'''Test program implementation on 3 speakers with a 16kHz wav file and voiceless and voiced stops.'''
-		calculateVOT("testing/test.wav", "testing/test3-4.TextGrid",['p','g'])
+		calculateVOT("tests/test.wav", "tests/test3-4.TextGrid",['p','g'])
 		tg = tgio.openTextgrid("output/test3-4_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -187,7 +187,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_twoSpeakerDistinctVoiceless(self):  #14
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two voiceless stops.'''
-		calculateVOT("testing/test.wav", "testing/test4.TextGrid",["p","t"])
+		calculateVOT("tests/test.wav", "tests/test4.TextGrid",["p","t"])
 		tg = tgio.openTextgrid("output/test4_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -205,7 +205,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_twoSpeakerDistinctVoiced(self):  #15
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two voiced stops.'''
-		calculateVOT("testing/test.wav", "testing/test5.TextGrid",["b","d"])
+		calculateVOT("tests/test.wav", "tests/test5.TextGrid",["b","d"])
 		tg = tgio.openTextgrid("output/test5_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -223,7 +223,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_oneSpeakerTierRelabeling(self):  #16
 		'''Test program implementation on 1 speaker with a 16kHz wav file and an preexisting AutoVOT tier.'''
-		calculateVOT("testing/test.wav", "testing/test6.TextGrid",["p"])
+		calculateVOT("tests/test.wav", "tests/test6.TextGrid",["p"])
 		tg = tgio.openTextgrid("output/test6_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -239,7 +239,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker with a 16kHz wav file and no voiceless stops.
 		The program should raise a SystemExit error and terminate the process.'''
 		with self.assertRaises(SystemExit): # check that the program stops
-			calculateVOT("testing/test.wav", "testing/test7.TextGrid")
+			calculateVOT("tests/test.wav", "tests/test7.TextGrid")
 		path = ("output/test7_output.TextGrid") # check that a file was not created
 		self.assertIs(os.path.exists(path),False)
 
@@ -247,7 +247,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 2 speakers with a 16kHz wav file and no voiceless stops.
 		The program should raise a SystemExit error and terminate the process.'''
 		with self.assertRaises(SystemExit): # check that the program stops
-			calculateVOT("testing/test.wav", "testing/test8.TextGrid")
+			calculateVOT("tests/test.wav", "tests/test8.TextGrid")
 		path = ("output/test8_output.TextGrid") # check that a file was not created
 		self.assertIs(os.path.exists(path),False)
 
@@ -255,7 +255,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker with a 16kHz wav file and excessive padding.
 		The program should print a warning message indicating readjustment to 25ms.'''
 		with self.assertLogs() as captured:
-			calculateVOT("testing/test.wav", "testing/test9-1.TextGrid",['p'],endPadding=0.03)
+			calculateVOT("tests/test.wav", "tests/test9-1.TextGrid",['p'],endPadding=0.03)
 		self.assertEqual(len(captured.records), 3)
 		self.assertEqual(captured.records[1].getMessage(), "An endPadding of 0.03 sec exceeds the maximum. "\
 			"It was adjusted to 0.025 sec.\n")
@@ -265,7 +265,7 @@ class TestVOT(unittest.TestCase):
 		and two phones close together. The program should print a warning message indicating a 
 		shift and the time in the recording where it occurred.'''
 		with self.assertLogs() as captured:
-			calculateVOT("testing/test.wav", "testing/test9-2.TextGrid",['k'],endPadding=0.025)
+			calculateVOT("tests/test.wav", "tests/test9-2.TextGrid",['k'],endPadding=0.025)
 		self.assertEqual(len(captured.records), 3)
 		self.assertEqual(captured.records[1].getMessage(), "In File test9-2.TextGrid, the phone "\
 			"starting at 23.201 was shifted forward due to a proximity issue.\n")
@@ -273,15 +273,15 @@ class TestVOT(unittest.TestCase):
 	def test_oneSpeakerOverlapping(self):  #21
 		'''Test program implementation on 1 speaker with a 16kHz wav file and two overlapping tokens.
 		The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit) as cm: # check that the program stops
-			calculateVOT("testing/test.wav", "testing/test9-3.TextGrid",['k'],endPadding=0.025)
+		with self.assertRaises(SystemExit): # check that the program stops
+			calculateVOT("tests/test.wav", "tests/test9-3.TextGrid",['k'],endPadding=0.025)
 
 	def test_twoSpeakerFirstProximity(self):  #22
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two tokens close together
 		for the first speaker. The program should print a warning messages indicating the shifts 
 		and the time  in the recording where they occurred.'''
 		with self.assertLogs() as captured:
-			calculateVOT("testing/test.wav", "testing/test10.TextGrid",['k'])
+			calculateVOT("tests/test.wav", "tests/test10.TextGrid",['k'])
 		self.assertEqual(len(captured.records), 3)
 		self.assertEqual(captured.records[1].getMessage(), "In File test10.TextGrid, the phone "\
 			"starting at 23.201 was shifted forward due to a proximity issue.\n")
@@ -289,15 +289,15 @@ class TestVOT(unittest.TestCase):
 	def test_twoSpeakersFirstOverlapping(self):  #23
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two overlapping tokens
 		for the first speaker. The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit) as cm: # check that the program stops
-			calculateVOT("testing/test.wav", "testing/test10.TextGrid",['k'],endPadding=0.025)
+		with self.assertRaises(SystemExit): # check that the program stops
+			calculateVOT("tests/test.wav", "tests/test10.TextGrid",['k'],endPadding=0.025)
 
 	def test_twoSpeakerSecondProximity(self):  #24
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two tokens close together
 		for the second speaker. The program should print a warning messages indicating the shifts 
 		and the time  in the recording where they occurred.'''
 		with self.assertLogs() as captured:
-			calculateVOT("testing/test.wav", "testing/test11.TextGrid",['k'])
+			calculateVOT("tests/test.wav", "tests/test11.TextGrid",['k'])
 		self.assertEqual(len(captured.records), 3)
 		self.assertEqual(captured.records[1].getMessage(), "In File test11.TextGrid, the phone "\
 			"starting at 23.201 was shifted forward due to a proximity issue.\n")
@@ -305,13 +305,13 @@ class TestVOT(unittest.TestCase):
 	def test_oneSpeakerSecondOverlapping(self):  #25
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two overlapping tokens for
 		the second speaker. The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit) as cm: # check that the program stops
-			calculateVOT("testing/test.wav", "testing/test11.TextGrid",['k'],endPadding=0.025)
+		with self.assertRaises(SystemExit): # check that the program stops
+			calculateVOT("tests/test.wav", "tests/test11.TextGrid",['k'],endPadding=0.025)
 
 	def test_inconsistentCapitalization(self):  #26
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two pairs of inconsistently 
 		capitalized tiers. The program should conver all labels to lowercase and continue the process.'''
-		calculateVOT("testing/test.wav", "testing/test12.TextGrid",["p"])
+		calculateVOT("tests/test.wav", "tests/test12.TextGrid",["p"])
 		tg = tgio.openTextgrid("output/test12_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -327,32 +327,32 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 2 speakers with a 16kHz wav file but second speaker only has
 		one word tier (mismatched tier pairs). The program should raise a SystemExit error and
 		terminate the process.'''
-		with self.assertRaises(SystemExit) as cm:
-			calculateVOT("testing/test.wav", "testing/test13.TextGrid")
+		with self.assertRaises(SystemExit):
+			calculateVOT("tests/test.wav", "tests/test13.TextGrid")
 
 	def test_noPhoneTier(self):  #28
 		'''Test program implementation on 2 speakers with a 16kHz wav file but both speakers only have
 		one word tier each (no phone tiers). The program should raise a SystemExit error and
 		terminate the process.'''
-		with self.assertRaises(SystemExit) as cm:
-			calculateVOT("testing/test.wav", "testing/test14.TextGrid")
+		with self.assertRaises(SystemExit):
+			calculateVOT("tests/test.wav", "tests/test14.TextGrid")
 
 	def test_fileFormatError(self):  #29
 		'''Test program implementation on 2 speakers with a 16kHz wav file and a .txt file (not a TG). 
 		The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit) as cm:
-			calculateVOT("testing/test.wav", "testing/test15.txt")
+		with self.assertRaises(SystemExit):
+			calculateVOT("tests/test.wav", "tests/test15.txt")
 
 	def test_stopsTierPresent(self):  #30
 		'''Test program implementation on 1 speaker with a 16kHz wav file and a preexisting 'stops' tier.
 		The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit) as cm:
-			calculateVOT("testing/test.wav", "testing/test16.TextGrid")
+		with self.assertRaises(SystemExit):
+			calculateVOT("tests/test.wav", "tests/test16.TextGrid")
 
 	def test_wavTwoChannels(self):  #31
 		'''Test program implementation on 1 speaker with a 16kHz wav file with two channels. The program
 		should extract one channel and continue.'''
-		calculateVOT("testing/test-2ch.wav", "testing/test17.TextGrid",["p"])
+		calculateVOT("tests/test-2ch.wav", "tests/test17.TextGrid",["p"])
 		tg = tgio.openTextgrid("output/test1-1_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -365,7 +365,7 @@ class TestVOT(unittest.TestCase):
 
 	def test_wavHigherSamplingRate(self):  #32
 		'''Test program implementation on 1 speaker with a 22.05kHz sampling rate wav file.'''
-		calculateVOT("testing/test-22khz.wav", "testing/test18.TextGrid",["p"])
+		calculateVOT("tests/test-22khz.wav", "tests/test18.TextGrid",["p"])
 		tg = tgio.openTextgrid("output/test1-1_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -380,7 +380,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker where one element in the stops list is not a stop.
 		The program should remove the element from the list and continue.'''
 		with self.assertLogs() as captured:
-			calculateVOT("testing/test.wav", "testing/test19.TextGrid",['p','a'])
+			calculateVOT("tests/test.wav", "tests/test19.TextGrid",['p','a'])
 		self.assertEqual(len(captured.records), 3)
 		self.assertEqual(captured.records[1].getMessage(), "'a' is not a stop sound. "\
 			"This symbol will be ignored in file test19.TextGrid.\n")
@@ -389,7 +389,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker where one element in the stops list is not a stop.
 		The program should remove the element from the list and continue.'''
 		with self.assertLogs() as captured:
-			calculateVOT("testing/test.wav", "testing/test20.TextGrid",['p','a','e'])
+			calculateVOT("tests/test.wav", "tests/test20.TextGrid",['p','a','e'])
 		self.assertEqual(len(captured.records), 3)
 		self.assertEqual(captured.records[1].getMessage(), "'a', 'e' are not stop sounds. "\
 			"These symbols will be ignored in file test20.TextGrid.\n")
@@ -398,7 +398,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker where the only element in the stops list is not a stop.
 		The program should remove the element from the list and continue analyzing all voiceless stops.'''
 		with self.assertLogs() as captured:
-			calculateVOT("testing/test.wav", "testing/test21.TextGrid",['a'])
+			calculateVOT("tests/test.wav", "tests/test21.TextGrid",['a'])
 		self.assertEqual(len(captured.records), 5)
 		self.assertEqual(captured.records[1].getMessage(), "'a' is not a stop sound. This symbol will "\
 			"be ignored in file test21.TextGrid.\n")
@@ -411,7 +411,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker where the only element in the stops list is not a stop.
 		The program should remove the element from the list and continue analyzing all voiceless stops.'''
 		with self.assertLogs() as captured:
-			calculateVOT("testing/test.wav", "testing/test22.TextGrid",['a','e'])
+			calculateVOT("tests/test.wav", "tests/test22.TextGrid",['a','e'])
 		self.assertEqual(len(captured.records), 5)
 		self.assertEqual(captured.records[1].getMessage(), "'a', 'e' are not stop sounds. These symbols "\
 			"will be ignored in file test22.TextGrid.\n")
@@ -424,7 +424,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker where the only element in the stops list is not a stop.
 		The program should remove the element from the list and continue analyzing all voiceless stops.'''
 		with self.assertLogs() as captured:
-			calculateVOT("testing/test.wav", "testing/test23.TextGrid",['a','e','i'])
+			calculateVOT("tests/test.wav", "tests/test23.TextGrid",['a','e','i'])
 		self.assertEqual(len(captured.records), 5)
 		self.assertEqual(captured.records[1].getMessage(), "'a', 'e', 'i' are not stop sounds. These "\
 			"symbols will be ignored in file test23.TextGrid.\n")

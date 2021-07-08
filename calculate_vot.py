@@ -238,28 +238,28 @@ def processStopTier(
 		startTime, endTime = 0, 1
 
 		if currentPhone[endTime] > nextPhone[startTime]:  # check if there is an overlap between phones
-			logger.error("Error: In file {} (after adding padding), the segment starting at {} sec overlaps with the segment starting at {}."\
+			logger.error("Error: In file {} (after adding padding), the segment starting at {:.3f} sec overlaps with the segment starting at {:.3f}."\
 			"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to solve the conflicts."\
-			"\n\nProcess incomplete.\n".format(TextGrid, round(currentPhone[startTime], 3), round(nextPhone[startTime], 3)))
+			"\n\nProcess incomplete.\n".format(TextGrid, currentPhone[startTime], nextPhone[startTime]))
 			sys.exit()
 		elif currentPhone[endTime] - currentPhone[startTime] < 0.025:  # check if currentPhone is under 25ms
 			if nextPhone[startTime] - currentPhone[endTime] <= 0.020:  # check if nextPhone is within 20ms
 				currentPhone[endTime] = currentPhone[startTime] + 0.025  # make currentPhone 25ms long
 				nextPhone[startTime] = currentPhone[endTime] + 0.021  # shift nextPhone 21ms after new endTime of currentPhone
-				logger.warning("In File {}, the phone starting at {} was elongaged to 25 ms because it did not meet length "\
-					"requirements, and the phone starting at {} was shifted forward due to a proximity issue. "\
+				logger.warning("In File {}, the phone starting at {:.3f} was elongaged to 25 ms because it did not meet length "\
+					"requirements, and the phone starting at {:.3f} was shifted forward due to a proximity issue. "\
 					"Please, verify manually that the modified windows still capture the segments accurately.\n"\
-					.format(TextGrid, round(currentPhone[startTime], 3), round(nextPhone[startTime], 3)))
+					.format(TextGrid, currentPhone[startTime], nextPhone[startTime]))
 			else:
 				currentPhone[endTime] = currentPhone[startTime] + 0.025  # make currentPhone 25ms long
-				logger.warning("In File {}, the phone starting at {} was elongaged to 25 ms because it did not meet length "\
+				logger.warning("In File {}, the phone starting at {:.3f} was elongaged to 25 ms because it did not meet length "\
 					"requirements.\n"\
-					.format(TextGrid, round(currentPhone[startTime], 3)))
+					.format(TextGrid, currentPhone[startTime]))
 		else:
 			if nextPhone[startTime] - currentPhone[endTime] <= 0.020:  # check if nextPhone is within 20ms
 				nextPhone[startTime] = currentPhone[endTime] + 0.021  # shift nextPhone 21ms after endTime of currentPhone
-				logger.warning("In File {}, the phone starting at {} was shifted forward due to a proximity issue.\n"\
-						.format(TextGrid, round(nextPhone[startTime], 3)))
+				logger.warning("In File {}, the phone starting at {:.3f} was shifted forward due to a proximity issue.\n"\
+						.format(TextGrid, nextPhone[startTime]))
 
 		if interval == len(extendedEntryList)-1 and nextPhone[endTime] - nextPhone[startTime] < 0.025:  # if the last segment is too short
 			nextPhone[endTime] = nextPhone[startTime] + 0.025  # shift nextPhone's (last phone) endTime to be 25 ms after startTime
@@ -352,6 +352,7 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory="output", startPadding
 	logger.info("Process for {} and {} is complete.\n".format(wav, TextGrid))
 
 	return
+
 
 
 
