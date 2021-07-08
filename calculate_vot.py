@@ -120,7 +120,7 @@ def addStopTier(
 				"relabel said tier before continuing.\n".format(TextGrid))
 			sys.exit()
 		elif tierName == "":
-			logger.error("At least one tier in file {} has no name. Fix the issue before continuing."\
+			logger.error("At least one tier in file {} has no name. Fix the issue before continuing.\n"\
 				.format(TextGrid))
 			sys.exit()  # exit or rename?
 	
