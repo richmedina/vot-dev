@@ -65,8 +65,7 @@ def processParameters(
 
 	# specify stop categories
 	ipaStops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'",
-				'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ', 'pp', 'bb', 'tt', 'dd', 'ʈʈ', 'ɖɖ', 'cc', 'ɟɟ', 'kk', 'gg', 
-				'qq', 'ɢɢ', 'ʔʔ']
+				'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 	voicelessStops = ['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'", 'pp', 'tt', 'ʈʈ', 'cc', 
 				'kk', 'qq', 'ʔʔ'] #??added geminates
 	
@@ -76,15 +75,15 @@ def processParameters(
 	else:
 		vettedStops, nonStops = [], []
 		for stopSymbol in stops:
-			if stopSymbol.lower() in ipaStops:
+			if stopSymbol[0].lower() in ipaStops:
 				vettedStops.append(stopSymbol)
 			else:
 				nonStops.append(stopSymbol)
 
 		if len(nonStops) == 1:
-			logger.info("'{}' is not a stop sound. This symbol will be ignored in file {}.\n".format(nonStops[0], TextGrid))
+			logger.info("'{}' is not (or does not start with) a stop sound. This symbol will be ignored in file {}.\n".format(nonStops[0], TextGrid))
 		elif len(nonStops) > 1:
-			logger.info("'{}' are not stop sounds. These symbols will be ignored in file {}.\n".format("', '".join(nonStops), TextGrid))
+			logger.info("'{}' are not (or do not start with) stop sounds. These symbols will be ignored in file {}.\n".format("', '".join(nonStops), TextGrid))
 
 		if len(vettedStops) == 0:
 			if len(stops) == 1:
@@ -117,8 +116,8 @@ def addStopTier(
 				"'autovot - original' to avoid a naming conflict.\n")
 			tg.renameTier("AutoVOT", "autovot - original")
 		elif tierName[-5:] == "stops":
-			logger.error("Error: There is a tier with the word 'stops' in its label in {}. You must "\
-				"relabel said tier before continuing.".format(TextGrid))
+			logger.error("There is a tier with the word 'stops' in its label in {}. You must "\
+				"relabel said tier before continuing.\n".format(TextGrid))
 			sys.exit()
 		elif tierName == "":
 			logger.error("At least one tier in file {} has no name. Fix the issue before continuing."\
@@ -135,13 +134,13 @@ def addStopTier(
 	# collect all word tiers and terminate process if none exists
 	allWordTiers = [tierName for tierName in tg.tierNameList if "word" in tierName]
 	if len(allWordTiers) == 0:
-		logger.error("Error: {} does not contain any tier labeled 'words'.\n".format(TextGrid))
+		logger.error("{} does not contain any tier labeled 'words'.\n".format(TextGrid))
 		sys.exit()
 
 	# collect all phone tiers and terminate process if none exists
 	allPhoneTiers = [tierName for tierName in tg.tierNameList if "phone" in tierName]
 	if len(allPhoneTiers) == 0:
-		logger.error("Error: {} does not contain any tier labeled 'phones'.\n".format(TextGrid))
+		logger.error("{} does not contain any tier labeled 'phones'.\n".format(TextGrid))
 		sys.exit()
 
 	# verify that an equal number of word and phone tiers exists before continuing
@@ -160,7 +159,7 @@ def addStopTier(
 				speakerName = tierName.split("phone")[0]
 				phoneTier = tg.tierDict[tierName]
 				wordTier = tg.tierDict[tierName.replace("phone", "word")]
-				wordStartTimes = [entry[0] for entry in wordTier.entryList]
+				wordStartTimes = [int(entry[0]*100000) for entry in wordTier.entryList]
 				if totalSpeakers == currentSpeaker:
 					lastSpeaker = True
 				newTier = processStopTier(
@@ -181,17 +180,17 @@ def addStopTier(
 					continue
 			
 			else:
-				logger.error("Error: The names of the 'word' and 'phone' tiers are inconsistent in file {}. "\
+				logger.error("The names of the 'word' and 'phone' tiers are inconsistent in file {}. "\
 					"Fix the issue before continuing.\n".format(TextGrid))
 				sys.exit()
 	
 	else:
-		logger.error("Error: There isn't an even number of 'phone' and 'word' tiers per speaker in file {}. "\
+		logger.error("There isn't an even number of 'phone' and 'word' tiers per speaker in file {}. "\
 			"Fix the issue before continuing.\n".format(TextGrid))
 		sys.exit()
 
 	if populatedTiers == 0:
-		logger.error("Error: There were no voiceless stops found in {}.\n".format(TextGrid))
+		logger.error("There were no voiceless stops found in {}.\n".format(TextGrid))
 		sys.exit()
 
 	# generate list of all stop tiers created
@@ -221,7 +220,8 @@ def processStopTier(
 	# gather stops of interest from TextGrid
 	stopEntryList = []
 	for entry in phoneTier.entryList:
-		if entry[-1].lower() in stops and entry[0] in wordStartTimes:
+		entryStart = int(entry[0]*100000)
+		if entry[-1].lower() in stops and entryStart in wordStartTimes:
 			stopEntryList.append(entry)
 			if entry[-1].lower() in voicedStops:
 				voicedTokens.append(entry[-1].lower())
@@ -229,7 +229,7 @@ def processStopTier(
 	# apply padding and convert phone labels to lowercase
 	extendedEntryList = []
 	for start, stop, label in stopEntryList:
-		extendedEntryList.append([start+startPadding, stop+endPadding, label.lower()])
+		extendedEntryList.append([start+startPadding, stop+endPadding, label])
 
 	# check for and resolve length requirements and timing conflicts
 	for interval in range(len(extendedEntryList)-1):
@@ -238,7 +238,7 @@ def processStopTier(
 		startTime, endTime = 0, 1
 
 		if currentPhone[endTime] > nextPhone[startTime]:  # check if there is an overlap between phones
-			logger.error("Error: In file {} (after adding padding), the segment starting at {:.3f} sec overlaps with the segment starting at {:.3f}."\
+			logger.error("In file {} (after adding padding), the segment starting at {:.3f} sec overlaps with the segment starting at {:.3f}."\
 			"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to solve the conflicts."\
 			"\n\nProcess incomplete.\n".format(TextGrid, currentPhone[startTime], nextPhone[startTime]))
 			sys.exit()
@@ -327,7 +327,8 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory="output", startPadding
 
 	# verify file format
 	if not approvedFileFormat(wav, TextGrid):
-		logger.error("\n{} must be a wav file and {} must be a TextGrid file. "\
+		print()
+		logger.error("{} must be a wav file and {} must be a TextGrid file. "\
 			"One or both files do not meet format requirements.\n".format(wav, TextGrid))
 		sys.exit()
 

@@ -28,7 +28,7 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTierNumber, 4)
 		self.assertEqual(tgTiers, ['utt - words', 'utt - phones', 'utt - stops', 'AutoVOT'])
 		self.assertEqual(tgTokenNumber, 1)
-		self.assertEqual(tgTokens, ['g'])
+		self.assertEqual(tgTokens, ['G'])
 
 	def test_oneSpeakerNone(self):  #3
 		'''Test program implementation on 1 speaker with a 16kHz wav file and no stop tokens.'''
@@ -54,7 +54,7 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTierNumber, 4)
 		self.assertEqual(tgTiers, ['utt - words', 'utt - phones', 'utt - stops', 'AutoVOT'])
 		self.assertEqual(tgTokenNumber, 7)
-		self.assertEqual(tgTokens, ['g','p'])
+		self.assertEqual(tgTokens, ['G','p'])
 
 	def test_oneSpeakerShort(self):  #5
 		'''Test program implementation on 1 speaker with one token shorter than 25ms.'''
@@ -95,7 +95,7 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTiers, ['utt - words','utt - phones','utt 2 - words','utt 2 - phones',
 			'utt - stops','utt 2 - stops','utt - AutoVOT','utt 2 - AutoVOT'])
 		self.assertEqual(tgTokenNumber, 1)
-		self.assertEqual(tgTokens, ['g'])
+		self.assertEqual(tgTokens, ['G'])
 
 	def test_twoSpeakerNone(self):  #8
 		'''Test program implementation on 2 speakers with a 16kHz wav file and no stop tokens.'''
@@ -123,7 +123,7 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTiers, ['utt - words','utt - phones','utt 2 - words','utt 2 - phones',
 			'utt - stops','utt 2 - stops','utt - AutoVOT','utt 2 - AutoVOT'])
 		self.assertEqual(tgTokenNumber, 7)
-		self.assertEqual(tgTokens, ['g','p'])
+		self.assertEqual(tgTokens, ['G','p'])
 
 	def test_threeSpeakerVoiceless(self):  #10
 		'''Test program implementation on 3 speakers with a 16kHz wav file and one voiceless stop.'''
@@ -153,7 +153,7 @@ class TestVOT(unittest.TestCase):
 			'utt 3 - words','utt 3 - phones','utt - stops','utt 2 - stops','utt 3 - stops',
 			'utt - AutoVOT','utt 2 - AutoVOT','utt 3 - AutoVOT'])
 		self.assertEqual(tgTokenNumber, 1)
-		self.assertEqual(tgTokens, ['g'])
+		self.assertEqual(tgTokens, ['G'])
 
 	def test_threeSpeakerNone(self):  #12
 		'''Test program implementation on 3 speakers with a 16kHz wav file and no stop tokens.'''
@@ -183,7 +183,7 @@ class TestVOT(unittest.TestCase):
 			'utt 3 - words','utt 3 - phones','utt - stops','utt 2 - stops','utt 3 - stops',
 			'utt - AutoVOT','utt 2 - AutoVOT','utt 3 - AutoVOT'])
 		self.assertEqual(tgTokenNumber, 7)
-		self.assertEqual(tgTokens, ['g','p'])
+		self.assertEqual(tgTokens, ['G','p'])
 
 	def test_twoSpeakerDistinctVoiceless(self):  #14
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two voiceless stops.'''
@@ -238,20 +238,40 @@ class TestVOT(unittest.TestCase):
 	def test_oneSpeakerNoVoiceless(self):  #17
 		'''Test program implementation on 1 speaker with a 16kHz wav file and no voiceless stops.
 		The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit): # check that the program stops
+		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
 			calculateVOT("tests/test.wav", "tests/test7.TextGrid")
-		path = ("output/test7_output.TextGrid") # check that a file was not created
-		self.assertIs(os.path.exists(path),False)
+		path = ("output/test7_output.TextGrid")  # map the potential path
+		self.assertIs(os.path.exists(path), False)  # check that a file was not created
+		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
+		self.assertEqual(captured.records[1].getMessage(), "There were no voiceless stops found in test7.TextGrid.\n")
 
 	def test_twoSpeakerNoVoiceless(self):  #18
 		'''Test program implementation on 2 speakers with a 16kHz wav file and no voiceless stops.
 		The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit): # check that the program stops
-			calculateVOT("tests/test.wav", "tests/test8.TextGrid")
-		path = ("output/test8_output.TextGrid") # check that a file was not created
-		self.assertIs(os.path.exists(path),False)
+		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
+			calculateVOT("tests/test.wav", "tests/test8-1.TextGrid")
+		path = ("output/test8-1_output.TextGrid")  # map the potential path
+		self.assertIs(os.path.exists(path), False)  # check that a file was not created
+		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
+		self.assertEqual(captured.records[1].getMessage(), "There were no voiceless stops found in test8-1.TextGrid.\n")
 
-	def test_oneSpeakerExtraPadding(self):  #19
+	def test_twoSpeakerOneNoVoiceless(self):  #19
+		'''Test program implementation on 2 speakers with a 16kHz wav file and one speaker has no voiceless stops.
+		The program should continue only for the speaker with voiceless stops, not the other.'''
+		with self.assertLogs() as captured: # check that the program stops and its logs
+			calculateVOT("tests/test.wav", "tests/test8-2.TextGrid")
+		tg = tgio.openTextgrid("output/test8-2_output.TextGrid")
+		tgTierNumber = len(tg.tierNameList)
+		tgTiers = tg.tierNameList
+		tgTokenNumber = len(tg.tierDict[tgTiers[-1]].entryList)
+		tgTokens = sorted(list(set([label for start,end,label in tg.tierDict[tgTiers[-2]].entryList])))
+		self.assertEqual(tgTierNumber, 6)
+		self.assertEqual(tgTiers, ['utt - words','utt - phones',
+			'utt2 - words','utt2 - phones','utt - stops','AutoVOT'])
+		self.assertEqual(tgTokenNumber, 21)
+		self.assertEqual(tgTokens, ['k', 'p'])
+
+	def test_oneSpeakerExtraPadding(self):  #20
 		'''Test program implementation on 1 speaker with a 16kHz wav file and excessive padding.
 		The program should print a warning message indicating readjustment to 25ms.'''
 		with self.assertLogs() as captured:
@@ -260,7 +280,7 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(captured.records[1].getMessage(), "An endPadding of 0.03 sec exceeds the maximum. "\
 			"It was adjusted to 0.025 sec.\n")
 
-	def test_oneSpeakerProximity(self):  #20
+	def test_oneSpeakerProximity(self):  #21
 		'''Test program implementation on 1 speaker with a 16kHz wav file, maximum padding (25ms), 
 		and two phones close together. The program should print a warning message indicating a 
 		shift and the time in the recording where it occurred.'''
@@ -270,45 +290,66 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(captured.records[1].getMessage(), "In File test9-2.TextGrid, the phone "\
 			"starting at 23.201 was shifted forward due to a proximity issue.\n")
 
-	def test_oneSpeakerOverlapping(self):  #21
+	def test_oneSpeakerOverlapping(self):  #22
 		'''Test program implementation on 1 speaker with a 16kHz wav file and two overlapping tokens.
 		The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit): # check that the program stops
+		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
 			calculateVOT("tests/test.wav", "tests/test9-3.TextGrid",['k'],endPadding=0.025)
+		path = ("output/test9-3_output.TextGrid")  # map the potential path
+		self.assertIs(os.path.exists(path), False)  # check that a file was not created
+		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
+		self.assertEqual(captured.records[1].getMessage(), "In file test9-3.TextGrid (after adding padding), the segment"\
+			" starting at 23.047 sec overlaps with the segment starting at 23.200."\
+			"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to solve the conflicts."\
+			"\n\nProcess incomplete.\n")
 
-	def test_twoSpeakerFirstProximity(self):  #22
+	def test_twoSpeakerFirstProximity(self):  #23
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two tokens close together
 		for the first speaker. The program should print a warning messages indicating the shifts 
 		and the time  in the recording where they occurred.'''
 		with self.assertLogs() as captured:
-			calculateVOT("tests/test.wav", "tests/test10.TextGrid",['k'])
+			calculateVOT("tests/test.wav", "tests/test10-1.TextGrid",['k'])
 		self.assertEqual(len(captured.records), 3)
-		self.assertEqual(captured.records[1].getMessage(), "In File test10.TextGrid, the phone "\
+		self.assertEqual(captured.records[1].getMessage(), "In File test10-1.TextGrid, the phone "\
 			"starting at 23.201 was shifted forward due to a proximity issue.\n")
 
-	def test_twoSpeakersFirstOverlapping(self):  #23
+	def test_twoSpeakersFirstOverlapping(self):  #24
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two overlapping tokens
 		for the first speaker. The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit): # check that the program stops
-			calculateVOT("tests/test.wav", "tests/test10.TextGrid",['k'],endPadding=0.025)
+		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
+			calculateVOT("tests/test.wav", "tests/test10-2.TextGrid",['k'],endPadding=0.025)
+		path = ("output/test10-2_output.TextGrid")  # map the potential path
+		self.assertIs(os.path.exists(path), False)  # check that a file was not created
+		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
+		self.assertEqual(captured.records[1].getMessage(), "In file test10-2.TextGrid (after adding padding), the segment"\
+			" starting at 23.047 sec overlaps with the segment starting at 23.200."\
+			"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to solve the conflicts."\
+			"\n\nProcess incomplete.\n")
 
-	def test_twoSpeakerSecondProximity(self):  #24
+	def test_twoSpeakerSecondProximity(self):  #25
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two tokens close together
 		for the second speaker. The program should print a warning messages indicating the shifts 
 		and the time  in the recording where they occurred.'''
 		with self.assertLogs() as captured:
-			calculateVOT("tests/test.wav", "tests/test11.TextGrid",['k'])
+			calculateVOT("tests/test.wav", "tests/test11-1.TextGrid",['k'])
 		self.assertEqual(len(captured.records), 3)
-		self.assertEqual(captured.records[1].getMessage(), "In File test11.TextGrid, the phone "\
+		self.assertEqual(captured.records[1].getMessage(), "In File test11-1.TextGrid, the phone "\
 			"starting at 23.201 was shifted forward due to a proximity issue.\n")
 
-	def test_oneSpeakerSecondOverlapping(self):  #25
+	def test_oneSpeakerSecondOverlapping(self):  #26
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two overlapping tokens for
 		the second speaker. The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit): # check that the program stops
-			calculateVOT("tests/test.wav", "tests/test11.TextGrid",['k'],endPadding=0.025)
+		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
+			calculateVOT("tests/test.wav", "tests/test11-2.TextGrid",['k'],endPadding=0.025)
+		path = ("output/test11-2_output.TextGrid")  # map the potential path
+		self.assertIs(os.path.exists(path), False)  # check that a file was not created
+		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
+		self.assertEqual(captured.records[1].getMessage(), "In file test11-2.TextGrid (after adding padding), the segment"\
+			" starting at 23.047 sec overlaps with the segment starting at 23.200."\
+			"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to solve the conflicts."\
+			"\n\nProcess incomplete.\n")
 
-	def test_inconsistentCapitalization(self):  #26
+	def test_inconsistentCapitalization(self):  #27
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two pairs of inconsistently 
 		capitalized tiers. The program should conver all labels to lowercase and continue the process.'''
 		calculateVOT("tests/test.wav", "tests/test12.TextGrid",["p"])
@@ -323,33 +364,52 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTokenNumber, 6)
 		self.assertEqual(tgTokens, ['p'])
 
-	def test_mismatchedTiers(self):  #27
+	def test_mismatchedTiers(self):  #28
 		'''Test program implementation on 2 speakers with a 16kHz wav file but second speaker only has
 		one word tier (mismatched tier pairs). The program should raise a SystemExit error and
 		terminate the process.'''
-		with self.assertRaises(SystemExit):
+		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
 			calculateVOT("tests/test.wav", "tests/test13.TextGrid")
+		path = ("output/test13_output.TextGrid")  # map the potential path
+		self.assertIs(os.path.exists(path), False)  # check that a file was not created
+		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
+		self.assertEqual(captured.records[1].getMessage(), "There isn't an even number of 'phone' and 'word' tiers per"\
+		" speaker in file test13.TextGrid. Fix the issue before continuing.\n")
 
-	def test_noPhoneTier(self):  #28
+	def test_noPhoneTier(self):  #29
 		'''Test program implementation on 2 speakers with a 16kHz wav file but both speakers only have
 		one word tier each (no phone tiers). The program should raise a SystemExit error and
 		terminate the process.'''
-		with self.assertRaises(SystemExit):
+		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
 			calculateVOT("tests/test.wav", "tests/test14.TextGrid")
+		path = ("output/test14_output.TextGrid")  # map the potential path
+		self.assertIs(os.path.exists(path), False)  # check that a file was not created
+		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
+		self.assertEqual(captured.records[1].getMessage(), "test14.TextGrid does not contain any tier labeled 'phones'.\n")
 
-	def test_fileFormatError(self):  #29
+	def test_fileFormatError(self):  #30
 		'''Test program implementation on 2 speakers with a 16kHz wav file and a .txt file (not a TG). 
 		The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit):
+		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
 			calculateVOT("tests/test.wav", "tests/test15.txt")
+		path = ("output/test15_output.TextGrid")  # map the potential path
+		self.assertIs(os.path.exists(path), False)  # check that a file was not created
+		self.assertEqual(len(captured.records), 1)  # check that the expected messages are logged
+		self.assertEqual(captured.records[0].getMessage(), "tests/test.wav must be a wav file and tests/test15.txt must "\
+			"be a TextGrid file. One or both files do not meet format requirements.\n")
 
-	def test_stopsTierPresent(self):  #30
+	def test_stopsTierPresent(self):  #31
 		'''Test program implementation on 1 speaker with a 16kHz wav file and a preexisting 'stops' tier.
 		The program should raise a SystemExit error and terminate the process.'''
-		with self.assertRaises(SystemExit):
+		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
 			calculateVOT("tests/test.wav", "tests/test16.TextGrid")
+		path = ("output/test16_output.TextGrid")  # map the potential path
+		self.assertIs(os.path.exists(path), False)  # check that a file was not created
+		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
+		self.assertEqual(captured.records[1].getMessage(), "There is a tier with the word 'stops' in its label in "\
+				"tests/test16.TextGrid. You must relabel said tier before continuing.\n")
 
-	def test_wavTwoChannels(self):  #31
+	def test_wavTwoChannels(self):  #32
 		'''Test program implementation on 1 speaker with a 16kHz wav file with two channels. The program
 		should extract one channel and continue.'''
 		calculateVOT("tests/test-2ch.wav", "tests/test17.TextGrid",["p"])
@@ -363,7 +423,7 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTokenNumber, 6)
 		self.assertEqual(tgTokens, ['p'])
 
-	def test_wavHigherSamplingRate(self):  #32
+	def test_wavHigherSamplingRate(self):  #33
 		'''Test program implementation on 1 speaker with a 22.05kHz sampling rate wav file.'''
 		calculateVOT("tests/test-22khz.wav", "tests/test18.TextGrid",["p"])
 		tg = tgio.openTextgrid("output/test1-1_output.TextGrid")
@@ -376,57 +436,57 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTokenNumber, 6)
 		self.assertEqual(tgTokens, ['p'])
 
-	def test_oneNonStop(self):  #33
+	def test_oneNonStop(self):  #34
 		'''Test program implementation on 1 speaker where one element in the stops list is not a stop.
 		The program should remove the element from the list and continue.'''
 		with self.assertLogs() as captured:
 			calculateVOT("tests/test.wav", "tests/test19.TextGrid",['p','a'])
 		self.assertEqual(len(captured.records), 3)
-		self.assertEqual(captured.records[1].getMessage(), "'a' is not a stop sound. "\
+		self.assertEqual(captured.records[1].getMessage(), "'a' is not (or does not start with) a stop sound. "\
 			"This symbol will be ignored in file test19.TextGrid.\n")
 
-	def test_twoNonStops(self):  #34
+	def test_twoNonStops(self):  #35
 		'''Test program implementation on 1 speaker where one element in the stops list is not a stop.
 		The program should remove the element from the list and continue.'''
 		with self.assertLogs() as captured:
 			calculateVOT("tests/test.wav", "tests/test20.TextGrid",['p','a','e'])
 		self.assertEqual(len(captured.records), 3)
-		self.assertEqual(captured.records[1].getMessage(), "'a', 'e' are not stop sounds. "\
+		self.assertEqual(captured.records[1].getMessage(), "'a', 'e' are not (or do not start with) stop sounds. "\
 			"These symbols will be ignored in file test20.TextGrid.\n")
 
-	def test_onlySoundNonStop(self):  #35
+	def test_onlySoundNonStop(self):  #36
 		'''Test program implementation on 1 speaker where the only element in the stops list is not a stop.
 		The program should remove the element from the list and continue analyzing all voiceless stops.'''
 		with self.assertLogs() as captured:
 			calculateVOT("tests/test.wav", "tests/test21.TextGrid",['a'])
 		self.assertEqual(len(captured.records), 5)
-		self.assertEqual(captured.records[1].getMessage(), "'a' is not a stop sound. This symbol will "\
+		self.assertEqual(captured.records[1].getMessage(), "'a' is not (or does not start with) a stop sound. This symbol will "\
 			"be ignored in file test21.TextGrid.\n")
 		self.assertEqual(captured.records[2].getMessage(), "The sound you entered is not classified as "\
 			"a stop sound by the IPA.")
 		self.assertEqual(captured.records[3].getMessage(), "The program will continue by analyzing all "\
 			"voiceless stops recognized by the IPA.\n")
 
-	def test_onlyTwoSoundsNonStop(self):  #36
+	def test_onlyTwoSoundsNonStop(self):  #37
 		'''Test program implementation on 1 speaker where the only element in the stops list is not a stop.
 		The program should remove the element from the list and continue analyzing all voiceless stops.'''
 		with self.assertLogs() as captured:
 			calculateVOT("tests/test.wav", "tests/test22.TextGrid",['a','e'])
 		self.assertEqual(len(captured.records), 5)
-		self.assertEqual(captured.records[1].getMessage(), "'a', 'e' are not stop sounds. These symbols "\
+		self.assertEqual(captured.records[1].getMessage(), "'a', 'e' are not (or do not start with) stop sounds. These symbols "\
 			"will be ignored in file test22.TextGrid.\n")
 		self.assertEqual(captured.records[2].getMessage(), "Neither of the sounds you entered is classified "\
 			"as a stop sound by the IPA.")
 		self.assertEqual(captured.records[3].getMessage(), "The program will continue by analyzing all "\
 			"voiceless stops recognized by the IPA.\n")
 
-	def test_onlyThreeSoundsNonStop(self):  #37
+	def test_onlyThreeSoundsNonStop(self):  #38
 		'''Test program implementation on 1 speaker where the only element in the stops list is not a stop.
 		The program should remove the element from the list and continue analyzing all voiceless stops.'''
 		with self.assertLogs() as captured:
 			calculateVOT("tests/test.wav", "tests/test23.TextGrid",['a','e','i'])
 		self.assertEqual(len(captured.records), 5)
-		self.assertEqual(captured.records[1].getMessage(), "'a', 'e', 'i' are not stop sounds. These "\
+		self.assertEqual(captured.records[1].getMessage(), "'a', 'e', 'i' are not (or do not start with) stop sounds. These "\
 			"symbols will be ignored in file test23.TextGrid.\n")
 		self.assertEqual(captured.records[2].getMessage(), "None of the sounds you entered is classified "\
 			"as a stop sound by the IPA.")
