@@ -64,7 +64,7 @@ def processParameters(
 		endPadding = -0.025
 
 	# specify stop categories
-	ipaStops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'",
+	ipaStops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 
 				'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 	voicelessStops = ['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'", 'pp', 'tt', 'ʈʈ', 'cc', 
 				'kk', 'qq', 'ʔʔ'] #??added geminates
@@ -223,7 +223,7 @@ def processStopTier(
 		entryStart = int(entry[0]*100000)
 		if (entry[-1].lower() in stops or entry[-1] in stops) and entryStart in wordStartTimes:
 			stopEntryList.append(entry)
-			if entry[-1].lower() in voicedStops:
+			if entry[-1][0].lower() in voicedStops:
 				voicedTokens.append(entry[-1].lower())
 
 	# apply padding and convert phone labels to lowercase
@@ -301,11 +301,11 @@ def applyAutoVOT(wav, stopTiers, annotatedTextgrid):
 		for tierName in stopTiers:
 			subprocess.run([
 				"python", "autovot_shortcut/auto_vot_decode.py", 
-				"--vot_tier", tierName,
+				"--vot_tier", tierName, 
 				"--vot_mark", "*", 
 				tempSound, 
 				annotatedTextgrid, 
-				"autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model",
+				"autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model", 
 				"--ignore_existing_tiers"
 				])
 
