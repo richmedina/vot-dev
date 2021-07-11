@@ -1,0 +1,5 @@
+MaSS - Multilingual corpus of Sentence-aligned Spoken utterances
+
+Textgrids: https://github.com/getalp/mass-dataset
+
+Audio: https://www.faithcomesbyhearing.com/audio-bible-resources/mp3-downloads?language=Russian&version=RUSS76N2DA

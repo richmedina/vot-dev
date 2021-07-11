@@ -51,16 +51,20 @@ def processParameters(
 
 	# adjust long padding values
 	if startPadding > 0.025:
-		logger.info("A startPadding of {} sec exceeds the maximum. It was adjusted to 0.025 sec.\n".format(startPadding))
+		logger.info("A startPadding of {} sec exceeds the maximum. It was adjusted to 0.025 sec.\n"\
+			.format(startPadding))
 		startPadding = 0.025
 	elif startPadding < -0.025:
-		logger.info("A startPadding of {} sec exceeds the minimum. It was adjusted to -0.025 sec.\n".format(startPadding))
+		logger.info("A startPadding of {} sec exceeds the minimum. It was adjusted to -0.025 sec.\n"\
+			.format(startPadding))
 		startPadding = -0.025
 	if endPadding > 0.025:
-		logger.info("An endPadding of {} sec exceeds the maximum. It was adjusted to 0.025 sec.\n".format(endPadding))
+		logger.info("An endPadding of {} sec exceeds the maximum. It was adjusted to 0.025 sec.\n"\
+			.format(endPadding))
 		endPadding = 0.025
 	elif endPadding < -0.025:
-		logger.info("An endPadding of {} sec exceeds the minimum. It was adjusted to -0.025 sec.\n".format(endPadding))
+		logger.info("An endPadding of {} sec exceeds the minimum. It was adjusted to -0.025 sec.\n"\
+			.format(endPadding))
 		endPadding = -0.025
 
 	# specify stop categories
@@ -81,9 +85,11 @@ def processParameters(
 				nonStops.append(stopSymbol)
 
 		if len(nonStops) == 1:
-			logger.info("'{}' is not (or does not start with) a stop sound. This symbol will be ignored in file {}.\n".format(nonStops[0], TextGrid))
+			logger.info("'{}' is not (or does not start with) a stop sound. This symbol will be ignored "\
+				"in file {}.\n".format(nonStops[0], TextGrid))
 		elif len(nonStops) > 1:
-			logger.info("'{}' are not (or do not start with) stop sounds. These symbols will be ignored in file {}.\n".format("', '".join(nonStops), TextGrid))
+			logger.info("'{}' are not (or do not start with) stop sounds. These symbols will be ignored "\
+				"in file {}.\n".format("', '".join(nonStops), TextGrid))
 
 		if len(vettedStops) == 0:
 			if len(stops) == 1:
@@ -156,7 +162,9 @@ def addStopTier(
 		for tierName in allPhoneTiers:
 			currentSpeaker += 1
 			if tierName.replace("phone", "word") in allWordTiers:
-				speakerName = tierName.split("phone")[0]
+				speakerName = tierName.split("phone")
+				if speakerName[1].lower().startswith('s'):
+					speakerName[1] = speakerName[1][1:]
 				phoneTier = tg.tierDict[tierName]
 				wordTier = tg.tierDict[tierName.replace("phone", "word")]
 				wordStartTimes = [int(entry[0]*100000) for entry in wordTier.entryList]
@@ -194,7 +202,7 @@ def addStopTier(
 		sys.exit()
 
 	# generate list of all stop tiers created
-	stopTiers = [tierName for tierName in tg.tierNameList if tierName[-5:] == "stops"]
+	stopTiers = [tierName for tierName in tg.tierNameList if "stops" in tierName]
 
 	# save the new textgrid with a 'stop' tier
 	saveName = TextGrid.split(".TextGrid")[0]+"_output.TextGrid"
@@ -238,50 +246,56 @@ def processStopTier(
 		startTime, endTime = 0, 1
 
 		if currentPhone[endTime] > nextPhone[startTime]:  # check if there is an overlap between phones
-			logger.error("In file {} (after adding padding), the segment starting at {:.3f} sec overlaps with the segment starting at {:.3f}."\
-			"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to solve the conflicts."\
-			"\n\nProcess incomplete.\n".format(TextGrid, currentPhone[startTime], nextPhone[startTime]))
+			logger.error("In file {} (after adding padding), the segment starting at {:.3f} sec overlaps "\
+				"with the segment starting at {:.3f}."\
+				"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to "\
+				"solve the conflicts."\
+				"\n\nProcess incomplete.\n".format(TextGrid, currentPhone[startTime], nextPhone[startTime]))
 			sys.exit()
 		elif currentPhone[endTime] - currentPhone[startTime] < 0.025:  # check if currentPhone is under 25ms
 			if nextPhone[startTime] - currentPhone[endTime] <= 0.020:  # check if nextPhone is within 20ms
 				currentPhone[endTime] = currentPhone[startTime] + 0.025  # make currentPhone 25ms long
-				nextPhone[startTime] = currentPhone[endTime] + 0.021  # shift nextPhone 21ms after new endTime of currentPhone
-				logger.warning("In File {}, the phone starting at {:.3f} was elongaged to 25 ms because it did not meet length "\
-					"requirements, and the phone starting at {:.3f} was shifted forward due to a proximity issue. "\
-					"Please, verify manually that the modified windows still capture the segments accurately.\n"\
-					.format(TextGrid, currentPhone[startTime], nextPhone[startTime]))
+				nextPhone[startTime] = currentPhone[endTime] + 0.021  # shift nextPhone 21ms after currentPhone
+				logger.warning("In File {}, the phone starting at {:.3f} was elongaged to 25 ms because it "\
+					"did not meet length requirements, and the phone starting at {:.3f} was shifted forward "\
+					"due to a proximity issue. Please, verify manually that the modified windows still capture "\
+					"the segments accurately.\n".format(TextGrid, currentPhone[startTime], nextPhone[startTime]))
 			else:
 				currentPhone[endTime] = currentPhone[startTime] + 0.025  # make currentPhone 25ms long
-				logger.warning("In File {}, the phone starting at {:.3f} was elongaged to 25 ms because it did not meet length "\
-					"requirements.\n"\
-					.format(TextGrid, currentPhone[startTime]))
+				logger.warning("In File {}, the phone starting at {:.3f} was elongaged to 25 ms because it did "\
+					"not meet length requirements.\n".format(TextGrid, currentPhone[startTime]))
 		else:
 			if nextPhone[startTime] - currentPhone[endTime] <= 0.020:  # check if nextPhone is within 20ms
-				nextPhone[startTime] = currentPhone[endTime] + 0.021  # shift nextPhone 21ms after endTime of currentPhone
-				logger.warning("In File {}, the phone starting at {:.3f} was shifted forward due to a proximity issue.\n"\
-						.format(TextGrid, nextPhone[startTime]))
+				nextPhone[startTime] = currentPhone[endTime] + 0.021  # shift nextPhone 21ms after currentPhone
+				logger.warning("In File {}, the phone starting at {:.3f} was shifted forward due to a proximity "\
+					"issue.\n".format(TextGrid, nextPhone[startTime]))
 
-		if interval == len(extendedEntryList)-1 and nextPhone[endTime] - nextPhone[startTime] < 0.025:  # if the last segment is too short
-			nextPhone[endTime] = nextPhone[startTime] + 0.025  # shift nextPhone's (last phone) endTime to be 25 ms after startTime
+		if interval == len(extendedEntryList)-1 and nextPhone[endTime] - nextPhone[startTime] < 0.025:  # last segment
+			nextPhone[endTime] = nextPhone[startTime] + 0.025  # shift last phone's endTime 25 ms after startTime
 
 	# provide warning for voiced tokens
-	if len(list(set(voicedTokens))) == 1 and lastSpeaker:  # check for lastSpeaker to print info only once, if multiple speakers are present
-		logger.warning("You're trying to obtain VOT calculations of the following voiced stop: '{}'".format(*list(set(voicedTokens)))) # best way to list??
+	if len(list(set(voicedTokens))) == 1 and lastSpeaker:  # print only once, for last speaker
+		logger.warning("You're trying to obtain VOT calculations of the following voiced stop: '{}'"\
+		.format(*list(set(voicedTokens)))) # best way to list??
 		logger.info("Note that AutoVOT's current model only works on voiceless stops; "\
 			"prevoicing in the productions may result in inaccurate calculations.\n")
-	elif len(list(set(voicedTokens))) > 1 and lastSpeaker:  # check for lastSpeaker to print info only once, if multiple speakers are present
-		logger.warning("You're trying to obtain VOT calculations of the following voiced stops: '{}'".format("', '".join(list(set(voicedTokens)))))
+	elif len(list(set(voicedTokens))) > 1 and lastSpeaker:  # print only once, for last speaker
+		logger.warning("You're trying to obtain VOT calculations of the following voiced stops: '{}'"\
+			.format("', '".join(list(set(voicedTokens)))))
 		logger.info("Note that AutoVOT's current model only works on voiceless stops; "\
 			"prevoicing in the productions may result in inaccurate calculations.\n")
 
 	# construct the stop tier if stops were identified
 	if len(extendedEntryList) > 0:
-		stopTier = phoneTier.new(name = speakerName+"stops", entryList = extendedEntryList)
+		stopTier = phoneTier.new(name = speakerName[0]+"stops"+speakerName[1], entryList = extendedEntryList)
 		return stopTier		
 	else:
 		return False
 
-def applyAutoVOT(wav, stopTiers, annotatedTextgrid):
+def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinctChannels):
+
+	# track whether or not predictions were calculated
+	processComplete = False
 
 	# make temporary directory to process predictions
 	with tempfile.TemporaryDirectory() as tempDirectory:
@@ -293,21 +307,47 @@ def applyAutoVOT(wav, stopTiers, annotatedTextgrid):
 		tempSound = os.path.join(tempDirectory, wav)
 		if psnd.get_sampling_frequency() != 16000:
 			psnd = psnd.resample(16000)
-		if psnd.get_number_of_channels() != 1:
-			psnd = psnd.extract_channel(1)
-		psnd.save(tempSound, "WAV")
-		
-		# run VOT predictor
-		for tierName in stopTiers:
-			subprocess.run([
-				"python", "autovot_shortcut/auto_vot_decode.py", 
-				"--vot_tier", tierName, 
-				"--vot_mark", "*", 
-				tempSound, 
-				annotatedTextgrid, 
-				"autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model", 
-				"--ignore_existing_tiers"
-				])
+
+		if distinctChannels:  # if multiple channels -- ie: one microphone per speaker
+			
+			channels = psnd.extract_all_channels()
+			channelNumber = 0
+
+			for psnd in channels:
+				psnd.save(tempSound, "WAV")
+
+				subprocess.run([
+					"python", "autovot_shortcut/auto_vot_decode.py", 
+					"--vot_tier", stopTiers[channelNumber], 
+					"--vot_mark", "*", 
+					tempSound, 
+					annotatedTextgrid, 
+					"autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model", 
+					"--ignore_existing_tiers"
+					])
+
+				channelNumber += 1
+				processComplete = True
+
+		else:
+	
+			if psnd.get_number_of_channels() != 1:
+				psnd = psnd.extract_channel(preferredChannel)
+			psnd.save(tempSound, "WAV")
+			
+			# run VOT predictor
+			for tierName in stopTiers:
+				subprocess.run([
+					"python", "autovot_shortcut/auto_vot_decode.py", 
+					"--vot_tier", tierName, 
+					"--vot_mark", "*", 
+					tempSound, 
+					annotatedTextgrid, 
+					"autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model", 
+					"--ignore_existing_tiers"
+					])
+
+				processComplete = True
 
 	# rename repeated labels of AutoVOT prediction tiers
 	if len(stopTiers) > 1:  # if multiple speakers
@@ -316,14 +356,25 @@ def applyAutoVOT(wav, stopTiers, annotatedTextgrid):
 			tierNumber = 0
 			for line in TG:
 				if "AutoVOT" in line:
-					line = line.replace("AutoVOT", stopTiers[tierNumber].split("stops")[0]+"AutoVOT") # relies on naming of tiers as "stops"
+					nameBookEnds = stopTiers[tierNumber].split("stops")  # relies on naming of tiers as "stops"
+					line = line.replace("AutoVOT", nameBookEnds[0]+"AutoVOT"+nameBookEnds[1])
 					tierNumber += 1
 				newTG.append(line)
 		with open(annotatedTextgrid, "w") as TG:
 			TG.writelines(newTG)
-	return
+	
+	return processComplete
 
-def calculateVOT(wav, TextGrid, stops=[], outputDirectory="output", startPadding=0, endPadding=0):
+def calculateVOT(
+	wav, 
+	TextGrid, 
+	stops=[], 
+	outputDirectory="output", 
+	startPadding=0, 
+	endPadding=0, 
+	preferredChannel=1, 
+	distinctChannels=False
+	):
 
 	# verify file format
 	if not approvedFileFormat(wav, TextGrid):
@@ -347,10 +398,16 @@ def calculateVOT(wav, TextGrid, stops=[], outputDirectory="output", startPadding
 	annotatedTextgrid = os.path.join(outputDirectory, saveName)
 
 	# apply AutoVOT prediction calculations
-	applyAutoVOT(wav, stopTiers, annotatedTextgrid)
+	processComplete = getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinctChannels)
 
-	print()
-	logger.info("Process for {} and {} is complete.\n".format(wav, TextGrid))
+	if processComplete:
+		print()
+		logger.info("Process for {} and {} is complete.\n".format(wav, TextGrid))
+	else:
+		print()
+		logger.error("Something went wrong while trying to obtain VOT predictions for files {} and {}.\n"\
+			.format(wav, TextGrid))
+		sys.exit() #is this even necessary?
 
 	return
 

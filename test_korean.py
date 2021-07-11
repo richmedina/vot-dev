@@ -16,13 +16,15 @@ class TestVOT(unittest.TestCase):
 		tgTokens = sorted(list(set([label for start, end, label in tg.tierDict[tgTiers[-2]].entryList])))
 		self.assertEqual(tgTierNumber, 4)
 		self.assertEqual(tgTiers, ['korean phones', 'korean words', 'korean stops', 'AutoVOT'])
-		self.assertEqual(tgTokenNumber, 97)
+		self.assertEqual(tgTokenNumber, 11)
 		self.assertEqual(tgTokens, ['cc', 'kk', 'pp', 'tt'])
 		
 
 	def test_allVoicelessKoreanStops(self):  #2
 		'''Test program implementation on 1 speaker with a 22.05kHz wav file and and all stops in korean.'''
-		calculateVOT("korean_tests/s22m37m6.wav", "korean_tests/s22m37m6.TextGrid", ['p0', 'ph', 'pp', 't0', 'th', 'tt', 'k0', 'kh', 'kk'])
+		calculateVOT("korean_tests/s22m37m6.wav", 
+			"korean_tests/s22m37m6.TextGrid", 
+			['p0', 'ph', 'pp', 't0', 'th', 'tt', 'k0', 'kh', 'kk'])
 		tg = tgio.openTextgrid("output/s22m37m6_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
@@ -30,8 +32,8 @@ class TestVOT(unittest.TestCase):
 		tgTokens = sorted(list(set([label for start, end, label in tg.tierDict[tgTiers[-2]].entryList])))
 		self.assertEqual(tgTierNumber, 4)
 		self.assertEqual(tgTiers, ['korean phones', 'korean words', 'korean stops', 'AutoVOT'])
-		self.assertEqual(tgTokenNumber, 519)
-		self.assertEqual(tgTokens, ['k0', 'kh', 'kk', 'p0', 'ph', 'pp', 't0', 'th', 'tt'])
+		self.assertEqual(tgTokenNumber, 91)
+		self.assertEqual(tgTokens, ['k0', 'kh', 'kk', 'p0', 'ph', 'pp', 't0', 'tt'])
 
 
 
