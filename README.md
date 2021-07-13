@@ -228,13 +228,15 @@ This software was developed as part of a summer internship hosted by [The Langua
 
 Finally, I want to thank all the researchers (listed below in alphabetical order of the language), who have made their own corpora available to the public or shared them with me to allow me to test VOT-CP with cross-linguistic data. I also want to acknowledge them for answering questions regarding the languages they study and their corpora.
 
-* Arabic: 
-* Cantonese: 
-* (American) English: 
-* (Indian) English: 
-* Korean: 
-* Russian: 
-* Spanish: 
+* Arabic: [Arabic Speech Corpus](http://en.arabicspeechcorpus.com/)
+  - Dr. Nawar Halabi
+* Cantonese: [SpiCE: Speech in Cantonese and English](https://dataverse.scholarsportal.info/dataset.xhtml?persistentId=doi:10.5683/SP2/MJOXP3)
+  - Khia A. Johnson
+* (American & Indian) English: [The Wildcat Corpus of Native and Foreign-Accented English](https://groups.linguistics.northwestern.edu/speech_comm_group/wildcat/)
+  - Dr. Ann Bradlow (and colleagues)
+* Korean: [Seoul Corpus](http://www.tyoon.net/scripts/praat/exphon2/SeoulCorpus.pdf)
+* Russian: [MaSS - Multilingual corpus of Sentence-aligned Spoken utterances](https://github.com/getalp/mass-dataset)
+* Spanish: [Archive of L1 and L2 Scripted and Spontaneous Transcripts And Recording (ALLSSTAR) Corpus](https://speechbox.linguistics.northwestern.edu/#!/home)
 
 | test | sldfa |
 | ---  | ---   |
