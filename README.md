@@ -16,8 +16,8 @@ VOT-CP is a Python program that allows for the automatic codification of phoneti
 
 The program takes in:
 
-1. a `.wav` file, and
-2. a `.TextGrid` with time-aligned word and phone tiers.
+1. `.wav` files, and
+2. `.TextGrid` files with time-aligned word and phone tiers.
 
 And it returns
 
@@ -64,7 +64,7 @@ In order to use this program, you will need the following installed in your mach
 
 _VOT-CP is available from Github_.
 
-To install the program for the first time, run the following command:
+To install the program for the first time, run the following command in your terminal window:
 
   ```
   $ git clone https://github.com/...
@@ -82,7 +82,7 @@ https://help.github.com/articles/set-up-git
 
 ## Usage
 
-### User-provided files and directories
+### User-provided files
 
 VOT-CP allows for more flexibility when processing your data, for it manages certain format settings that AutoVOT does not. However, there are still certain limitations to the format of the data that can be submitted as input to the software. 
 
@@ -91,7 +91,7 @@ VOT-CP allows for more flexibility when processing your data, for it manages cer
 What is **allowed**:
 * Can be any length (note that longer files will likely take longer to process).
 * Can have one or multiple channels (see below for instructions on selecting particular channels).
-* Can have any sampling frequency (provided that it's accepted by [Praat](https://www.fon.hum.uva.nl/praat/)).
+* Can have any sampling frequency (provided that it is accepted by [Praat](https://www.fon.hum.uva.nl/praat/)).
 
 What is **required**:
 * Must be `.wav` files; other formats are not accepted.
@@ -100,7 +100,7 @@ What is **required**:
 * Must have stop segments in the 'phone' tier that are at least 25 ms long.
 * Must have stop segments that are over 20 ms apart from each other.
 
-#### TextGrids:
+#### Transcriptions:
 
 What is **allowed**:
 * Tier labels can have any capitalization, for example:
@@ -115,6 +115,7 @@ What is **allowed**:
   - 'Word-john', 'phone-John' [both singular; identifying information '-john' is placed and spelled consistently; capitalization is irrelevant]
 
 What is **required**:
+* Must be `.TextGrid` files; other formats are not accepted.
 * Must have a time-aligned word tier
 * Must have a time-aligned phone tier
 * Must have an identical inverval boundary (not close enough, identical) between word onset and start of first phone
