@@ -12,7 +12,7 @@ Richard Medina (...(?))
 
 ## Description
 
-VOT-CP is a Python program that allows for the automatic codification of phonetically aligned data in order to obtain VOT predictions. This program makes use of [AutoVOT](https://github.com/mlml/autovot)'s model for generating the VOT calculations. When provided with a TextGrid that contains a word and phone tier, the program will identify all word-initial stop consonants of interest. VOT-CP will then generate and populate a new tier that can be used by AutoVOT to find the burst and onset of voicing for all selected segments. 
+VOT-CP is a Python program that allows for the automatic codification of phonetically aligned data in order to obtain voice onset time (VOT) predictions. This program makes use of [AutoVOT](https://github.com/mlml/autovot)'s model for generating the VOT calculations. When provided with a TextGrid that contains a word and phone tier, the program will identify all word-initial stop consonants of interest. VOT-CP will then generate and populate a new tier that can be used by AutoVOT to find the burst and onset of voicing for all selected segments. 
 
 The program takes in:
 
@@ -178,22 +178,27 @@ While capitalization will be irrelevant in matching wav and TextGrid files, spel
 
 The optional arguments for single-pair processing and batch processing are: 
 
-| Arguments         | Description |
-| :---              | :---        |
-|`stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered for this parameter, the program will default to all singleton and geminate stops recognaized by the IPA: `['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']`. |
-|`outputDirectory`  | a string to be used as the name for the directory (ie, folder) were the output will be stored. If the directory already exists, the output will be stored there; otherwise, a new directory will be created with the name provided. If nothing is entered for this parameter, the program will defualt to `'output/'`. |
-|`startPadding`     | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's start boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, increase the segment window) and a positive value will shift the boundary right (that is, decrease the segment window). This parameter can be used when a corpus consistently marks the start boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
-|`endPadding`       | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's end boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, decrease the segment window) and a positive value will shift the boundary right (that is, increase the segment window). This parameter can be used when a corpus consistently marks the end boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
-|`preferredChannel` | a number (*an integer*) that indicates the channel to be used when obtaining VOT predictions. This parameter should be used if and only if the wav file contains multiple channels, and the first channel is not the one that contains the acoustic information. If nothing is entered for this parameter, the program will default to channel 1. |
-|`distinctChannels` | a boolean (ie, `True` or `False`) that indicates whether or not there are different speakers in the recording and transcription, each with a distinct channel. This occurs when two speakers are recorded simultaneously with different microphones. If nothing is entered for this parameter, the program defaults to `False`, indicating that the acoustic information for the speaker(s) in the transcription can be found in the `preferredChannel`. If the value `True` is entered for this parameter, the program will assume that there are as many channels in the wav file as there are speakers in the TextGrid file; it will then proceed to match the first pair of 'phone' and 'word' tiers to the first channel and any subsequent tier pairs to subsequent channels. |
+| Arguments          | Description |
+| :---               | :---        |
+| `stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered for this parameter, the program will default to all voiceless singleton stops recognaized by the IPA (and their geminate form): `['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'", 'pp', 'tt', 'ʈʈ', 'cc', 'kk', 'qq', 'ʔʔ']`. |
+| `outputDirectory`  | a string to be used as the name for the directory (ie, folder) were the output will be stored. If the directory already exists, the output will be stored there; otherwise, a new directory will be created with the name provided. If nothing is entered for this parameter, the program will defualt to `'output/'`. |
+| `startPadding`     | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's start boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, increase the segment window) and a positive value will shift the boundary right (that is, decrease the segment window). This parameter can be used when a corpus consistently marks the start boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
+| `endPadding`       | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's end boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, decrease the segment window) and a positive value will shift the boundary right (that is, increase the segment window). This parameter can be used when a corpus consistently marks the end boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
+| `preferredChannel` | a number (*an integer*) that indicates the channel to be used when obtaining VOT predictions. This parameter should be used if and only if the wav file contains multiple channels, and the first channel is not the one that contains the acoustic information. If nothing is entered for this parameter, the program will default to channel 1. |
+| `distinctChannels` | a boolean (ie, `True` or `False`) that indicates whether or not there are different speakers in the recording and transcription, each with a distinct channel. This occurs when two speakers are recorded simultaneously with different microphones. If nothing is entered for this parameter, the program defaults to `False`, indicating that the acoustic information for the speaker(s) in the transcription can be found in the `preferredChannel`. If the value `True` is entered for this parameter, the program will assume that there are as many channels in the wav file as there are speakers in the TextGrid file; it will then proceed to match the first pair of 'phone' and 'word' tiers to the first channel and any subsequent tier pairs to subsequent channels. |
 
 ### Additional notes
 
-VOT-CP is able to process data from multiple speakers within a TextGrid (ie, multiple 'phone' and 'word' tiers in the same file), regardless of the number of channels in the wav file. In fact, if multiple phone-word tier pairs are identified in the TextGrid file, the program will automatically process all of them.
+1. VOT-CP is able to process data from multiple speakers within a TextGrid (ie, multiple 'phone' and 'word' tiers in the same file), regardless of the number of channels in the wav file. In fact, if multiple phone-word tier pairs are identified in the TextGrid file, the program will automatically process all of them.
 
-This program makes use of AutoVOT's latest VOT prediction model ([AutoVOT v. 0.94](https://github.com/mlml/autovot/releases/tag/0.94)). When accurately aligned data is fed to this model, it provides VOT predictions with high accuracy. If the 
+2. This program makes use of AutoVOT's latest VOT prediction model ([AutoVOT v. 0.94](https://github.com/mlml/autovot/releases/tag/0.94)). 
+  * When accurately aligned data is fed to this model, it provides VOT predictions with high accuracy. If the data are not aligned accurately or if the segment windows are too big or too small, the accuracy of the predictions will decrease.
+  * The current model has been trained to predict VOT for voiceless stops; in its current form, it does not support calculations of negative VOT (ie, lead voicing). 
+    - Although I can say, anecdotally, that accuracy of VOT predictions for negative VOT is above chance, it is not as high as prediction accuracy for positive VOT. However, I have not investigated this issue systematically.
 
--Check your data manually.
+3. The user is advised to manually check the output data from this program. Although AutoVOT's model provides high accuracy predictions, occasional manual corrections may be required.
+
+4. If VOT-CP does not meet your current needs based on particular transcription norms for the language(s) you study or corpus format, get in touch with me to see how the program can me re-adjusted to meet those needs.
 
 ## Tutorial
 
@@ -206,6 +211,8 @@ VOT-CP is a general purpose program and doesn't need to be cited, but if you fee
 However, if you use this program to analyzed data that are presented at conferences or published, it is recommended that you [cite the AutoVOT program](https://github.com/mlml/autovot/blob/master/README.md#citing).
 
 ## Acknowledgements
+
+
 
 ## License
 
