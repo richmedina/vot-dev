@@ -62,7 +62,7 @@ In order to use this program, you will need the following installed in your mach
 
 #### Command line installation
 
-_VOT-CP is available from Github_
+_VOT-CP is available from Github_.
 
 To install the program for the first time, run the following command:
 
@@ -100,13 +100,36 @@ What is **required**:
 
 ##### TextGrids:
 
-What is **flexible**:
-* 
-* 
+What is **allowed**:
+* Tier labels can have any capitalization, for example:
+  - WORDS
+  - Words
+  - words
+  - wOrDs
+* Tier labels can have any arbitrary name (provided that the word and phone tiers match), for example:
+  - 'Word', 'Phone' [both singular]
+  - 'words', 'phones' [both plural]
+  - 'Mary - words', 'Mary - phones' [consistent spelling and spacing]
+  - 'Word-john', 'phone-John' [both singular; identifying information '-john' is placed and spelled consistently; capitalization is irrelevant]
 
-What is **required**:
-* 
-* 
+
+What is **prohibited**:
+* Tier labels with inconsistent naming, for example:
+  - 'Word', 'Phones' [mixture of singular and plural]
+  - 'words', 'phone' [mixture of singular and plural]
+  - 'Mary's - words', 'Mary - phones' [inconsistent spelling]
+  - 'Mary - words', 'Mary-phones' [inconsistent spacing]
+* Unequal number of word and phone tiers, for example:
+  - 'Phones', 'Words-Mary', 'Phones-Mary' [an additional 'Phones' tier]
+* Using the word 'stops' in any of the tier labels, for example:
+  - 'stops'
+  - 'stops tier'
+  - 'Tier stops'
+  - 'ThisIsMyStopsTier'
+* Any tiers with repeated names, for example:
+  - 'phones', 'words', 'phones', 'words'
+* Any tiers with no name.
+
 
 #### Single wav-TextGrid pair processing
 
