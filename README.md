@@ -3,7 +3,11 @@ Initial development of a Voice Onset Time library in Python.
 
 ____________________________________
 
-Project name:
+VOT-CP (VOT coding and predictions)
+=======
+
+Ernesto Gutiérrez Topete (ernesto.gutierrez@berkeley.edu)
+Richard Medina (...)
 
 Description:
 
