@@ -214,16 +214,17 @@ However, if you use this program to analyzed data that are presented at conferen
 
 This software was developed as part of a summer internship hosted by [The Language Flagship Technology Innovation Center (Tech Center)](https://thelanguageflagship.tech/). 
 
-### Development support
+#### Development support
 
 Dr. Richard Medina, from the Tech Center, was the primary reserch advisor who guided the development of this program.\
 Dr. Suzanne Freynik and Dr. Aitor Arronte Alvarez, both from the Tech Center, also provided support during the development phase.
 
-### Programming support
+#### Programming support
 
-I want to acknowledge Yannick Jadoul, Dr. Thea Knowles, and Dr. Joseph Keshet who answered questions regarding their own programs ([Parselmouth](https://parselmouth.readthedocs.io/en/stable/) and AutoVOT). Yannick Jadoul also provided invaluable support in other aspects that aided in the development of the VOT-CP program.
+I want to acknowledge Yannick Jadoul, Dr. Thea Knowles, and Dr. Joseph Keshet who answered questions regarding their own programs ([Parselmouth](https://parselmouth.readthedocs.io/en/stable/) and AutoVOT).\
+Yannick Jadoul also provided invaluable support in other aspects that aided in the development of the VOT-CP program.
 
-### Cross-linguistic corpora
+#### Cross-linguistic corpora
 
 Finally, I want to thank all the researchers (listed below in alphabetical order of the language), who have made their own corpora available to the public or shared them with me to allow me to test VOT-CP with cross-linguistic data.
 
@@ -237,7 +238,7 @@ Finally, I want to thank all the researchers (listed below in alphabetical order
 
 | test | sldfa |
 | ---  | ---   |
-| word | other |
+| word | other\ word |
 
 ## License
 
