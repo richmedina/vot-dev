@@ -158,9 +158,9 @@ The positinal arguments for this function are: `wav` and `TextGrid`, the two fil
 
 To process multiple wav and TextGrid files at once, use the function
 ```
-calculateVOTBatch("input")
+calculateVOTBatch(input)
 ```
-The sole positional argument for this function is: `input`, which indicates the name of the directory where the wav and TextGrid files are located.
+The sole positional argument for this function is: `input`, a string-based path which indicates the name (and location) of the directory where the wav and TextGrid files are located. If nothing is entered for the parameter, the program will default to looking for the directory (ie, folder) named `"input"`. If no such a folder exists or if the directory name that was entered does not lead to a real directory, the program will terminate immediately.
 
 Note that this function will iterate through all items in the corpus and identify all wav and TextGrid files, ignoring any files with other extensions. Once wav and TextGrid files are identified, they will be paired with each other on the basis of their names; that is why it is important that the files match in name, for example:
 
