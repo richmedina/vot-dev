@@ -238,7 +238,7 @@ Finally, I want to thank all the researchers (listed below in alphabetical order
 
 | test | sldfa |
 | ---  | ---   |
-| word | other \ word |
+| word | other <br /> word |
 
 ## License
 
