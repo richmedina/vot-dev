@@ -235,8 +235,11 @@ Finally, I want to thank all the researchers (listed below in alphabetical order
 * (American & Indian) English: [The Wildcat Corpus of Native and Foreign-Accented English](https://groups.linguistics.northwestern.edu/speech_comm_group/wildcat/)
   - Dr. Ann Bradlow (and colleagues)
 * Korean: [Seoul Corpus](http://www.tyoon.net/scripts/praat/exphon2/SeoulCorpus.pdf)
+  - Dr. Kyuchul Yoon (and colleagues)
 * Russian: [MaSS - Multilingual corpus of Sentence-aligned Spoken utterances](https://github.com/getalp/mass-dataset)
+  - Marcely Zanon Boito
 * Spanish: [Archive of L1 and L2 Scripted and Spontaneous Transcripts And Recording (ALLSSTAR) Corpus](https://speechbox.linguistics.northwestern.edu/#!/home)
+  - Dr. Ann Bradlow (and colleagues)
 
 | test | sldfa |
 | ---  | ---   |
