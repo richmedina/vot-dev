@@ -165,14 +165,14 @@ To process multiple wav and TextGrid files at once, use the function
 ```
 calculateVOTBatch(input)
 ```
-The sole positional argument for this function is: `input`, a string-based path which indicates the name (and location) of the directory where the wav and TextGrid files are located. If nothing is entered for the parameter, the program will default to looking for the directory (ie, folder) named `"input/"`. If no such a folder exists or if the directory name that was entered does not lead to a real directory, the program will terminate immediately.
+The sole positional argument for this function is: `input`, a string-based path which indicates the name (and location) of the directory where the wav and TextGrid files are located. If no such directory exists or if the directory name that was entered leads to an empty directory, the program will terminate immediately.
 
 Note that this function will iterate through all items in the corpus and identify all wav and TextGrid files, ignoring any files with other extensions. Once wav and TextGrid files are identified, they will be paired with each other on the basis of their names; that is why it is important that the files match in name, for example:
 
   * Allowed: `S01_interview.wav` and `S01_interview.TextGrid` as well as `John.wav` and `John.TextGrid`
   * Not allowed: `S01_interview.wav` and `S1_intvw.TextGrid` nor `Mary-audio.wav` and `Mary-transcription.TextGrid`
 
-While capitalization will be irrelevant in matching wav and TextGrid files, spelling and spacing will be essential.
+While capitalization will be irrelevant in matching wav and TextGrid files, spelling, punctuation, and spacing will be essential.
 
 #### Arguments
 
@@ -191,7 +191,7 @@ The optional arguments for single-pair processing and batch processing are:
 
 VOT-CP is able to process data from multiple speakers within a TextGrid (ie, multiple 'phone' and 'word' tiers in the same file), regardless of the number of channels in the wav file. In fact, if multiple phone-word tier pairs are identified in the TextGrid file, the program will automatically process all of them.
 
-This program makes use of AutoVOT's latest VOT prediction model (version 0.94). When accurately aligned data is fed to this model, This model 
+This program makes use of AutoVOT's latest VOT prediction model ([AutoVOT v. 0.94](https://github.com/mlml/autovot/releases/tag/0.94)). When accurately aligned data is fed to this model, it provides VOT predictions with high accuracy. If the 
 
 -Check your data manually.
 
