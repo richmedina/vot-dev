@@ -16,8 +16,8 @@ VOT-CP is a Python program that allows for the automatic codification of phoneti
 
 The program takes in:
 
-1. a `.wav` file
-2. a `.TextGrid` with aligned word and phone tiers
+1. a `.wav` file, and
+2. a `.TextGrid` with time-aligned word and phone tiers.
 
 And it returns
 
@@ -56,7 +56,7 @@ In order to use this program, you will need the following installed in your mach
 * [Python (2.7 or 3)](https://www.python.org/downloads/)
 * Python dependencies:
   - Run the command `pip install -r "requirements.txt"` on your terminal.
-* For macOS users:
+* For macOS users, complete either of the next two steps:
   - Install [Xcode](http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12) -- Do I need this??
   - Download the [Command Line Tools for Xcode](http://developer.apple.com/downloads) as a stand-alone package.
 
