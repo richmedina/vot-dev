@@ -62,7 +62,7 @@ In order to use this program, you will need the following installed in your mach
 
 #### Command line installation
 
-*VOT-CP is available from Github*
+**VOT-CP is available from Github**
 
 To install the program for the first time, run the following command:
 
@@ -72,7 +72,9 @@ To install the program for the first time, run the following command:
 
 To update the VOT-CP software, navigate to the directory where the software is installed and run:
 
-  `$ git pull origin master`
+  ```
+  $ git pull origin master
+  ```
 
 If you are new to Github, you can find helpful tutorials and tips for getting started here:
 
@@ -82,7 +84,33 @@ https://help.github.com/articles/set-up-git
 
 #### User-provided files and directories
 
+VOT-CP allows for more flexibility when processing your data, for it manages certain format settings that AutoVOT does not. However, there are still certain limitations to the format of the data that can be submitted as input to the software. 
 
+##### Audio files:
+
+What is **flexible**:
+* Can be any length (note that longer files will likely take longer to process).
+* Can have one or multiple channels (see below for instructions on selecting particular channels).
+* Can have any sampling frequency (provided it's accepted by Praat).
+
+What is **required**:
+* Must be `.wav` files; other formats are not accepted.
+* Must have a sample width of 2.
+* Must not be a compressed file.
+
+##### TextGrids:
+
+What is **flexible**:
+* 
+* 
+
+What is **required**:
+* 
+* 
+
+#### Single wav-TextGrid pair processing
+
+#### Batch processing
 
 ### Tutorial
 
