@@ -119,12 +119,12 @@ What is **required**:
 * Must have a time-aligned word tier
 * Must have a time-aligned phone tier
 * Must have an identical inverval boundary (not close enough, identical) between word onset and start of first phone
-* While the orthography (ie: alphabet) of the word tier does not matter, the label of the phone tier must use the Latin alphabet or IPA.
-* Phone labels can use any romanization system (if the language does not use Latin orthography), as long as the initial element of a stop label is a stop character (ie: \<p>, \<t>, \<k>, <ʈ>, <ɟ>, etc.), for example:
+* While the orthography (ie, alphabet) of the word tier does not matter, the label of the phone tier must use the Latin alphabet or IPA.
+* Phone labels can use any romanization system (if the language does not use Latin orthography), as long as the initial element of a stop label is a stop character (ie, \<p>, \<t>, \<k>, <ʈ>, <ɟ>, etc.), for example:
   - Allowed: 't', 'p0', 'kw', 'kk', etc.
   - Not allowed: 'at', '1p', '-k', etc.
 
-*Note that phone labels that don't use IPA or romanization will be ignored. Furthermore, any other tiers that do not contain the label 'phone' or 'word' (eg: 'lexical items', 'notes' or 'utterances') will also be ignored.
+*Note that phone labels that don't use IPA or romanization will be ignored. Furthermore, any other tiers that do not contain the label 'phone(s)' or 'word(s)' (eg, 'lexical items', 'notes' or 'utterances') will also be ignored.
 
 What is **prohibited**:
 * Tier labels with inconsistent naming, for example:
