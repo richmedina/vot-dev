@@ -152,22 +152,22 @@ To process one pair of wav and TextGrid files at a time, use the function
 ```
 calculateVOT()
 ```
-The positinal arguments for this function are: `wav` and `TextGrid`, the two files that will be processed.
-
-The optional arguments are: 
-
-| arguments         | explanation |
-| :---              | :---        |
-|`stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered in this list, the program will default to all singleton and geminate stops recognaized by the IPA. |
-|`outputDirectory`  | a string to be used as the name for the directory (ie: folder) were the output will be stored. If nothing is entered, the program will defualt to 'output/'. |
-|`startPadding`     | a float, in seconds, to indicate the amount of time to be added (or reduced) |
-|`endPadding`       |2            |
-|`preferredChannel` | 1           |
-|`distinctChannels` |   2         |
+The positinal arguments for this function are: `wav` and `TextGrid`, the two files that will be processed. See below for more information on the optional arguments.
 
 ##### Batch processing
 
 ##### Arguments
+
+The optional arguments are: 
+
+| Arguments         | Description |
+| :---              | :---        |
+|`stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered for this parameter, the program will default to all singleton and geminate stops recognaized by the IPA: `['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']`. |
+|`outputDirectory`  | a string to be used as the name for the directory (ie: folder) were the output will be stored. If nothing is entered for this parameter, the program will defualt to 'output/'. |
+|`startPadding`     | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's start boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sed). Note that a negative value will shift the boundary left (that is, increase the segment window) and a positive value will shift the boundary right (that is, decrease the segment window). This parameter can be used when a corpus consistently marks the start boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
+|`endPadding`       | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's end boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sed). Note that a negative value will shift the boundary left (that is, decrease the segment window) and a positive value will shift the boundary right (that is, increase the segment window). This parameter can be used when a corpus consistently marks the end boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
+|`preferredChannel` | a number (*an integer*) that indicates the channel to be used when obtaining VOT predictions. This parameter should be used if and only if the wav file contains multiple channels, and the first channel is not the one that contains the acoustic information. If nothing is entered for this parameter, the program will default to channel 1. |
+|`distinctChannels` | a boolean (ie, `True` or `False`) that indicates whether or not there are different speakers in the recording and transcription, each with a distinct channel. This occurs when two speakers are recorded simultaneously with different microphones. If nothing is entered for this parameter, the program defaults `False`, indicating that the acoustic information for the speaker(s) in the transcription can be found in the `preferredChannel`. If the parameter `True` is entered, the program will assume that there are as many channels in the wav file as there are speakers in the TextGrid file; it will then proceed to match the first pair of 'phone' and 'word' tiers to the first channel and any subsequent tier pairs to subsequent channels. |
 
 ### Tutorial
 
