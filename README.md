@@ -64,13 +64,23 @@ In order to use this program, you will need the following installed in your mach
 
 *VOT-CP is available from Github*
 
-  $ git clone https://github.com/...
+To install the program for the first time, run the following command:
 
-*To update the VOT-CP software, navigate to the directory where the software is installed and run*
+  `$ git clone https://github.com/...`
 
-  $ git pull origin master
+To update the VOT-CP software, navigate to the directory where the software is installed and run:
+
+  `$ git pull origin master`
+
+If you are new to Github, check out the following site for helpful tutorials and tips for getting set up:
+
+https://help.github.com/articles/set-up-git
 
 ### Usage
+
+#### User-provided files and directories
+
+
 
 ### Tutorial
 
