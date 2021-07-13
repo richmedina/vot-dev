@@ -158,10 +158,7 @@ The optional arguments are:
 
 | arguments         | explanation |
 | :---              | :---:       |
-|`stops`            | a list of phone labels to look for and process.
-                      For example: `['p','k']` if only bilabial and velar stops are of interest
-                      Remember that the labels passed in this argument must match the labels in the TextGrid file, for example
-                      `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>))|
+|`stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels passed in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). |
 |`outputDirectory`  |    4        |
 |`startPadding`     | 3           |
 |`endPadding`       |2            |
