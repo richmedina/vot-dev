@@ -100,7 +100,7 @@ What is **required**:
 * Must have stop segments in the 'phone' tier that are at least 25 ms long.
 * Must have stop segments that are over 20 ms apart from each other.
 
-#### Transcriptions:
+#### TextGrid files:
 
 What is **allowed**:
 * Tier labels can have any capitalization, for example:
@@ -115,7 +115,7 @@ What is **allowed**:
   - 'Word-john', 'phone-John' [both singular; identifying information '-john' is placed and spelled consistently; capitalization is irrelevant]
 
 What is **required**:
-* Must be `.TextGrid` files; other formats are not accepted.
+* Must be `.TextGrid` files in [full text format](https://www.fon.hum.uva.nl/praat/manual/TextGrid_file_formats.html)(ie, the default); other formats are not accepted.
 * Must have a time-aligned word tier
 * Must have a time-aligned phone tier
 * Must have an identical inverval boundary (not close enough, identical) between word onset and start of first phone
