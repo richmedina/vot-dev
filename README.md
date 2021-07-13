@@ -157,10 +157,10 @@ The positinal arguments for this function are: `wav` and `TextGrid`, the two fil
 The optional arguments are: 
 
 | arguments         | explanation |
-| :---              | :---:       |
-|`stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels passed in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). |
-|`outputDirectory`  |    4        |
-|`startPadding`     | 3           |
+| :---              | :---        |
+|`stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered in this list, the program will default to all singleton and geminate stops recognaized by the IPA. |
+|`outputDirectory`  | a string to be used as the name for the directory (ie: folder) were the output will be stored. If nothing is entered, the program will defualt to 'output/'. |
+|`startPadding`     | a float, in seconds, to indicate the amount of time to be added (or reduced) |
 |`endPadding`       |2            |
 |`preferredChannel` | 1           |
 |`distinctChannels` |   2         |
