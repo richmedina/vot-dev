@@ -112,6 +112,16 @@ What is **allowed**:
   - 'Mary - words', 'Mary - phones' [consistent spelling and spacing]
   - 'Word-john', 'phone-John' [both singular; identifying information '-john' is placed and spelled consistently; capitalization is irrelevant]
 
+What is **required**:
+* Must have a time-aligned word tier
+* Must have a time-aligned phone tier
+* Must have an identical inverval boundary (not close enough, identical) between word onset and start of first phone
+* While the orthography (ie: alphabet) of the elements in the word tier does not matter, the label of the phone tier must use Latin orthography
+* Phone labels can use any romanization system (if the language does not use Latin orthography), as long as the initial element is a stop (ie: <p>, <t>, <k>, <ʈ>, <ɟ> etc.), for example:
+  - Allowed: 't', 'p0', 'kw', 'kk', etc.
+  - Not allowed: 'at', '1p', '-k', etc.
+
+*Note that any other tiers (eg: 'notes' or 'utterances') will be ignored.
 
 What is **prohibited**:
 * Tier labels with inconsistent naming, for example:
@@ -129,6 +139,8 @@ What is **prohibited**:
 * Any tiers with repeated names, for example:
   - 'phones', 'words', 'phones', 'words'
 * Any tiers with no name.
+
+*Note that, to ensure precise matching of the phone and word tiers, both tiers must be identical in spelling, changing only in the words 'phone(s)' and 'word(s)'.
 
 
 #### Single wav-TextGrid pair processing
