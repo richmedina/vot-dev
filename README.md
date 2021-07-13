@@ -88,15 +88,15 @@ VOT-CP allows for more flexibility when processing your data, for it manages cer
 
 ##### Audio files:
 
-What is **flexible**:
+What is **allowed**:
 * Can be any length (note that longer files will likely take longer to process).
 * Can have one or multiple channels (see below for instructions on selecting particular channels).
-* Can have any sampling frequency (provided it's accepted by Praat).
+* Can have any sampling frequency (provided that it's accepted by [Praat](https://www.fon.hum.uva.nl/praat/)).
 
 What is **required**:
 * Must be `.wav` files; other formats are not accepted.
 * Must have a sample width of 2.
-* Must not be a compressed file.
+* Must not be compressed files.
 
 ##### TextGrids:
 
@@ -116,8 +116,8 @@ What is **required**:
 * Must have a time-aligned word tier
 * Must have a time-aligned phone tier
 * Must have an identical inverval boundary (not close enough, identical) between word onset and start of first phone
-* While the orthography (ie: alphabet) of the elements in the word tier does not matter, the label of the phone tier must use Latin orthography
-* Phone labels can use any romanization system (if the language does not use Latin orthography), as long as the initial element is a stop (ie: \<p>, \<t>, \<k>, <ʈ>, <ɟ>, etc.), for example:
+* While the orthography (ie: alphabet) of the word tier does not matter, the label of the phone tier must use the Latin alphabet.
+* Phone labels can use any romanization system (if the language does not use Latin orthography), as long as the initial element of a stop label is a stop character (ie: \<p>, \<t>, \<k>, <ʈ>, <ɟ>, etc.), for example:
   - Allowed: 't', 'p0', 'kw', 'kk', etc.
   - Not allowed: 'at', '1p', '-k', etc.
 
