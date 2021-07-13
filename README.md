@@ -1,7 +1,3 @@
-# vot-dev
-Initial development of a Voice Onset Time library in Python.
-
-___
 
 VOT-CP (VOT coding and predictions)
 =======
