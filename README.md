@@ -38,7 +38,7 @@ This is a beta version. Any reports of bugs, suggestions for improvements to the
 
 ---
 
-##### Table of Contents
+#### Table of Contents
 
 1. [Installation](#installation)
 2. [Usage](#usage)
@@ -49,7 +49,7 @@ This is a beta version. Any reports of bugs, suggestions for improvements to the
 
 ### Installation
 
-##### Dependencies
+#### Dependencies
 
 In order to use this program, you will need the following installed in your machine:
 * [GCC, the GNU Compiler Collection](http://gcc.gnu.org/install/download.html) Do I need this??
