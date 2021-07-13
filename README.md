@@ -117,7 +117,7 @@ What is **required**:
 * Must have a time-aligned phone tier
 * Must have an identical inverval boundary (not close enough, identical) between word onset and start of first phone
 * While the orthography (ie: alphabet) of the elements in the word tier does not matter, the label of the phone tier must use Latin orthography
-* Phone labels can use any romanization system (if the language does not use Latin orthography), as long as the initial element is a stop (ie: <p>, <t>, <k>, <ʈ>, <ɟ> etc.), for example:
+* Phone labels can use any romanization system (if the language does not use Latin orthography), as long as the initial element is a stop (ie: \<p>, \<t>, \<k>, <ʈ>, <ɟ>, etc.), for example:
   - Allowed: 't', 'p0', 'kw', 'kk', etc.
   - Not allowed: 'at', '1p', '-k', etc.
 
