@@ -52,10 +52,23 @@ This is a beta version. Any reports of bugs, suggestions for improvements to the
 #### Dependencies
 
 In order to use this program, you will need the following installed in your machine:
-* [GCC, the GNU Compiler Collection](http://gcc.gnu.org/install/download.html) Do I need this??
+* [GCC, the GNU Compiler Collection](http://gcc.gnu.org/install/download.html) -- Do I need this??
 * [Python (2.7 or 3)](https://www.python.org/downloads/)
 * Python dependencies:
   - Run the command `pip install -r "requirements.txt"` on your terminal.
+* For macOS users:
+  - Install [Xcode](http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12) -- Do I need this??
+  - Download the [Command Line Tools for Xcode](http://developer.apple.com/downloads) as a stand-alone package.
+
+#### Command line installation
+
+*VOT-CP is available from Github*
+
+  $ git clone https://github.com/...
+
+*To update the VOT-CP software, navigate to the directory where the software is installed and run*
+
+  $ git pull origin master
 
 ### Usage
 
