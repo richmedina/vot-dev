@@ -66,7 +66,9 @@ In order to use this program, you will need the following installed in your mach
 
 To install the program for the first time, run the following command:
 
-  ```$ git clone https://github.com/...```
+  ```
+  $ git clone https://github.com/...
+  ```
 
 To update the VOT-CP software, navigate to the directory where the software is installed and run:
 
