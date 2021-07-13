@@ -62,7 +62,7 @@ In order to use this program, you will need the following installed in your mach
 
 #### Command line installation
 
-**VOT-CP is available from Github**
+_VOT-CP is available from Github_
 
 To install the program for the first time, run the following command:
 
