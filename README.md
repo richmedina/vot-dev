@@ -156,12 +156,14 @@ The positinal arguments for this function are: `wav` and `TextGrid`, the two fil
 
 The positional arguments are: 
 
-`stops`         5\
-`outputDirectory`       4\
-`startPadding`      3\
-`endPadding`    2\
-`preferredChannel`  1\
-`distinctChannels`    2
+| arguments         | explanation |
+| :---              | :---:       |
+|`stops`            |5            |
+|`outputDirectory`  |    4        |
+|`startPadding`     | 3           |
+|`endPadding`       |2            |
+|`preferredChannel` | 1           |
+|`distinctChannels` |   2         |
 
 ##### Batch processing
 
