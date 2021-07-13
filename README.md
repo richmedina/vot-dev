@@ -226,7 +226,7 @@ Yannick Jadoul also provided invaluable support in other aspects that aided in t
 
 #### Cross-linguistic corpora
 
-Finally, I want to thank all the researchers (listed below in alphabetical order of the language), who have made their own corpora available to the public or shared them with me to allow me to test VOT-CP with cross-linguistic data.
+Finally, I want to thank all the researchers (listed below in alphabetical order of the language), who have made their own corpora available to the public or shared them with me to allow me to test VOT-CP with cross-linguistic data. I also want to acknowledge them for answering questions regarding the languages they study and their corpora.
 
 * Arabic: 
 * Cantonese: 
@@ -238,7 +238,7 @@ Finally, I want to thank all the researchers (listed below in alphabetical order
 
 | test | sldfa |
 | ---  | ---   |
-| word | other\ word |
+| word | other \ word |
 
 ## License
 
