@@ -216,7 +216,7 @@ This software was developed as part of a summer internship hosted by [The Langua
 
 #### Development support
 
-<space> Dr. Richard Medina, from the Tech Center, was the primary reserch advisor who guided the development of this program.\
+&nbsp; Dr. Richard Medina, from the Tech Center, was the primary reserch advisor who guided the development of this program.\
 &ensp; Dr. Suzanne Freynik and Dr. Aitor Arronte Alvarez, both from the Tech Center, also provided support during the development phase.
 
 #### Programming support
