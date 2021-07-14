@@ -248,6 +248,32 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", outputDirectory="vot-p
 
 Both of these executions provide the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name. Note that you need to include a parameter for `stops`, even if it's an empty list, to avoid writing the parameter names; otherwise use the argument name to specify the specific parameter.
 
+\
+**4 Single-pair processing with added padding:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t'], startPadding=-20, endPadding=20)
+```
+
+This execution moves the start boundary to the left by 20 ms (increasing the window) and the end boundary to the right by 20 ms (increasing the window even further).
+
+\
+**5 Single-pair processing with specific channel:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", preferredChannel = 2)
+```
+
+This execution identifies the second channel in the audio file as the channel to be looked at when obtaining VOT calculations. Regardless of how many speakers are present in the TextGrid (ie, one or more pairs of phone-word tiers), all data will be analyzed using the acoustic information in the second channel. The first channel will be ignored completely.
+
+\
+**6 Single-pair processing with distinct channels:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", distinctChannels=True)
+```
+
+This execution tells VOT-CP that there are multiple channels present in the audio file and multiple speakers represented in the TextGrid. The program will continue by linking the first channel to the first pair of phone-word tiers, the second channel to the second pair of phone-word tiers, and so on. 
+
+Note that if `distinctChannels` is set to `True` and there isn't an equal number of channels and tier pairs (eg, two channels and one tier pair), the program will terminate immediately.
+
 ## Citing VOT-CP
 
 VOT-CP is a general purpose program and doesn't need to be cited, but if you feel inclined, it can be cited in this way:
