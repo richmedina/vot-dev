@@ -50,28 +50,33 @@ def processParameters(
 	TextGrid = TextGrid.split("/")[1] #delete
 
 	# adjust long padding values
-	if startPadding > 0.025:
-		logger.info("A startPadding of {} sec exceeds the maximum. It was adjusted to 0.025 sec.\n"\
+	if startPadding > 25:
+		logger.info("A startPadding of {} ms exceeds the maximum. It was adjusted to 25 ms.\n"\
 			.format(startPadding))
 		startPadding = 0.025
-	elif startPadding < -0.025:
-		logger.info("A startPadding of {} sec exceeds the minimum. It was adjusted to -0.025 sec.\n"\
+	elif startPadding < -25:
+		logger.info("A startPadding of {} ms exceeds the minimum. It was adjusted to -25 ms.\n"\
 			.format(startPadding))
 		startPadding = -0.025
-	if endPadding > 0.025:
-		logger.info("An endPadding of {} sec exceeds the maximum. It was adjusted to 0.025 sec.\n"\
+	else:
+		startPadding = startPadding/1000
+
+	if endPadding > 25:
+		logger.info("An endPadding of {} ms exceeds the maximum. It was adjusted to 25 ms.\n"\
 			.format(endPadding))
 		endPadding = 0.025
-	elif endPadding < -0.025:
-		logger.info("An endPadding of {} sec exceeds the minimum. It was adjusted to -0.025 sec.\n"\
+	elif endPadding < -25:
+		logger.info("An endPadding of {} ms exceeds the minimum. It was adjusted to -25 ms.\n"\
 			.format(endPadding))
 		endPadding = -0.025
+	else:
+		endPadding = endPadding/1000
 
 	# specify stop categories
 	ipaStops = ['p', 'b', 't', 'd', 'ʈ', 'ɖ', 'c', 'ɟ', 'k', 'g', 'q', 'ɢ', 'ʔ', "p'", "t'", "k'", 
 				'ɓ', 'ɗ', 'ʄ', 'ɠ', 'ʛ']
 	voicelessStops = ['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'", 'pp', 'tt', 'ʈʈ', 'cc', 
-				'kk', 'qq', 'ʔʔ'] #??added geminates
+				'kk', 'qq', 'ʔʔ']
 	
 	# define stops of interest
 	if len(stops) == 0:
@@ -276,7 +281,7 @@ def processStopTier(
 	# provide warning for voiced tokens
 	if len(list(set(voicedTokens))) == 1 and lastSpeaker:  # print only once, for last speaker
 		logger.warning("You're trying to obtain VOT calculations of the following voiced stop: '{}'"\
-		.format(*list(set(voicedTokens)))) # best way to list??
+		.format(*list(set(voicedTokens))))
 		logger.info("Note that AutoVOT's current model only works on voiceless stops; "\
 			"prevoicing in the productions may result in inaccurate calculations.\n")
 	elif len(list(set(voicedTokens))) > 1 and lastSpeaker:  # print only once, for last speaker
@@ -407,7 +412,7 @@ def calculateVOT(
 		print()
 		logger.error("Something went wrong while trying to obtain VOT predictions for files {} and {}.\n"\
 			.format(wav, TextGrid))
-		sys.exit() #is this even necessary?
+		sys.exit()
 
 	return
 

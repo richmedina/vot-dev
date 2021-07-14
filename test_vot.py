@@ -275,10 +275,10 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker with a 16kHz wav file and excessive padding.
 		The program should print a warning message indicating readjustment to 25ms.'''
 		with self.assertLogs() as captured:
-			calculateVOT("tests/test.wav", "tests/test9-1.TextGrid", ['p'], endPadding=0.03)
+			calculateVOT("tests/test.wav", "tests/test9-1.TextGrid", ['p'], endPadding=30)
 		self.assertEqual(len(captured.records), 3)
-		self.assertEqual(captured.records[1].getMessage(), "An endPadding of 0.03 sec exceeds the maximum. "\
-			"It was adjusted to 0.025 sec.\n")
+		self.assertEqual(captured.records[1].getMessage(), "An endPadding of 30 ms exceeds the maximum. "\
+			"It was adjusted to 25 ms.\n")
 
 	def test_oneSpeakerProximity(self):  #21
 		'''Test program implementation on 1 speaker with a 16kHz wav file, maximum padding (25ms), 
