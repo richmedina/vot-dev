@@ -178,7 +178,7 @@ The optional arguments for single-pair processing and batch processing are:
 
 | Arguments          | Description |
 | :---               | :---        |
-| `stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered for this parameter, the program will default to all voiceless singleton stops recognaized by the IPA (and their geminate form): `['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'", 'pp', 'tt', 'ʈʈ', 'cc', 'kk', 'qq', 'ʔʔ']`. <br> *Note that the program is case-sensitive to the phone labels, so type them as they appear in your TextGrid. |
+| `stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered for this parameter, the program will default to all voiceless singleton stops recognaized by the IPA (and their geminate form): `['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'", 'pp', 'tt', 'ʈʈ', 'cc', 'kk', 'qq', 'ʔʔ']`. <br> *Note that the program (1) is case-sensitive to the phone labels and (2) looks for an exact match, so type the labels as they appear in your TextGrid. |
 | `outputDirectory`  | a string to be used as the name for the directory (ie, folder) were the output will be stored. If the directory already exists, the output will be stored there; otherwise, a new directory will be created with the name provided. If nothing is entered for this parameter, the program will defualt to `'output/'`. |
 | `startPadding`     | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's start boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, increase the segment window) and a positive value will shift the boundary right (that is, decrease the segment window). This parameter can be used when a corpus consistently marks the start boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
 | `endPadding`       | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's end boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, decrease the segment window) and a positive value will shift the boundary right (that is, increase the segment window). This parameter can be used when a corpus consistently marks the end boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
@@ -216,16 +216,32 @@ Note that you first need to import the program. For this execution, the program 
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['p'])
 ```
 
-For this execution, the program will only look for /p/-initial tokens and process them. This execution will ignore any other stops found in the transcription.
+For this execution, the program will only look for (word-initial) 'p' tokens and process them. This execution will ignore any other stops found in the transcription.
 
 2.2 Single-pair processing with specific stops:
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t', 'T', 'tt'])
 ```
 
-For this execution, the program will look for the phone labels 't', 'T', and 'tt'. Use this approach if the TextGrid contains labels that are lowercase and uppercase. This is done, for example, in at least one Arabic corpus to distinguish between emphatic (ie, pharyngealized) and non-emphatic (ie, plain) stops, as well as geminate stops.
+For this execution, the program will only look for phone labels 't', 'T', and 'tt'. Use this approach if the TextGrid contains labels that are lowercase and uppercase. This is done, for example, in at least one Arabic corpus to distinguish between non-emphatic (ie, plain) and emphatic (ie, pharyngealized) stops, as well as geminate stops.
 
-3. ...
+2.3 Single-pair processing with specific stops:
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['k', 'kw'])
+```
+
+For this execution, the program will only look for the phone labels 'k', and 'kw'. Use this approach if the TextGrid contains labels that specify additional features. This is done, for example, in some corpora to distinguish between plain and labialized stops.
+
+3. Single-pair processing with a specific output directory name:
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", [], "vot-predictions")
+```
+or
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", outputDirectory="vot-predictions")
+```
+
+Both of these executions, provide the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name. Note that you need to include a parameter for `stops`, even if it's an empty list, to avoid writing the parameter names; otherwise use the argument name to specify which parameters you would like to pass.
 
 ## Citing VOT-CP
 
