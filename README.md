@@ -202,7 +202,7 @@ The optional arguments for single-pair processing and batch processing are:
 
 The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script.
 
-*1. Single-pair processing with all default settings:*
+**1. Single-pair processing with all default settings:**
 ```
 import votcp
 
@@ -211,7 +211,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
 
 Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
 
-*2.1 Single-pair processing with specific stops:*
+**2.1 Single-pair processing with specific stops:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['p'])
 ```
