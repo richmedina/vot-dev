@@ -198,6 +198,17 @@ The optional arguments for single-pair processing and batch processing are:
 
 ## Tutorial
 
+The following code blocks exemplify how to use the VOT-CP program under different conditions.
+
+1. Single-pair processing with all default settings:
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
+```
+
+2. ...
+
+3. ...
+
 ## Citing VOT-CP
 
 VOT-CP is a general purpose program and doesn't need to be cited, but if you feel inclined, it can be cited in this way:
