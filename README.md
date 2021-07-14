@@ -274,6 +274,16 @@ This execution tells VOT-CP that there are multiple channels present in the audi
 
 Note that if `distinctChannels` is set to `True` and there isn't an equal number of channels and tier pairs (eg, two channels and one tier pair), the program will terminate immediately.
 
+\
+**7. Batch processing with  with all default settings:**
+```
+calculateVOT("input")
+```
+
+For this execution, the program will iterate through all files in the directory `input/` in order to begin pairing files and processing them. The output files will be returned to the `output/` directory. 
+
+Note that you can adjust the rest of the parameters just as you would with the `calculateVOT` function (ie, single-pair processing).
+
 ## Citing VOT-CP
 
 VOT-CP is a general purpose program and doesn't need to be cited, but if you feel inclined, it can be cited in this way:
