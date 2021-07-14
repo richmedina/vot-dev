@@ -316,7 +316,7 @@ This software was developed as part of a summer internship hosted by [The Langua
 
 #### Cross-linguistic corpora
 
-Finally, I want to thank all the researchers (listed below in alphabetical order of the language), who have made their own corpora available to the public or shared them with me to allow me to test VOT-CP with cross-linguistic data. I also want to acknowledge those who answered questions regarding the languages they study and their corpora.
+Finally, I want to thank all the researchers (listed below in alphabetical order of the language), who have made their own corpora available to the public or shared them with me to allow me to test VOT-CP with cross-linguistic data. I also want to acknowledge Dr. Nawar Halabi and Khia A. Johnson for answering questions regarding the languages they study and their corpora.
 
 * Arabic: [Arabic Speech Corpus](http://en.arabicspeechcorpus.com/)
   - Dr. Nawar Halabi
