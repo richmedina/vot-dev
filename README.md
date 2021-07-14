@@ -202,6 +202,8 @@ The following code blocks exemplify how to use the VOT-CP program under differen
 
 1. Single-pair processing with all default settings:
 ```
+import votcp
+
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
 ```
 
