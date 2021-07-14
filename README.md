@@ -209,7 +209,7 @@ import votcp
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
 ```
 
-For this execution, 
+For this execution, the program will default to all voiceless (singleton and geminate) stops, the `output/` directory, no padding to the start and end boundaries for the stop segments, channel 1 of the audio, and the same channel for all speaker groups.
 
 2. ...
 
