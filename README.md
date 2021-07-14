@@ -213,7 +213,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
 Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
 
 \
-**2.1 Single-pair processing with specific stops:**
+**2.1. Single-pair processing with specific stops:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['p'])
 ```
@@ -221,7 +221,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['p'])
 For this execution, the program will only look for (word-initial) 'p' tokens and process them. This execution will ignore any other stops found in the transcription.
 
 \
-**2.2 Single-pair processing with specific stops:**
+**2.2. Single-pair processing with specific stops:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t', 'T', 'tt'])
 ```
@@ -229,7 +229,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t', 'T', 'tt'])
 For this execution, the program will only look for phone labels 't', 'T', and 'tt'. Use this approach if the TextGrid contains labels that are lowercase and uppercase. This is done, for example, in at least one Arabic corpus to distinguish between non-emphatic (ie, plain) and emphatic (ie, pharyngealized) stops, as well as geminate stops.
 
 \
-**2.3 Single-pair processing with specific stops:**
+**2.3. Single-pair processing with specific stops:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['k', 'kw'])
 ```
@@ -249,7 +249,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", outputDirectory="vot-p
 Both of these executions provide the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name. Note that you need to include a parameter for `stops`, even if it's an empty list, to avoid writing the parameter names; otherwise use the argument name to specify the specific parameter.
 
 \
-**4 Single-pair processing with added padding:**
+**4. Single-pair processing with added padding:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t'], startPadding=-20, endPadding=20)
 ```
@@ -257,7 +257,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t'], startPadding=-2
 This execution moves the start boundary to the left by 20 ms (increasing the window) and the end boundary to the right by 20 ms (increasing the window even further).
 
 \
-**5 Single-pair processing with specific channel:**
+**5. Single-pair processing with specific channel:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", preferredChannel = 2)
 ```
@@ -265,7 +265,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", preferredChannel = 2)
 This execution identifies the second channel in the audio file as the channel to be looked at when obtaining VOT calculations. Regardless of how many speakers are present in the TextGrid (ie, one or more pairs of phone-word tiers), all data will be analyzed using the acoustic information in the second channel. The first channel will be ignored completely.
 
 \
-**6 Single-pair processing with distinct channels:**
+**6. Single-pair processing with distinct channels:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", distinctChannels=True)
 ```
