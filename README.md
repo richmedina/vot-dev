@@ -202,7 +202,7 @@ The optional arguments for single-pair processing and batch processing are:
 
 The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script.
 
-
+\
 **1. Single-pair processing with all default settings:**
 ```
 import votcp
@@ -210,23 +210,23 @@ import votcp
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
 ```
 
-:Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
+Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
 
-
+\
 **2.1 Single-pair processing with specific stops:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['p'])
 ```
 
-" For this execution, the program will only look for (word-initial) 'p' tokens and process them. This execution will ignore any other stops found in the transcription. :
+For this execution, the program will only look for (word-initial) 'p' tokens and process them. This execution will ignore any other stops found in the transcription.
 
-
+\
 **2.2 Single-pair processing with specific stops:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t', 'T', 'tt'])
 ```
 
-":For this execution, the program will only look for phone labels 't', 'T', and 'tt'. Use this approach if the TextGrid contains labels that are lowercase and uppercase. This is done, for example, in at least one Arabic corpus to distinguish between non-emphatic (ie, plain) and emphatic (ie, pharyngealized) stops, as well as geminate stops.
+For this execution, the program will only look for phone labels 't', 'T', and 'tt'. Use this approach if the TextGrid contains labels that are lowercase and uppercase. This is done, for example, in at least one Arabic corpus to distinguish between non-emphatic (ie, plain) and emphatic (ie, pharyngealized) stops, as well as geminate stops.
 
 **2.3 Single-pair processing with specific stops:**
 ```
