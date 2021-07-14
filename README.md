@@ -153,7 +153,7 @@ calculateVOT(wav, TextGrid)
 ```
 The positinal arguments for this function are: `wav` and `TextGrid`, the two files that will be processed. See below for more information on the optional arguments.
 
-*It is recommended that new users first try the single-pair processing on a couple of data to identify the desired parameters for your corpus, before proceeding to process the entire corpus. Depending on the corpus size, the program may take a long time to process all of the data. Single-pair processing will take less time, allowing the user to make re-adjustments to the parameters quickly, in order to find the desired settings.*
+***It is recommended that new users first try the single-pair processing on a couple of data to identify the desired parameters for your corpus, before proceeding to process the entire corpus. Depending on the corpus size, the program may take a long time to process all of the data. Single-pair processing will take less time, allowing the user to make re-adjustments to the parameters quickly, in order to find the desired settings.*
 
 #### Batch processing
 
@@ -170,7 +170,7 @@ Note that this function will iterate through all items in the corpus and identif
 
 While capitalization will be irrelevant in matching wav and TextGrid files, spelling, punctuation, and spacing will be essential.
 
-*It is recommended that new users first try the single-pair processing on a couple of data to identify the desired parameters for your corpus, before proceeding to process the entire corpus. Depending on the corpus size, the program may take a long time to process all of the data. Single-pair processing will take less time, allowing the user to make re-adjustments to the parameters quickly, in order to find the desired settings.*
+***It is recommended that new users first try the single-pair processing on a couple of data to identify the desired parameters for your corpus, before proceeding to process the entire corpus. Depending on the corpus size, the program may take a long time to process all of the data. Single-pair processing will take less time, allowing the user to make re-adjustments to the parameters quickly, in order to find the desired settings.*
 
 #### Arguments
 
