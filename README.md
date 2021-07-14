@@ -48,33 +48,35 @@ This is a beta version. Any reports of bugs, suggestions for improvements to the
 ### Dependencies
 
 In order to use this program, you will need the following installed in your machine:
-* [GCC, the GNU Compiler Collection](http://gcc.gnu.org/install/download.html) -- Do I need this??
-* [Python (2.7 or 3)](https://www.python.org/downloads/)
+* [GCC, the GNU Compiler Collection](http://gcc.gnu.org/install/download.html) -- Do I need this?? RM: yes, but most systems will already have this. you can mention it if needed but not the impression that they need to download and install this
+* [Python (2.7 or 3)](https://www.python.org/downloads/) RM: python3 only right? Did you test with python2?
 * Python dependencies:
-  - Run the command `pip install -r "requirements.txt"` on your terminal.
+  - Run the command `pip install -r "requirements.txt"` on your terminal. RM: Move this to the installation section, they can't run this until they have downloaded the program.
 * For macOS users, complete either of the next two steps:
-  - Install [Xcode](http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12) -- Do I need this??
+  - Install [Xcode](http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12) -- Do I need this?? RM: probably wouldn't hurt.
   - Download the [Command Line Tools for Xcode](http://developer.apple.com/downloads) as a stand-alone package.
 
 ### Command line installation
 
 _VOT-CP is available from Github_.
 
-To install the program for the first time, run the following command in your terminal window:
+Change the current directory where you would like to place the program files then to install the program for the first time, run the following command in your terminal window:
 
   ```
   $ git clone https://github.com/...
   ```
-
 To update the VOT-CP software, navigate to the directory where the software is installed and run:
 
   ```
-  $ git pull origin master
+  $ git pull origin main
   ```
 
 If you are new to Github, you can find helpful tutorials and tips for getting started here:
 
 https://help.github.com/articles/set-up-git
+
+RM: Add instructions for installing pip requirements here
+
 
 ## Usage
 
@@ -200,7 +202,7 @@ The optional arguments for single-pair processing and batch processing are:
 
 ## Tutorial
 
-The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script.
+The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script. RM: we should discuss this.
 
 \
 **1. Single-pair processing with all default settings:**
@@ -288,7 +290,7 @@ Note that you can adjust the rest of the parameters just as you would with the `
 
 VOT-CP is a general purpose program and doesn't need to be cited, but if you feel inclined, it can be cited in this way:
 
-...(?)
+...(?) RM: I'll add this after we move the repo to its permanent location.
 
 However, if you use this program to analyzed data that are presented at conferences or published, it is recommended that you [cite the AutoVOT program](https://github.com/mlml/autovot/blob/master/README.md#citing).
 
@@ -326,4 +328,4 @@ Finally, I want to thank all the researchers (listed below in alphabetical order
 
 ## License
 
-*add license*
+*add license* RM I'll add this later, but it will probably be MIT (https://choosealicense.com/licenses/mit/)
