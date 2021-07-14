@@ -153,7 +153,7 @@ calculateVOT(wav, TextGrid)
 ```
 The positinal arguments for this function are: `wav` and `TextGrid`, the two files that will be processed. See below for more information on the optional arguments.
 
-It is recommended that new users first 
+*It is recommended that new users first try the single-pair processing on a couple of data to identify the desired parameters for your corpus, before proceeding to process the entire corpus. Depending on the corpus size, the program may take a long time to process all of the data. Single-pair processing will take less time, allowing the user to make re-adjustments to the parameters quickly, in order to find the desired settings.*
 
 #### Batch processing
 
@@ -169,6 +169,8 @@ Note that this function will iterate through all items in the corpus and identif
   * Not allowed: `S01_interview.wav` and `S1_intvw.TextGrid` nor `Mary-audio.wav` and `Mary-transcription.TextGrid`
 
 While capitalization will be irrelevant in matching wav and TextGrid files, spelling, punctuation, and spacing will be essential.
+
+*It is recommended that new users first try the single-pair processing on a couple of data to identify the desired parameters for your corpus, before proceeding to process the entire corpus. Depending on the corpus size, the program may take a long time to process all of the data. Single-pair processing will take less time, allowing the user to make re-adjustments to the parameters quickly, in order to find the desired settings.*
 
 #### Arguments
 
@@ -198,7 +200,7 @@ The optional arguments for single-pair processing and batch processing are:
 
 ## Tutorial
 
-The following code blocks exemplify how to use the VOT-CP program under different conditions.
+The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script.
 
 1. Single-pair processing with all default settings:
 ```
@@ -206,6 +208,8 @@ import votcp
 
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
 ```
+
+For this execution, 
 
 2. ...
 
