@@ -178,7 +178,7 @@ The optional arguments for single-pair processing and batch processing are:
 
 | Arguments          | Description |
 | :---               | :---        |
-| `stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered for this parameter, the program will default to all voiceless singleton stops recognaized by the IPA (and their geminate form): `['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'", 'pp', 'tt', 'ʈʈ', 'cc', 'kk', 'qq', 'ʔʔ']`. |
+| `stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered for this parameter, the program will default to all voiceless singleton stops recognaized by the IPA (and their geminate form): `['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'", 'pp', 'tt', 'ʈʈ', 'cc', 'kk', 'qq', 'ʔʔ']`. < br \> Note that the program is case-sensitive to the phone labels, so type them as they appear in your TextGrid. |
 | `outputDirectory`  | a string to be used as the name for the directory (ie, folder) were the output will be stored. If the directory already exists, the output will be stored there; otherwise, a new directory will be created with the name provided. If nothing is entered for this parameter, the program will defualt to `'output/'`. |
 | `startPadding`     | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's start boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, increase the segment window) and a positive value will shift the boundary right (that is, decrease the segment window). This parameter can be used when a corpus consistently marks the start boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
 | `endPadding`       | a number to indicate the amount of time, *in miliseconds*, to be added to (or reduced from) the phone's end boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, decrease the segment window) and a positive value will shift the boundary right (that is, increase the segment window). This parameter can be used when a corpus consistently marks the end boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
@@ -209,9 +209,21 @@ import votcp
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
 ```
 
-For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers in the TextGrid.
+Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
 
-2. ...
+2.1 Single-pair processing with specific stops:
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['p'])
+```
+
+For this execution, the program will only look for /p/-initial tokens and process them. This execution will ignore any other stops found in the transcription.
+
+2.2 Single-pair processing with specific stops:
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t','T'])
+```
+
+For this execution, the program will look for the phone labels 't' and 'T'. 
 
 3. ...
 
