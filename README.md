@@ -228,6 +228,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t', 'T', 'tt'])
 
 For this execution, the program will only look for phone labels 't', 'T', and 'tt'. Use this approach if the TextGrid contains labels that are lowercase and uppercase. This is done, for example, in at least one Arabic corpus to distinguish between non-emphatic (ie, plain) and emphatic (ie, pharyngealized) stops, as well as geminate stops.
 
+\
 **2.3 Single-pair processing with specific stops:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['k', 'kw'])
@@ -235,6 +236,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['k', 'kw'])
 
 For this execution, the program will only look for the phone labels 'k', and 'kw'. Use this approach if the TextGrid contains labels that specify additional features. This is done, for example, in some corpora to distinguish between plain and labialized stops.
 
+\
 **3. Single-pair processing with a specific output directory name:**
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", [], "vot-predictions")
@@ -244,7 +246,7 @@ or
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", outputDirectory="vot-predictions")
 ```
 
-Both of these executions, provide the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name. Note that you need to include a parameter for `stops`, even if it's an empty list, to avoid writing the parameter names; otherwise use the argument name to specify which parameters you would like to pass.
+Both of these executions provide the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name. Note that you need to include a parameter for `stops`, even if it's an empty list, to avoid writing the parameter names; otherwise use the argument name to specify the specific parameter.
 
 ## Citing VOT-CP
 
