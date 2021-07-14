@@ -318,6 +318,11 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 			channels = psnd.extract_all_channels()
 			channelNumber = 0
 
+			if len(channels) != len(stopTiers):
+				logger.error("You enabled the parameter 'distinctChannels', but there isn't an equal number of "\
+					"channels and speakers in the file {}. Fix the issue before continuing.\n".format(wav))
+				sys.exit()
+
 			for psnd in channels:
 				psnd.save(tempSound, "WAV")
 
