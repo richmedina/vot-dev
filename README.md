@@ -275,7 +275,7 @@ This execution tells VOT-CP that there are multiple channels present in the audi
 Note that if `distinctChannels` is set to `True` and there isn't an equal number of channels and tier pairs (eg, two channels and one tier pair), the program will terminate immediately.
 
 \
-**7. Batch processing with  with all default settings:**
+**7. Batch processing with all default settings:**
 ```
 calculateVOT("input")
 ```
