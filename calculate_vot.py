@@ -299,10 +299,13 @@ def processStopTier(
 	else:
 		return False
 
-def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinctChannels):
+def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinctChannels, trainedModel):
 
 	# track whether or not predictions were calculated
 	processComplete = False
+
+	if not trainedModel:
+		trainedModel = "autovot/models/vot_predictor.amanda.max_num_instances_1000.model"
 
 	# make temporary directory to process predictions
 	with tempfile.TemporaryDirectory() as tempDirectory:
@@ -333,7 +336,7 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 					"--vot_mark", "*", 
 					tempSound, 
 					annotatedTextgrid, 
-					"autovot/models/vot_predictor.amanda.max_num_instances_1000.model", 
+					trainedModel, 
 					"--ignore_existing_tiers"
 					])
 
@@ -384,7 +387,8 @@ def calculateVOT(
 	startPadding=0, 
 	endPadding=0, 
 	preferredChannel=1, 
-	distinctChannels=False
+	distinctChannels=False, 
+	trainedModel=""
 	):
 
 	# verify file format
@@ -409,7 +413,7 @@ def calculateVOT(
 	annotatedTextgrid = os.path.join(outputDirectory, saveName)
 
 	# apply AutoVOT prediction calculations
-	processComplete = getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinctChannels)
+	processComplete = getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinctChannels, trainedModel)
 
 	# remove file path from file names if present for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
@@ -433,7 +437,8 @@ def calculateVOTBatch(
 	startPadding=0, 
 	endPadding=0, 
 	preferredChannel=1, 
-	distinctChannels=False
+	distinctChannels=False, 
+	trainedModel=""
 	):
 	
 	fileNames = []
