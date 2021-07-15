@@ -21,6 +21,7 @@ import tempfile
 import subprocess
 import parselmouth
 from praatio import tgio
+from collections import Counter
 
 
 
@@ -28,6 +29,10 @@ from praatio import tgio
 
 
 def approvedFileFormat(wav, TextGrid):
+
+	# remove file path from file names if present
+	TextGrid = TextGrid.split("/")[-1]
+	wav = wav.split("/")[-1]
 
 	wavName, wavExt = os.path.splitext(wav)
 	textgridName, textgridExt = os.path.splitext(TextGrid)
@@ -46,8 +51,8 @@ def processParameters(
 	TextGrid
 	): 
 
-	# remove directory from TG name
-	TextGrid = TextGrid.split("/")[1] #delete
+	# remove file path from TG name if present
+	TextGrid = TextGrid.split("/")[-1]
 
 	# adjust long padding values
 	if startPadding > 25:
@@ -139,8 +144,8 @@ def addStopTier(
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
 	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items())
 
-	# remove directory from TG name
-	TextGrid = TextGrid.split("/")[1] #delete
+	# remove file path from TG name if present
+	TextGrid = TextGrid.split("/")[-1]
 
 	# collect all word tiers and terminate process if none exists
 	allWordTiers = [tierName for tierName in tg.tierNameList if "word" in tierName]
@@ -307,8 +312,7 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 
 		# process the sound file
 		psnd = parselmouth.Sound(wav)
-		# remove directory from TG name
-		wav = wav.split("/")[1] #delete
+		wav = wav.split("/")[-1]  # remove file path if present
 		tempSound = os.path.join(tempDirectory, wav)
 		if psnd.get_sampling_frequency() != 16000:
 			psnd = psnd.resample(16000)
@@ -410,6 +414,10 @@ def calculateVOT(
 	# apply AutoVOT prediction calculations
 	processComplete = getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinctChannels)
 
+	# remove file path from file names if present
+	TextGrid = TextGrid.split("/")[-1]
+	wav = wav.split("/")[-1]
+
 	if processComplete:
 		print()
 		logger.info("Process for {} and {} is complete.\n".format(wav, TextGrid))
@@ -421,9 +429,43 @@ def calculateVOT(
 
 	return
 
+def calculateVOTBatch(
+	inputDirectory, 
+	stops=[], 
+	outputDirectory="output", 
+	startPadding=0, 
+	endPadding=0, 
+	preferredChannel=1, 
+	distinctChannels=False
+	):
+	
+	fileNames = []
+	
+	for file in os.listdir(inputDirectory):
+		fileName, fileExt = os.path.splitext(file)
+		if fileExt == ".wav" or fileExt == ".TextGrid":
+			fileNames.append(fileName)
+
+	for fileGroup in Counter(fileNames).items():
+		if fileGroup[1] == 2:
+			wavFilePath = os.path.join(inputDirectory,fileGroup[0]+".wav")
+			TextGridFilePath = os.path.join(inputDirectory,fileGroup[0]+".TextGrid")
+			calculateVOT(
+				wavFilePath, 
+				TextGridFilePath, 
+				stops, 
+				outputDirectory, 
+				startPadding, 
+				endPadding, 
+				preferredChannel, 
+				distinctChannels
+				)
+
+	return
 
 
 
+calculateVOTBatch("english_tests", ['p'])
 
 
 # if __name__ == "__main__":
