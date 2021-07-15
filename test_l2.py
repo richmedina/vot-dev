@@ -28,7 +28,7 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTokenNumberCh2, 44)
 		self.assertEqual(tgTokensCh2, ['K', 'P', 'T'])
 	
-	def test_L2ThaiKorean(self):  #1
+	def test_L2ThaiKorean(self):  #2
 		'''Test program implementation on 2 speaker with a 2-channel, 22.05kHz wav file and no stops list (defaults 
 		to all voiceless stops). Only singleton and geminate stops are part of the default voiceless stops category, 
 		which will cover all stop sounds found in english.'''

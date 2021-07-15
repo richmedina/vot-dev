@@ -25,17 +25,14 @@ from collections import Counter
 
 
 
-
-
-
 def approvedFileFormat(wav, TextGrid):
 
 	# remove file path from file names if present for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
 	wav = wav.split("/")[-1]
 
-	wavName, wavExt = os.path.splitext(wav)
-	textgridName, textgridExt = os.path.splitext(TextGrid)
+	wavExt = os.path.splitext(wav)[1]
+	textgridExt = os.path.splitext(TextGrid)[1]
 
 	if wavExt != ".wav" or textgridExt != ".TextGrid":
 		return False
@@ -125,6 +122,9 @@ def addStopTier(
 	# open textgrid
 	tg = tgio.openTextgrid(TextGrid)
 
+	# remove file path from TG name if present for reporting purposes
+	TextGrid = TextGrid.split("/")[-1]
+
 	# verify that no 'AutoVOT' or 'stops' tiers exist. Reject TG with unname tiers
 	for tierName in tg.tierNameList:
 		if tierName == "AutoVOT":
@@ -143,9 +143,6 @@ def addStopTier(
 	# convert tier labels to lowercase
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
 	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items())
-
-	# remove file path from TG name if present for reporting purposes
-	TextGrid = TextGrid.split("/")[-1]
 
 	# collect all word tiers and terminate process if none exists
 	allWordTiers = [tierName for tierName in tg.tierNameList if "word" in tierName]
@@ -448,7 +445,7 @@ def calculateVOTBatch(
 				fileNames.append(fileName)
 	except FileNotFoundError:
 		logger.error("The directory you entered for the parameter 'inputDirectory' does not exist.")
-		# sys.exit()
+		sys.exit()
 
 	for fileGroup in Counter(fileNames).items():
 		if fileGroup[1] == 2:
@@ -469,7 +466,7 @@ def calculateVOTBatch(
 
 
 
-calculateVOTBatch("arabic_tets", ['p'])
+# calculateVOTBatch("arabic_tsts", ['p'])
 
 
 # if __name__ == "__main__":

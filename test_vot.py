@@ -285,7 +285,7 @@ class TestVOT(unittest.TestCase):
 		and two phones close together. The program should print a warning message indicating a 
 		shift and the time in the recording where it occurred.'''
 		with self.assertLogs() as captured:
-			calculateVOT("tests/test.wav", "tests/test9-2.TextGrid", ['k'], endPadding=0.025)
+			calculateVOT("tests/test.wav", "tests/test9-2.TextGrid", ['k'], endPadding=25)
 		self.assertEqual(len(captured.records), 3)
 		self.assertEqual(captured.records[1].getMessage(), "In File test9-2.TextGrid, the phone "\
 			"starting at 23.201 was shifted forward due to a proximity issue.\n")
@@ -294,7 +294,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker with a 16kHz wav file and two overlapping tokens.
 		The program should raise a SystemExit error and terminate the process.'''
 		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
-			calculateVOT("tests/test.wav", "tests/test9-3.TextGrid", ['k'], endPadding=0.025)
+			calculateVOT("tests/test.wav", "tests/test9-3.TextGrid", ['k'], endPadding=25)
 		path = ("output/test9-3_output.TextGrid")  # map the potential path
 		self.assertIs(os.path.exists(path), False)  # check that a file was not created
 		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
@@ -317,7 +317,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two overlapping tokens
 		for the first speaker. The program should raise a SystemExit error and terminate the process.'''
 		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
-			calculateVOT("tests/test.wav", "tests/test10-2.TextGrid", ['k'], endPadding=0.025)
+			calculateVOT("tests/test.wav", "tests/test10-2.TextGrid", ['k'], endPadding=25)
 		path = ("output/test10-2_output.TextGrid")  # map the potential path
 		self.assertIs(os.path.exists(path), False)  # check that a file was not created
 		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
@@ -340,7 +340,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 2 speakers with a 16kHz wav file and two overlapping tokens for
 		the second speaker. The program should raise a SystemExit error and terminate the process.'''
 		with self.assertRaises(SystemExit), self.assertLogs() as captured: # check that the program stops and its logs
-			calculateVOT("tests/test.wav", "tests/test11-2.TextGrid", ['k'], endPadding=0.025)
+			calculateVOT("tests/test.wav", "tests/test11-2.TextGrid", ['k'], endPadding=25)
 		path = ("output/test11-2_output.TextGrid")  # map the potential path
 		self.assertIs(os.path.exists(path), False)  # check that a file was not created
 		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
@@ -395,7 +395,7 @@ class TestVOT(unittest.TestCase):
 		path = ("output/test15_output.TextGrid")  # map the potential path
 		self.assertIs(os.path.exists(path), False)  # check that a file was not created
 		self.assertEqual(len(captured.records), 1)  # check that the expected messages are logged
-		self.assertEqual(captured.records[0].getMessage(), "tests/test.wav must be a wav file and tests/test15.txt must "\
+		self.assertEqual(captured.records[0].getMessage(), "test.wav must be a wav file and test15.txt must "\
 			"be a TextGrid file. One or both files do not meet format requirements.\n")
 
 	def test_stopsTierPresent(self):  #31
@@ -407,7 +407,7 @@ class TestVOT(unittest.TestCase):
 		self.assertIs(os.path.exists(path), False)  # check that a file was not created
 		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
 		self.assertEqual(captured.records[1].getMessage(), "There is a tier with the word 'stops' in its label in "\
-				"tests/test16.TextGrid. You must relabel said tier before continuing.\n")
+				"test16.TextGrid. You must relabel said tier before continuing.\n")
 
 	def test_wavTwoChannels(self):  #32
 		'''Test program implementation on 1 speaker with a 16kHz wav file with two channels. The program

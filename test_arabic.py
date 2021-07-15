@@ -38,7 +38,7 @@ class TestVOT(unittest.TestCase):
 		path = ("output/ARA_NORM__0003_output.TextGrid")  # map the potential path
 		self.assertIs(os.path.exists(path), False)  # check that a file was not created
 		self.assertEqual(len(captured.records), 2)  # check that the expected messages are logged
-		self.assertEqual(captured.records[1].getMessage(), "At least one tier in file arabic_tests/ARA_NORM__0003.TextGrid"\
+		self.assertEqual(captured.records[1].getMessage(), "At least one tier in file ARA_NORM__0003.TextGrid"\
 			" has no name. Fix the issue before continuing.\n")
 
 	def test_allVoicelessStops(self):  #4
@@ -70,7 +70,7 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTokenNumber, 2)
 		self.assertEqual(tgTokens, ['t'])
 
-	def test_arabicFive(self):  #5
+	def test_noStopsListArgumentAgain(self):  #5
 		'''Test program implementation on 1 speaker with a 48kHz wav file and all voiceless coronals.'''
 		calculateVOT("arabic_tests/ARA_NORM__0005.wav", "arabic_tests/ARA_NORM__0005.TextGrid")
 		tg = tgio.openTextgrid("output/ARA_NORM__0005_output.TextGrid")
@@ -83,7 +83,7 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTokenNumber, 1)
 		self.assertEqual(tgTokens, ['t'])
 
-	def test_arabicAnnotatedStops(self):
+	def test_arabicAnnotatedStops(self):  #5
 		'''Test program implementation on 1 speaker with a 48kHz wav file and annotated labels. The stop label 'th'
 		will prompt the search for identical matches, skipping other phones such as 't' or 't0' and so on.'''
 		calculateVOT("arabic_tests/ARA_NORM__0006.wav", "arabic_tests/ARA_NORM__0006.TextGrid", ["th", "tt", "T"])

@@ -24,7 +24,7 @@ class TestVOT(unittest.TestCase):
 		'''Test program implementation on 1 speaker with a 2-channel, 22.05kHz wav file and all voiceless palatalized 
 		stops in russian.'''
 		calculateVOT("russian_tests/MaSS_Russian2.wav", "russian_tests/MaSS_Russian2-1.TextGrid", ["p_j", "t_j", "k_j"])
-		tg = tgio.openTextgrid("output/MaSS_Russian2_output.TextGrid")
+		tg = tgio.openTextgrid("output/MaSS_Russian2-1_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
 		tgTokenNumber = len(tg.tierDict[tgTiers[-2]].entryList)
@@ -34,14 +34,14 @@ class TestVOT(unittest.TestCase):
 		self.assertEqual(tgTokenNumber, 4)
 		self.assertEqual(tgTokens, ['p_j', 't_j'])
 
-	def test_allVoicelessPalatalized(self):  #3
+	def test_allVoicelessPalatalizedSecondChannel(self):  #3
 		'''Test program implementation on 1 speaker with a 2-channel, 22.05kHz wav file and all voiceless palatalized 
 		stops in russian. Choose the second channel to analyzed, rather than the default first channel.'''
 		calculateVOT("russian_tests/MaSS_Russian2.wav", 
 			"russian_tests/MaSS_Russian2-2.TextGrid", 
 			["p_j", "t_j", "k_j"],
 			preferredChannel=2)
-		tg = tgio.openTextgrid("output/MaSS_Russian2_output.TextGrid")
+		tg = tgio.openTextgrid("output/MaSS_Russian2-2_output.TextGrid")
 		tgTierNumber = len(tg.tierNameList)
 		tgTiers = tg.tierNameList
 		tgTokenNumber = len(tg.tierDict[tgTiers[-2]].entryList)
