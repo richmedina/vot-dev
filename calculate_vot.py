@@ -328,12 +328,12 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 				psnd.save(tempSound, "WAV")
 
 				subprocess.run([
-					"python", "autovot_shortcut/auto_vot_decode.py", 
+					"python", "autovot/auto_vot_decode.py", 
 					"--vot_tier", stopTiers[channelNumber], 
 					"--vot_mark", "*", 
 					tempSound, 
 					annotatedTextgrid, 
-					"autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model", 
+					"autovot/models/vot_predictor.amanda.max_num_instances_1000.model", 
 					"--ignore_existing_tiers"
 					])
 
@@ -349,12 +349,12 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 			# run VOT predictor
 			for tierName in stopTiers:
 				subprocess.run([
-					"python", "autovot_shortcut/auto_vot_decode.py", 
+					"python", "autovot/auto_vot_decode.py", 
 					"--vot_tier", tierName, 
 					"--vot_mark", "*", 
 					tempSound, 
 					annotatedTextgrid, 
-					"autovot_shortcut/models/vot_predictor.amanda.max_num_instances_1000.model", 
+					"autovot/models/vot_predictor.amanda.max_num_instances_1000.model", 
 					"--ignore_existing_tiers"
 					])
 
