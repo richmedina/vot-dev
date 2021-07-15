@@ -5,7 +5,7 @@ logger.setLevel(logging.INFO)
 
 formatter = logging.Formatter('%(levelname)s: %(message)s')
 
-file_handler = logging.FileHandler("calculateVOT.log")
+file_handler = logging.FileHandler("VOT-CP.log")
 file_handler.setFormatter(formatter)
 
 stream_handler = logging.StreamHandler()
@@ -304,6 +304,7 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 	# track whether or not predictions were calculated
 	processComplete = False
 
+	# assign AutoVOT's pretrained model
 	if not trainedModel:
 		trainedModel = "autovot/models/vot_predictor.amanda.max_num_instances_1000.model"
 
