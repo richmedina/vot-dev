@@ -169,7 +169,7 @@ To process multiple wav and TextGrid files at once, use the function
 ```
 calculateVOTBatch(input)
 ```
-The sole positional argument for this function is: `input`, a string-based path which indicates the name (and location) of the directory where the wav and TextGrid files are located. If no such directory exists or if the directory name that was entered leads to an empty directory, the program will terminate immediately.
+The sole positional argument for this function is: `inputDirectory`, a string-based path which indicates the name (and location) of the directory where the wav and TextGrid files are located. If no such directory exists or if the directory name that was entered leads to an empty directory, the program will terminate immediately.
 
 Note that this function will iterate through all items in the corpus and identify all wav and TextGrid files, ignoring any files with other extensions. Once wav and TextGrid files are identified, they will be paired with each other on the basis of their names; that is why it is important that the files match in name, for example:
 
@@ -285,7 +285,7 @@ Note that if `distinctChannels` is set to `True` and there isn't an equal number
 \
 **7. Batch processing with all default settings:**
 ```
-calculateVOT("input")
+calculateVOT("input_corpus")
 ```
 
 For this execution, the program will iterate through all files in the directory `input/` in order to begin pairing files and processing them. The output files will be returned to the `output/` directory. 

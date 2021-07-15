@@ -3,9 +3,9 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(levelname)s:%(message)s')
+formatter = logging.Formatter('%(levelname)s: %(message)s')
 
-file_handler = logging.FileHandler("stop_tier.log")
+file_handler = logging.FileHandler("calculateVOT.log")
 file_handler.setFormatter(formatter)
 
 stream_handler = logging.StreamHandler()
@@ -30,7 +30,7 @@ from collections import Counter
 
 def approvedFileFormat(wav, TextGrid):
 
-	# remove file path from file names if present
+	# remove file path from file names if present for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
 	wav = wav.split("/")[-1]
 
@@ -51,7 +51,7 @@ def processParameters(
 	TextGrid
 	): 
 
-	# remove file path from TG name if present
+	# remove file path from TG name if present for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
 
 	# adjust long padding values
@@ -144,7 +144,7 @@ def addStopTier(
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
 	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items())
 
-	# remove file path from TG name if present
+	# remove file path from TG name if present for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
 
 	# collect all word tiers and terminate process if none exists
@@ -312,7 +312,7 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 
 		# process the sound file
 		psnd = parselmouth.Sound(wav)
-		wav = wav.split("/")[-1]  # remove file path if present
+		wav = wav.split("/")[-1]  # remove file path if present for reporting purposes
 		tempSound = os.path.join(tempDirectory, wav)
 		if psnd.get_sampling_frequency() != 16000:
 			psnd = psnd.resample(16000)
@@ -393,8 +393,8 @@ def calculateVOT(
 	# verify file format
 	if not approvedFileFormat(wav, TextGrid):
 		print()
-		logger.error("{} must be a wav file and {} must be a TextGrid file. "\
-			"One or both files do not meet format requirements.\n".format(wav, TextGrid))
+		logger.error("{} must be a wav file and {} must be a TextGrid file. One or both files do "\
+			"not meet format requirements.\n".format(wav.split("/")[-1], TextGrid.split("/")[-1]))
 		sys.exit()
 
 	# process variable parameters
@@ -414,7 +414,7 @@ def calculateVOT(
 	# apply AutoVOT prediction calculations
 	processComplete = getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinctChannels)
 
-	# remove file path from file names if present
+	# remove file path from file names if present for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
 	wav = wav.split("/")[-1]
 
@@ -441,10 +441,14 @@ def calculateVOTBatch(
 	
 	fileNames = []
 	
-	for file in os.listdir(inputDirectory):
-		fileName, fileExt = os.path.splitext(file)
-		if fileExt == ".wav" or fileExt == ".TextGrid":
-			fileNames.append(fileName)
+	try:
+		for file in os.listdir(inputDirectory):
+			fileName, fileExt = os.path.splitext(file)
+			if fileExt == ".wav" or fileExt == ".TextGrid":
+				fileNames.append(fileName)
+	except FileNotFoundError:
+		logger.error("The directory you entered for the parameter 'inputDirectory' does not exist.")
+		# sys.exit()
 
 	for fileGroup in Counter(fileNames).items():
 		if fileGroup[1] == 2:
@@ -465,7 +469,7 @@ def calculateVOTBatch(
 
 
 
-calculateVOTBatch("english_tests", ['p'])
+calculateVOTBatch("arabic_tets", ['p'])
 
 
 # if __name__ == "__main__":
