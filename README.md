@@ -297,7 +297,7 @@ For this execution, VOT-CP will use the model that you have trained for your dat
 calculateVOT("input_corpus")
 ```
 
-For this execution, the program will iterate through all files in the directory `input/` in order to begin pairing files and processing them. The output files will be returned to the `output/` directory. 
+For this execution, the program will iterate through all files in the directory `input_corpus/` in order to begin pairing files and processing them. The output files will be returned to the `output/` directory. 
 
 Note that you can adjust the rest of the parameters just as you would with the `calculateVOT` function (ie, single-pair processing).
 
