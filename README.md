@@ -284,7 +284,15 @@ This execution tells VOT-CP that there are multiple channels present in the audi
 Note that if `distinctChannels` is set to `True` and there isn't an equal number of channels and tier pairs (eg, two channels and one tier pair), the program will terminate immediately.
 
 \
-**7. Batch processing with all default settings:**
+**7. Single-pair processing with newly trained model:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", trainedModel="myVOTmodel.model")
+```
+
+For this execution, VOT-CP will use the model that you have trained for your data and indicated in the function call. Refer to AutoVOT's documentation for more information on how to train your own model.
+
+\
+**8. Batch processing with all default settings:**
 ```
 calculateVOT("input_corpus")
 ```
