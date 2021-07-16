@@ -122,7 +122,7 @@ What is **required**:
 * Must be `.TextGrid` files in [full text format](https://www.fon.hum.uva.nl/praat/manual/TextGrid_file_formats.html)(ie, the default); other formats are not accepted.
 * Must have a time-aligned word tier
 * Must have a time-aligned phone tier
-* Must have an identical inverval boundary (not close enough, identical) between word onset and start of first phone
+* Must have an identical interval boundary (not close enough, identical) between word onset and start of first phone
 * While the orthography (ie, alphabet) of the word tier does not matter, the label of the phone tier must use the Latin alphabet or IPA.
 * Phone labels can use any romanization system (if the language does not use Latin orthography), as long as the initial element of a stop label is a stop character (ie, \<p>, \<t>, \<k>, <ʈ>, <ɟ>, etc.), for example:
   - Allowed: 't', 'p0', 'kw', 'kk', etc.
