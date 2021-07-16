@@ -159,7 +159,7 @@ To process one pair of wav and TextGrid files at a time, use the function
 ```
 calculateVOT(wav, TextGrid)
 ```
-The positinal arguments for this function are: `wav` and `TextGrid`, the two files that will be processed. See below for more information on the optional arguments.
+The positional arguments for this function are: `wav` and `TextGrid`, the two files that will be processed. See below for more information on the optional arguments.
 
 ***It is recommended that new users first try the single-pair processing on a couple of data to identify the desired parameters for your corpus, before proceeding to process the entire corpus. Depending on the corpus size, the program may take a long time to process all of the data. Single-pair processing will take less time, allowing the user to make re-adjustments to the parameters quickly, in order to find the desired settings.*
 
@@ -187,10 +187,10 @@ The optional arguments for single-pair processing and batch processing are:
 | Arguments          | Description |
 | :---               | :---        |
 | `stops`            | a list of phone labels to look for and process. For example: `['p','k']` if only bilabial and velar stops are of interest. Remember that the labels entered in this argument must match the labels in the TextGrid file, for example `['pp',"t'",'kw']` (two \<p>, a \<t> plus an apostrophe, and a \<k> plus a \<w>)). If nothing is entered for this parameter, the program will default to all voiceless singleton stops recognized by the IPA (and their geminate form): `['p', 't', 'ʈ', 'c', 'k', 'q', 'ʔ', "p'", "t'", "k'", 'pp', 'tt', 'ʈʈ', 'cc', 'kk', 'qq', 'ʔʔ']`. <br> <br> **Note that the program (1) is case-sensitive to the phone labels and (2) looks for an exact match, so type the labels as they appear in your TextGrid.* |
-| `outputDirectory`  | a string to be used as the name for the directory (ie, folder) were the output will be stored. If the directory already exists, the output will be stored there; otherwise, a new directory will be created with the name provided. If nothing is entered for this parameter, the program will defualt to `'output/'`. |
-| `startPadding`     | a number to indicate the amount of time, *in milliseconds*, to be added to (or reduced from) the phone's start boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, increase the segment window) and a positive value will shift the boundary right (that is, decrease the segment window). This parameter can be used when a corpus consistently marks the start boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
-| `endPadding`       | a number to indicate the amount of time, *in milliseconds*, to be added to (or reduced from) the phone's end boundary. The maximam is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, decrease the segment window) and a positive value will shift the boundary right (that is, increase the segment window). This parameter can be used when a corpus consistently marks the end boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
-| `preferredChannel` | a number (*an integer*) that indicates the channel to be used when obtaining VOT predictions. This parameter should be used if and only if the wav file contains multiple channels, and the first channel is not the one that contains the acoustic information. If nothing is entered for this parameter, the program will default to channel 1. |
+| `outputDirectory`  | a string to be used as the name for the directory (ie, folder) where the output will be stored. If the directory already exists, the output will be stored there; otherwise, a new directory will be created with the name provided. If nothing is entered for this parameter, the program will default to `'output/'`. |
+| `startPadding`     | a number to indicate the amount of time, *in milliseconds*, to be added to (or reduced from) the phone's start boundary. The maximum is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, increase the segment window) and a positive value will shift the boundary right (that is, decrease the segment window). This parameter can be used when a corpus consistently marks the start boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
+| `endPadding`       | a number to indicate the amount of time, *in milliseconds*, to be added to (or reduced from) the phone's end boundary. The maximum is 25 ms (or 0.025 sec), and the minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, decrease the segment window) and a positive value will shift the boundary right (that is, increase the segment window). This parameter can be used when a corpus consistently marks the end boundary in its stops a little too early or a little too late. If nothing is entered for this parameter, the program will default to 0 ms (ie, no padding). |
+| `preferredChannel` | a number (*an integer*) that indicates the channel from the wav file to be used when obtaining VOT predictions. This parameter should be used if and only if the wav file contains multiple channels, and the first channel is not the one that contains the acoustic information. If nothing is entered for this parameter, the program will default to channel 1. |
 | `distinctChannels` | a boolean (ie, `True` or `False`) that indicates whether or not there are different speakers in the recording and transcription, each with a distinct channel. This occurs when two speakers are recorded simultaneously with different microphones. If nothing is entered for this parameter, the program defaults to `False`, indicating that the acoustic information for the speaker(s) in the transcription can be found in the `preferredChannel`. If the value `True` is entered for this parameter, the program will assume that there are as many channels in the wav file as there are speakers in the TextGrid file; it will then proceed to match the first pair of 'phone' and 'word' tiers to the first channel and any subsequent tier pairs to subsequent channels. |
 | `trainedModel`     | a string-based path that indicates the location of a trained model for your corpus. If nothing is entered in this parameter, the program will default to AutoVOT's latest pre-trained model (v. 0.94). Otherwise, the program will use the newly trained model you indicate. |
 
@@ -205,7 +205,7 @@ The optional arguments for single-pair processing and batch processing are:
 
 3. The user is advised to manually check the output data from this program. Although AutoVOT's model provides high accuracy predictions, occasional manual corrections may be required.
 
-4. If VOT-CP does not meet your current needs based on particular transcription norms for the language(s) you study or corpus format, get in touch with me to see how the program can me re-adjusted to meet those needs.
+4. If VOT-CP does not meet your current needs based on particular transcription norms for the language(s) you study or corpus format, get in touch with me to see how the program can be re-adjusted to meet those needs.
 
 ## Tutorial
 
@@ -307,7 +307,7 @@ VOT-CP is a general purpose program and doesn't need to be cited, but if you fee
 
 ...(?) RM: I'll add this after we move the repo to its permanent location.
 
-However, if you use this program to analyzed data that are presented at conferences or published, it is recommended that you [cite the AutoVOT program](https://github.com/mlml/autovot/blob/master/README.md#citing).
+However, if you use this program to analyze data that are presented at conferences or published, it is recommended that you [cite the AutoVOT program](https://github.com/mlml/autovot/blob/master/README.md#citing).
 
 ## Acknowledgements
 
@@ -315,7 +315,7 @@ This software was developed as part of a summer internship hosted by [The Langua
 
 #### Development support
 
-* Dr. Richard Medina, from the Tech Center, was the primary reserch advisor who guided the development of this program.
+* Dr. Richard Medina, from the Tech Center, was the primary research advisor who guided the development of this program.
 * Dr. Suzanne Freynik and Dr. Aitor Arronte Alvarez, both from the Tech Center, also provided support during the development phase.
 
 #### Programming support
