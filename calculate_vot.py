@@ -472,11 +472,8 @@ def calculateVOTBatch(
 
 
 
-# calculateVOTBatch("arabic_tsts", ['p'])
-
-
-# if __name__ == "__main__":
-# 	unittest.main()
+if __name__ == "__main__":
+	calculate_VOT.main()
 
 
 

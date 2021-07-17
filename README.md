@@ -66,16 +66,17 @@ Change the current directory where you would like to place the program files the
   ```
   $ git clone https://github.com/...
   ```
-To update the VOT-CP software, navigate to the directory where the software is installed and run:
 
-  ```
-  $ git pull origin main
-  ```
-
-After installing the program, run the following command in your terminal window to install all dependencies: 
+After installing the program, navigate to the directory where the software is installed and run the following command in your terminal window to install all dependencies: 
 
   ```
   $ pip install -r "requirements.txt"
+  ```
+
+To update the VOT-CP software when newer versions are released, navigate to the directory where the software is installed and run:
+
+  ```
+  $ git pull origin main
   ```
 
 
