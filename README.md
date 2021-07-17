@@ -2,8 +2,8 @@
 VOT-CP (VOT coding and predictions)
 =======
 
-Ernesto R. Gutiérrez Topete (ernesto.gutierrez@berkeley.edu), **lead developer**\
-Richard Medina (rmedina@hawaii.edu), **project lead** (RM, is this fine?)
+Ernesto R. Gutiérrez Topete (ernesto.gutierrez@berkeley.edu), **lead developer**.\
+Richard Medina (rmedina@hawaii.edu), **project lead**.
 
 
 ## Description
@@ -30,7 +30,7 @@ This program is designed to work with cross-linguistic data, and with data in va
 
 VOT-CP does not modify the original files in any way. However, users are advised to keep a backup of all files processed with this software. Please see below for more information on the input format that is allowed or not allowed for the data processed with this program; note that some of these requirements differ from the AutoVOT program's input requirements.
 
-This is a beta version. Any reports of bugs, suggestions for improvements to the software or the documentation, or questions are welcome and greatly appreciated.
+This is a beta version. Any reports of bugs, suggestions for improvements to the software or the documentation, or questions are welcome and greatly appreciated. Please direct all communication to Ernesto R. Gutiérrez Topete (@egutierrez, ernesto.gutierrez@berkeley.edu).
 
 ---
 
@@ -75,7 +75,7 @@ To update the VOT-CP software, navigate to the directory where the software is i
 After installing the program, run the following command in your terminal window to install all dependencies: 
 
   ```
-  pip install -r "requirements.txt"
+  $ pip install -r "requirements.txt"
   ```
 
 
