@@ -105,9 +105,9 @@ What is **required**:
 * Must have a sample width of 2.
 * Must not be compressed files.
 * Must have stop segments in the 'phone' tier that are at least 25 ms long.
-  -if this is not a severe violation (eg, 22-ms segment), VOT-CP will automatically make corrections.
+  - if this is not a severe violation (eg, 22-ms segment), VOT-CP will automatically make corrections.
 * Must have stop segments that are over 20 ms apart from each other.
-  --if this is not a severe violation (eg, 18 ms apart), VOT-CP will automatically make corrections.
+  - if this is not a severe violation (eg, 18 ms apart), VOT-CP will automatically make corrections.
 
 #### TextGrid files:
 
