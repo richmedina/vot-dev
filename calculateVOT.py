@@ -489,12 +489,12 @@ if __name__ == "__main__":
         "to be added to (or reduced from) the phone's start boundary. The maximum is 25 ms (or 0.025 sec), and the "
         "minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, increase "
         "the segment window) and a positive value will shift the boundary right (that is, decrease the segment window).",
-        type=int)
+        type=float)
     parser.add_argument('--endPadding', default=0, help="A number to indicate the amount of time, in milliseconds, to "
         "be added to (or reduced from) the phone's end boundary. The maximum is 25 ms (or 0.025 sec), and the minimum "
         "is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, decrease the "
         "segment window) and a positive value will shift the boundary right (that is, increase the segment window).",
-        type=int)
+        type=float)
     parser.add_argument('--preferredChannel', default=1, help="A number (an integer) that indicates the channel from "
         "the wav file to be used when obtaining VOT predictions.", type=int)
     parser.add_argument('--distinctChannels', default=False, help="a boolean (ie, True or False) that indicates whether "
