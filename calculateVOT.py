@@ -135,11 +135,11 @@ def addStopTier(
 		elif tierName[-5:] == "stops":
 			logger.error("There is a tier with the word 'stops' in its label in {}. You must "\
 				"relabel said tier before continuing.\n".format(TextGrid))
-			sys.exit()
+			raise RuntimeError("    *** Process incomplete. ***")
 		elif tierName == "":
 			logger.error("At least one tier in file {} has no name. Fix the issue before continuing.\n"\
 				.format(TextGrid))
-			sys.exit()
+			RuntimeError("    *** Process incomplete. ***")
 	
 	# convert tier labels to lowercase
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
@@ -149,13 +149,13 @@ def addStopTier(
 	allWordTiers = [tierName for tierName in tg.tierNameList if "word" in tierName]
 	if len(allWordTiers) == 0:
 		logger.error("{} does not contain any tier labeled 'words'.\n".format(TextGrid))
-		sys.exit()
+		raise RuntimeError("    *** Process incomplete. ***")
 
 	# collect all phone tiers and terminate process if none exists
 	allPhoneTiers = [tierName for tierName in tg.tierNameList if "phone" in tierName]
 	if len(allPhoneTiers) == 0:
 		logger.error("{} does not contain any tier labeled 'phones'.\n".format(TextGrid))
-		sys.exit()
+		raise RuntimeError("    *** Process incomplete. ***")
 
 	# verify that an equal number of word and phone tiers exists before continuing
 	if len(allWordTiers) == len(allPhoneTiers):
@@ -198,16 +198,16 @@ def addStopTier(
 			else:
 				logger.error("The names of the 'word' and 'phone' tiers are inconsistent in file {}. "\
 					"Fix the issue before continuing.\n".format(TextGrid))
-				sys.exit()
+				raise RuntimeError("    *** Process incomplete. ***")
 	
 	else:
 		logger.error("There isn't an even number of 'phone' and 'word' tiers per speaker in file {}. "\
 			"Fix the issue before continuing.\n".format(TextGrid))
-		sys.exit()
+		raise RuntimeError("    *** Process incomplete. ***")
 
 	if populatedTiers == 0:
 		logger.error("There were no voiceless stops found in {}.\n".format(TextGrid))
-		sys.exit()
+		raise RuntimeError("    *** Process incomplete. ***")
 
 	# generate list of all stop tiers created
 	stopTiers = [tierName for tierName in tg.tierNameList if "stops" in tierName]
@@ -259,7 +259,7 @@ def processStopTier(
 				"\nYou might have to decrease the amount of padding and/or manually adjust segmentation to "\
 				"solve the conflicts."\
 				"\n\nProcess incomplete.\n".format(TextGrid, currentPhone[startTime], nextPhone[startTime]))
-			sys.exit()
+			raise RuntimeError("    *** Process incomplete. ***")
 		elif currentPhone[endTime] - currentPhone[startTime] < 0.025:  # check if currentPhone is under 25ms
 			if nextPhone[startTime] - currentPhone[endTime] <= 0.020:  # check if nextPhone is within 20ms
 				currentPhone[endTime] = currentPhone[startTime] + 0.025  # make currentPhone 25ms long
@@ -327,7 +327,7 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 			if len(channels) != len(stopTiers):
 				logger.error("You enabled the parameter 'distinctChannels', but there isn't an equal number of "\
 					"channels and speakers in the file {}. Fix the issue before continuing.\n".format(wav))
-				sys.exit()
+				raise RuntimeError("    *** Process incomplete. ***")
 
 			for psnd in channels:
 				psnd.save(tempSound, "WAV")
@@ -398,7 +398,7 @@ def calculateVOT(
 		print()
 		logger.error("{} must be a wav file and {} must be a TextGrid file. One or both files do "\
 			"not meet format requirements.\n".format(wav.split("/")[-1], TextGrid.split("/")[-1]))
-		sys.exit()
+		raise RuntimeError("    *** Process incomplete. ***")
 
 	# process variable parameters
 	startPadding, endPadding, stops = processParameters(startPadding, endPadding, stops, TextGrid)
@@ -428,7 +428,7 @@ def calculateVOT(
 		print()
 		logger.error("Something went wrong while trying to obtain VOT predictions for files {} and {}.\n"\
 			.format(wav, TextGrid))
-		sys.exit()
+		raise RuntimeError("    *** Process incomplete. ***")
 
 	return
 
@@ -452,22 +452,25 @@ def calculateVOTBatch(
 				fileNames.append(fileName)
 	except FileNotFoundError:
 		logger.error("The directory you entered for the parameter 'inputDirectory' does not exist.")
-		sys.exit()
+		raise RuntimeError("    *** Process incomplete. ***")
 
 	for fileGroup in Counter(fileNames).items():
 		if fileGroup[1] == 2:
 			wavFilePath = os.path.join(inputDirectory,fileGroup[0]+".wav")
 			TextGridFilePath = os.path.join(inputDirectory,fileGroup[0]+".TextGrid")
-			calculateVOT(
-				wavFilePath, 
-				TextGridFilePath, 
-				stops, 
-				outputDirectory, 
-				startPadding, 
-				endPadding, 
-				preferredChannel, 
-				distinctChannels
-				)
+			try:
+				calculateVOT(
+					wavFilePath, 
+					TextGridFilePath, 
+					stops, 
+					outputDirectory, 
+					startPadding, 
+					endPadding, 
+					preferredChannel, 
+					distinctChannels
+					)
+			except Exception as e:
+				print(e)
 
 	return
 
@@ -502,17 +505,20 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.wav and args.TextGrid:
-        calculateVOT(
-        	args.wav, 
-        	args.TextGrid, 
-        	args.stops, 
-        	args.outputDirectory, 
-        	args.startPadding, 
-        	args.endPadding, 
-        	args.preferredChannel, 
-        	args.distinctChannels, 
-        	args.trainedModel
-        	)
+	    try:
+	    	calculateVOT(
+	        	args.wav, 
+	        	args.TextGrid, 
+	        	args.stops, 
+	        	args.outputDirectory, 
+	        	args.startPadding, 
+	        	args.endPadding, 
+	        	args.preferredChannel, 
+	        	args.distinctChannels, 
+	        	args.trainedModel
+	        	)
+	    except Exception:
+	    	pass
     elif args.inputDirectory:
         calculateVOTBatch(
         	args.inputDirectory, 

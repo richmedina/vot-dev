@@ -212,9 +212,11 @@ The optional arguments for single-pair processing and batch processing are:
 
 ## Tutorial
 
+VOT-CP is a Python library that can be used within another Python script or directly from your terminal window. Both methods support single-pair and batch processing. Below is a brief tutorial for using this program from another Python script, followed by another tutorial that performs the same actions directly from the command line.
+
 ### Python script usage
 
-The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script. RM: we should discuss this.
+The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script.
 
 \
 **1. Single-pair processing with all default settings:**
@@ -308,7 +310,111 @@ Note that you can adjust the rest of the parameters just as you would with the `
 
 ### Command-line usage
 
-Text...
+The following code blocks exemplify how to use the VOT-CP program, under different conditions, directly from your terminal window.
+
+Below are the arguments accepted through this mode:
+
+```
+[--wav WAV]
+[--TextGrid TEXTGRID]
+[--inputDirectory INPUTDIRECTORY] 
+[--stops STOPS]
+[--outputDirectory OUTPUTDIRECTORY]
+[--startPadding STARTPADDING] [--endPadding ENDPADDING]
+[--preferredChannel PREFERREDCHANNEL]
+[--distinctChannels DISTINCTCHANNELS]
+[--trainedModel TRAINEDMODEL]
+```
+
+Although all arguments are marked as optional, the program will automatically engage single-pair processing mode if a wav file and a TextGrid file are *both* submitted for processing. If these arguments are left blank but instead an inputDirectory path is submitted, the program will automatically engage batch processing mode. For more help with these and other optional arguments, type 'calculateVOT.py -h' in your terminal.
+
+\
+**1. Single-pair processing with all default settings:**
+```
+python calculateVOT --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid
+```
+
+Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
+
+\
+**2.1. Single-pair processing with specific stops:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['p'])
+```
+
+For this execution, the program will only look for (word-initial) 'p' tokens and process them. This execution will ignore any other stops found in the transcription.
+
+\
+**2.2. Single-pair processing with specific stops:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t', 'T', 'tt'])
+```
+
+For this execution, the program will only look for phone labels 't', 'T', and 'tt'. Use this approach if the TextGrid contains labels that are lowercase and uppercase. This is done, for example, in at least one Arabic corpus to distinguish between non-emphatic (ie, plain) and emphatic (ie, pharyngealized) stops, as well as geminate stops.
+
+\
+**2.3. Single-pair processing with specific stops:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['k', 'kw'])
+```
+
+For this execution, the program will only look for the phone labels 'k', and 'kw'. Use this approach if the TextGrid contains labels that specify additional features. This is done, for example, in some corpora to distinguish between plain and labialized stops.
+
+\
+**3. Single-pair processing with a specific output directory name:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", [], "vot-predictions")
+```
+or
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", outputDirectory="vot-predictions")
+```
+
+Both of these executions provide the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name. Note that you need to include a parameter for `stops`, even if it's an empty list, to avoid writing the parameter names; otherwise use the argument name to specify the specific parameter.
+
+\
+**4. Single-pair processing with added padding:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t'], startPadding=-20, endPadding=20)
+```
+
+This execution moves the start boundary to the left by 20 ms (increasing the window) and the end boundary to the right by 20 ms (increasing the window even further).
+
+\
+**5. Single-pair processing with specific channel:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", preferredChannel = 2)
+```
+
+This execution identifies the second channel in the audio file as the channel to be looked at when obtaining VOT calculations. Regardless of how many speakers are present in the TextGrid (ie, one or more pairs of phone-word tiers), all data will be analyzed using the acoustic information in the second channel. The first channel will be ignored completely.
+
+\
+**6. Single-pair processing with distinct channels:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", distinctChannels=True)
+```
+
+This execution tells VOT-CP that there are multiple channels present in the audio file and multiple speakers represented in the TextGrid. The program will continue by linking the first channel to the first pair of phone-word tiers, the second channel to the second pair of phone-word tiers, and so on. 
+
+Note that if `distinctChannels` is set to `True` and there isn't an equal number of channels and tier pairs (eg, two channels and one tier pair), the program will terminate immediately.
+
+\
+**7. Single-pair processing with newly trained model:**
+```
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", trainedModel="myVOTmodel.model")
+```
+
+For this execution, VOT-CP will use the model that you have trained for your data and indicated in the function call. Refer to AutoVOT's documentation for more information on how to train your own model.
+
+\
+**8. Batch processing with all default settings:**
+```
+calculateVOT("input_corpus")
+```
+
+For this execution, the program will iterate through all files in the directory `input_corpus/` in order to begin pairing files and processing them. The output files will be returned to the `output/` directory. 
+
+Note that you can adjust the rest of the parameters just as you would with the `calculateVOT` function (ie, single-pair processing).
 
 ## Citing VOT-CP
 
