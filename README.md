@@ -326,7 +326,9 @@ Below are the arguments accepted through this mode:
 [--trainedModel TRAINEDMODEL]
 ```
 
-Although all arguments are marked as optional, the program will automatically engage single-pair processing mode if a wav file and a TextGrid file are *both* submitted for processing. If these arguments are left blank but instead an inputDirectory path is submitted, the program will automatically engage batch processing mode. For more help with these and other optional arguments, type 'calculateVOT.py -h' in your terminal.
+Although all arguments are marked as optional, the program will automatically engage single-pair processing mode if a wav file and a TextGrid file are *both* submitted for processing. If these arguments are left blank (or at least one) but instead an inputDirectory path is submitted, the program will automatically engage batch processing mode. Note that if all three arguments are submitted (wav, TextGrid, and inputDirectory), the program will first engage single-pair processing, ignoring the inputDirectory. For more help with these and other optional arguments, type 'calculateVOT.py -h' in your terminal.
+
+To use command-line processing, open a Terminal window and navigate to the directory where you have stored the VOT-CP program.
 
 \
 **1. Single-pair processing with all default settings:**
