@@ -210,6 +210,7 @@ The optional arguments for single-pair processing and batch processing are:
       - If voiced stops (eg, 'b' or 'g') are entered for processing using VOT-CP, the program will show a `WARNING` about lead voicing. The warning is only presented once during single-pair processing, but it will be presented once for each pair processed during batch processing.
         - If the language you study uses pre-voicing, you can still obtain VOT calculation for voiced stops using this program; however, manual verification and corrections of the output is **strongly** encouraged.
         - If you study a language that does not produce (much) pre-voicing, you can enter voiced labels (eg, 'd' or 'g' produced with short-lag voicing) and ignore the `WARNING`.
+        - Finally, if you enter voiced stop labels for processing, but they are not found in the corpus, the program will not present the warning.
 
 3. After processing your data, look for any `ERROR` messages printed on the window. They will indicate if any data were not processed and the reason why. Users are specially encouraged to look for error messages during batch processing. Also, look for `WARNING` messages; they will indicate if something was off about your data but corrected by VOT-CP.
 

@@ -28,13 +28,14 @@ from collections import Counter
 
 def approvedFileFormat(wav, TextGrid):
 
-	# remove file path from file names if present for reporting purposes
+	# remove file path from file names if present, for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
 	wav = wav.split("/")[-1]
 
 	wavExt = os.path.splitext(wav)[1]
 	textgridExt = os.path.splitext(TextGrid)[1]
 
+	# verify input contains the expected extensions
 	if wavExt != ".wav" or textgridExt != ".TextGrid":
 		return False
 	else:
@@ -49,7 +50,7 @@ def processParameters(
 	TextGrid
 	): 
 
-	# remove file path from TG name if present for reporting purposes
+	# remove file path from TG name if present, for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
 
 	# adjust long padding values
@@ -123,10 +124,10 @@ def addStopTier(
 	# open textgrid
 	tg = tgio.openTextgrid(TextGrid)
 
-	# remove file path from TG name if present for reporting purposes
+	# remove file path from TG name if present, for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
 
-	# verify that no 'AutoVOT' or 'stops' tiers exist. Reject TG with unname tiers
+	# verify that no 'AutoVOT' or 'stops' tiers exist. Reject TG with unnamed tiers
 	for tierName in tg.tierNameList:
 		if tierName == "AutoVOT":
 			logger.warning("A tier named 'AutoVOT' already exists. Said tier will be renamed as "\
@@ -145,13 +146,13 @@ def addStopTier(
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
 	tg.tierDict = dict((k.lower(), v) for k, v in tg.tierDict.items())
 
-	# collect all word tiers and terminate process if none exists
+	# collect all word tiers or terminate process if none exists
 	allWordTiers = [tierName for tierName in tg.tierNameList if "word" in tierName]
 	if len(allWordTiers) == 0:
 		logger.error("{} does not contain any tier labeled 'words'.\n".format(TextGrid))
 		raise RuntimeError("    *** Process incomplete. ***")
 
-	# collect all phone tiers and terminate process if none exists
+	# collect all phone tiers or terminate process if none exists
 	allPhoneTiers = [tierName for tierName in tg.tierNameList if "phone" in tierName]
 	if len(allPhoneTiers) == 0:
 		logger.error("{} does not contain any tier labeled 'phones'.\n".format(TextGrid))
@@ -160,13 +161,13 @@ def addStopTier(
 	# verify that an equal number of word and phone tiers exists before continuing
 	if len(allWordTiers) == len(allPhoneTiers):
 
-		# add stop tier
 		voicedTokens =[]
 		totalSpeakers = len(allPhoneTiers)
 		currentSpeaker = 0
 		lastSpeaker =	False
 		populatedTiers = 0
 
+		# add stop tier
 		for tierName in allPhoneTiers:
 			currentSpeaker += 1
 			if tierName.replace("phone", "word") in allWordTiers:
@@ -212,7 +213,7 @@ def addStopTier(
 	# generate list of all stop tiers created
 	stopTiers = [tierName for tierName in tg.tierNameList if "stops" in tierName]
 
-	# save the new textgrid with a 'stop' tier
+	# save the new textgrid that contains one or more 'stops' tiers, using long form
 	saveName = TextGrid.split(".TextGrid")[0]+"_output.TextGrid"
 	tg.save(os.path.join(outputPath, saveName), useShortForm=False)
 	
@@ -242,7 +243,7 @@ def processStopTier(
 			if entry[-1][0].lower() in voicedStops:
 				voicedTokens.append(entry[-1].lower())
 
-	# apply padding and convert phone labels to lowercase
+	# apply padding
 	extendedEntryList = []
 	for start, stop, label in stopEntryList:
 		extendedEntryList.append([start+startPadding, stop+endPadding, label])
@@ -314,7 +315,7 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 
 		# process the sound file
 		psnd = parselmouth.Sound(wav)
-		wav = wav.split("/")[-1]  # remove file path if present for reporting purposes
+		wav = wav.split("/")[-1]  # remove file path if present, for reporting purposes
 		tempSound = os.path.join(tempDirectory, wav)
 		if psnd.get_sampling_frequency() != 16000:
 			psnd = psnd.resample(16000)
@@ -329,8 +330,9 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 					"channels and speakers in the file {}. Fix the issue before continuing.\n".format(wav))
 				raise RuntimeError("    *** Process incomplete. ***")
 
-			for psnd in channels:
-				psnd.save(tempSound, "WAV")
+			# run VOT predictor
+			for channel in channels:
+				channel.save(tempSound, "WAV")
 
 				subprocess.run([
 					"python", "autovot/auto_vot_decode.py", 
@@ -372,7 +374,7 @@ def getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinct
 			tierNumber = 0
 			for line in TG:
 				if "AutoVOT" in line:
-					nameBookEnds = stopTiers[tierNumber].split("stops")  # relies on naming of tiers as "stops"
+					nameBookEnds = stopTiers[tierNumber].split("stops")
 					line = line.replace("AutoVOT", nameBookEnds[0]+"AutoVOT"+nameBookEnds[1])
 					tierNumber += 1
 				newTG.append(line)
@@ -417,7 +419,7 @@ def calculateVOT(
 	# apply AutoVOT prediction calculations
 	processComplete = getPredictions(wav, stopTiers, annotatedTextgrid, preferredChannel, distinctChannels, trainedModel)
 
-	# remove file path from file names if present for reporting purposes
+	# remove file path from file names if present, for reporting purposes
 	TextGrid = TextGrid.split("/")[-1]
 	wav = wav.split("/")[-1]
 
