@@ -41,7 +41,7 @@ This is a beta version. Any reports of bugs, suggestions for improvements to the
 3. [Tutorial](#tutorial)
   3.1 [Python script usage](#python)
   3.2 [Command-line usage](#command-line)
-4. [Citing VOT-CP](#citingvotcp)
+4. [Citing VOT-CP](#Citing VOT-CP)
 5. [Acknowledgements](#acknowledgements)
 6. [License](#license)
 
