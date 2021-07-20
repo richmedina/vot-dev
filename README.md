@@ -39,8 +39,8 @@ This is a beta version. Any reports of bugs, suggestions for improvements to the
 1. [Installation](#installation)
 2. [Usage](#usage)
 3. [Tutorial](#tutorial)
-  3.1 [Python script usage](#python)
-  3.2 [Command-line usage](#command-line)
+  3.1 [Python script usage](#python-script-usage)
+  3.2 [Command-line usage](#command-line-usage)
 4. [Citing VOT-CP](#Citing)
 5. [Acknowledgements](#acknowledgements)
 6. [License](#license)
@@ -57,9 +57,9 @@ In order to use this program, you will need the following installed in your mach
   - (see instructions below)
 * For macOS users, complete either of the next two steps:
   - Install [Xcode](http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12)
-  - Download the [Command Line Tools for Xcode](http://developer.apple.com/downloads) as a stand-alone package.
+  - Download the [Command-line Tools for Xcode](http://developer.apple.com/downloads) as a stand-alone package.
 
-### Command line installation
+### Command-line installation
 
 _VOT-CP is available from Github_.
 
