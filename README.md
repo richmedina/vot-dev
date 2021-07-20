@@ -202,9 +202,9 @@ The optional arguments for single-pair processing and batch processing are:
 1. VOT-CP is able to process data from multiple speakers within a TextGrid (ie, multiple 'phone' and 'word' tiers in the same file), regardless of the number of channels in the wav file. In fact, if multiple phone-word tier pairs are identified in the TextGrid file, the program will automatically process all of them.
 
 2. This program makes use of AutoVOT's latest VOT prediction model ([AutoVOT v. 0.94](https://github.com/mlml/autovot/releases/tag/0.94)). 
-  * When accurately aligned data is fed to this model, it provides VOT predictions with high accuracy. If the data are not aligned accurately or if the segment windows are too big or too small, the accuracy of the predictions will decrease.
-  * The current model has been trained to predict VOT for voiceless stops; in its current form, it does not support calculations of negative VOT (ie, lead voicing). 
-    - Although I can say, anecdotally, that accuracy of VOT predictions for negative VOT is above chance, it is not as high as prediction accuracy for positive VOT. However, I have not investigated this issue systematically.
+    * When accurately aligned data is fed to this model, it provides VOT predictions with high accuracy. If the data are not aligned accurately or if the segment windows are too big or too small, the accuracy of the predictions will decrease.
+    * The current model has been trained to predict VOT for voiceless stops; in its current form, it does not support calculations of negative VOT (ie, lead voicing). 
+      - Although I can say, anecdotally, that accuracy of VOT predictions for negative VOT is above chance, it is not as high as prediction accuracy for positive VOT. However, I have not investigated this issue systematically.
 
 3. The user is advised to manually check the output data from this program. Although AutoVOT's model provides high accuracy predictions, occasional manual corrections may be required.
 
