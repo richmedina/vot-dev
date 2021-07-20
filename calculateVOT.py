@@ -482,7 +482,7 @@ if __name__ == "__main__":
     parser.add_argument('--wav', default='', help="An audio file with a '.wav' extension.")
     parser.add_argument('--TextGrid', default='', help="A labeled TextGrid file containing stops to measured VOT.")
     parser.add_argument('--inputDirectory', default='', help="A string-based path where data corpus is located.")
-    parser.add_argument('--stops', default='', help="A list of phone labels to look for and process.")
+    parser.add_argument('--stops', default='', help="A list of phone labels to look for and process.", nargs="*")
     parser.add_argument('--outputDirectory', default='output', help="A string to be used as the name of the directory "
         "where the output will be sored.")
     parser.add_argument('--startPadding', default=0, help="A number to indicate the amount of time, in milliseconds, "
