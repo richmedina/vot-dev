@@ -207,7 +207,8 @@ The optional arguments for single-pair processing and batch processing are:
     * When accurately aligned data are fed to this model, it provides VOT predictions with high accuracy. If the data are not aligned accurately or if the segment windows are too big or too small, the accuracy of the predictions will decrease.
     * The current model has been trained to predict VOT for voiceless stops; in its current form, it does not support calculations of negative VOT (ie, lead voicing). 
       - Although I can say, anecdotally, that accuracy of VOT predictions for negative VOT is above chance, it is not as high as prediction accuracy for positive VOT. However, I have not investigated this issue systematically.
-      - If voiced stops (eg, 'b' or 'g') are entered for processing using VOT-CP, the program will show a `warning` about lead voicing. If the language you study uses pre-voicing, you can still obtain VOT calculation for voiced stops using this program; however, manually verification of the output is **strongly** encouraged.
+      - If voiced stops (eg, 'b' or 'g') are entered for processing using VOT-CP, the program will show a `warning` about lead voicing. 
+        - If the language you study uses pre-voicing, you can still obtain VOT calculation for voiced stops using this program; however, manually verification and corrections of the output is **strongly** encouraged.
       - If you study a language that does not produce (much) pre-voicing, you can enter voiced labels (eg, 'd' or 'g' produced with short-lag voicing) and ignore the `warning`.
 
 3. The user is advised to manually check the output data from this program. Although AutoVOT's model provides high accuracy predictions, occasional manual corrections may be required.
