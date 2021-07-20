@@ -17,6 +17,7 @@ logger.addHandler(stream_handler)
 
 import os
 import sys
+import argparse
 import tempfile
 import subprocess
 import parselmouth
@@ -473,10 +474,62 @@ def calculateVOTBatch(
 
 
 if __name__ == "__main__":
-	calculate_VOT.main()
+	# parse arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--wav', default='', help="An audio file with a '.wav' extension.")
+    parser.add_argument('--TextGrid', default='', help="A labeled TextGrid file containing stops to measured VOT.")
+    parser.add_argument('--inputDirectory', default='', help="A string-based path where data corpus is located.")
+    parser.add_argument('--stops', default='', help="A list of phone labels to look for and process.")
+    parser.add_argument('--outputDirectory', default='output', help="A string to be used as the name of the directory "
+        "where the output will be sored.")
+    parser.add_argument('--startPadding', default=0, help="A number to indicate the amount of time, in milliseconds, "
+        "to be added to (or reduced from) the phone's start boundary. The maximum is 25 ms (or 0.025 sec), and the "
+        "minimum is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, increase "
+        "the segment window) and a positive value will shift the boundary right (that is, decrease the segment window).",
+        type=int)
+    parser.add_argument('--endPadding', default=0, help="A number to indicate the amount of time, in milliseconds, to "
+        "be added to (or reduced from) the phone's end boundary. The maximum is 25 ms (or 0.025 sec), and the minimum "
+        "is -25 ms (or -0.025 sec). Note that a negative value will shift the boundary left (that is, decrease the "
+        "segment window) and a positive value will shift the boundary right (that is, increase the segment window).",
+        type=int)
+    parser.add_argument('--preferredChannel', default=1, help="A number (an integer) that indicates the channel from "
+        "the wav file to be used when obtaining VOT predictions.", type=int)
+    parser.add_argument('--distinctChannels', default=False, help="a boolean (ie, True or False) that indicates whether "
+        "or not there are different speakers in the recording and transcription, each with a distinct channel.", type=bool)
+    parser.add_argument('--trainedModel', default='', help="a string-based path that indicates the location of a trained "
+        "model for your corpus.")
 
+    args = parser.parse_args()
 
-
+    if args.wav and args.TextGrid:
+        calculateVOT(
+        	args.wav, 
+        	args.TextGrid, 
+        	args.stops, 
+        	args.outputDirectory, 
+        	args.startPadding, 
+        	args.endPadding, 
+        	args.preferredChannel, 
+        	args.distinctChannels, 
+        	args.trainedModel
+        	)
+    elif args.inputDirectory:
+        calculateVOTBatch(
+        	args.inputDirectory, 
+        	args.stops, 
+        	args.outputDirectory, 
+        	args.startPadding, 
+        	args.endPadding, 
+        	args.preferredChannel, 
+        	args.distinctChannels, 
+        	args.trainedModel
+        	)
+    else:
+    	print()
+    	logger.error("The required positional arguments were not provided. Provide a wav and TextGrid files for single-pair "
+    		"processing or an input directory for batch processing.\nIf you need help, type 'calculateVOT.py -h' in your "
+    		"terminal.\n")
+    	sys.exit()
 
 
 
