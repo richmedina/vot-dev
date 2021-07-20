@@ -39,6 +39,8 @@ This is a beta version. Any reports of bugs, suggestions for improvements to the
 1. [Installation](#installation)
 2. [Usage](#usage)
 3. [Tutorial](#tutorial)
+  3.1 [Python script usage](#python)
+  3.2 [Command-line usage](#command-line)
 4. [Citing VOT-CP](#citingvotcp)
 5. [Acknowledgements](#acknowledgements)
 6. [License](#license)
@@ -210,6 +212,8 @@ The optional arguments for single-pair processing and batch processing are:
 
 ## Tutorial
 
+### Python script usage
+
 The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script. RM: we should discuss this.
 
 \
@@ -301,6 +305,10 @@ calculateVOT("input_corpus")
 For this execution, the program will iterate through all files in the directory `input_corpus/` in order to begin pairing files and processing them. The output files will be returned to the `output/` directory. 
 
 Note that you can adjust the rest of the parameters just as you would with the `calculateVOT` function (ie, single-pair processing).
+
+### Command-line usage
+
+Text...
 
 ## Citing VOT-CP
 
