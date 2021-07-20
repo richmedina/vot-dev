@@ -441,7 +441,7 @@ This software was developed as part of a summer internship hosted by [The Langua
 #### Programming support
 
 * I want to acknowledge Yannick Jadoul, Dr. Thea Knowles, and Dr. Joseph Keshet who answered questions regarding their own programs ([Parselmouth](https://parselmouth.readthedocs.io/en/stable/) and [AutoVOT](https://github.com/mlml/autovot)).
-* Yannick Jadoul also provided invaluable support in other aspects that aided in the development of the VOT-CP program.
+* I especially want to thank Yannick Jadoul for providing invaluable support in other aspects that aided in the development of the VOT-CP program.
 
 #### Cross-linguistic corpora
 
