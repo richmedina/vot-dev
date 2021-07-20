@@ -312,7 +312,7 @@ Note that you can adjust the rest of the parameters just as you would with the `
 
 The following code blocks exemplify how to use the VOT-CP program, under different conditions, directly from your terminal window.
 
-Below are the arguments accepted through this mode:
+Below are the arguments accepted through this mode. The two dashes and lowercase word is a mandatory keyword indicating the argument, and the uppercase word is to be replaced by the argument you are passing for processing.
 
 ```
 [--wav WAV]
