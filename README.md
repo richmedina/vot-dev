@@ -223,12 +223,12 @@ VOT-CP is a Python library that can be used within another Python script or dire
 
 ### Python script usage
 
-The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script.
+The following code blocks exemplify how to use the VOT-CP program, under different conditions, in your Python script. Make sure your script is located in the same directory where you saved the VOT-CP program.
 
 \
 **1. Single-pair processing with all default settings:**
 ```
-import votcp
+import calculateVOT
 
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
 ```
