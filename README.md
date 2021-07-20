@@ -112,12 +112,12 @@ What is **required**:
 #### TextGrid files:
 
 What is **allowed**:
-* Tier labels can have any capitalization, for example:
+* Tier names can have any capitalization, for example:
   - WORDS
   - Words
   - words
   - wOrDs
-* Tier labels can have any arbitrary name (provided that the word and phone tiers match), for example:
+* Tier names can have any arbitrary name (provided that the word and phone tiers match), for example:
   - 'Word', 'Phone' [both singular]
   - 'words', 'phones' [both plural]
   - 'Mary - words', 'Mary - phones' [consistent spelling and spacing]
@@ -133,17 +133,17 @@ What is **required**:
   - Allowed: 't', 'p0', 'kw', 'kk', etc.
   - Not allowed: 'at', '1p', '-k', etc.
 
-*Note that phone labels that don't use IPA or romanization will be ignored. Furthermore, any other tiers that do not contain the label 'phone(s)' or 'word(s)' (eg, 'lexical items', 'notes' or 'utterances') will also be ignored.
+*Note that phone labels that don't use IPA or romanization will be ignored. Furthermore, any other tiers that do not contain the name 'phone(s)' or 'word(s)' (eg, 'lexical items', 'notes' or 'utterances') will also be ignored.
 
 What is **prohibited**:
-* Tier labels with inconsistent naming, for example:
+* Tier names with inconsistent naming, for example:
   - 'Word', 'Phones' [mixture of singular and plural]
   - 'words', 'phone' [mixture of singular and plural]
   - 'Mary's - words', 'Mary - phones' [inconsistent spelling]
   - 'Mary - words', 'Mary-phones' [inconsistent spacing]
 * Unequal number of word and phone tiers, for example:
   - 'Phones', 'Words-Mary', 'Phones-Mary' [an additional 'Phones' tier]
-* Using the word 'stops' in any of the tier labels, for example:
+* Using the word 'stops' in any of the tier names, for example:
   - 'stops'
   - 'stops tier'
   - 'Tier stops'
