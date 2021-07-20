@@ -341,15 +341,15 @@ Note that you first need to import the program. For this execution, the program 
 \
 **2.1. Single-pair processing with specific stops:**
 ```
-python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --stops p,k
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --stops p k
 ```
 
-For this execution, the program will only look for (word-initial) 'p' and 'k' tokens and process them. This execution will ignore any other stops found in the transcription. Note that in this case, all stops are presented without quotes, separated only with commas, not spaces.
+For this execution, the program will only look for (word-initial) 'p' and 'k' tokens and process them. This execution will ignore any other stops found in the transcription. Note that in this case, all stops are presented without quotes, separated only by a blank space.
 
 \
 **2.2. Single-pair processing with specific stops:** ##check??
 ```
-python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --stops t,T,tt
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --stops t T tt
 ```
 
 For this execution, the program will only look for phone labels 't', 'T', and 'tt'. Use this approach if the TextGrid contains labels that are lowercase and uppercase. This is done, for example, in at least one Arabic corpus to distinguish between non-emphatic (ie, plain) and emphatic (ie, pharyngealized) stops, as well as geminate stops.
