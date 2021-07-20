@@ -331,7 +331,7 @@ Although all arguments are marked as optional, the program will automatically en
 \
 **1. Single-pair processing with all default settings:**
 ```
-python calculateVOT --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid
 ```
 
 Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
@@ -339,10 +339,10 @@ Note that you first need to import the program. For this execution, the program 
 \
 **2.1. Single-pair processing with specific stops:**
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['p'])
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --stops p,k
 ```
 
-For this execution, the program will only look for (word-initial) 'p' tokens and process them. This execution will ignore any other stops found in the transcription.
+For this execution, the program will only look for (word-initial) 'p' and 'k' tokens and process them. This execution will ignore any other stops found in the transcription. Note that in this case, all stops are presented without quotes, separated only with commas, not spaces.
 
 \
 **2.2. Single-pair processing with specific stops:**
