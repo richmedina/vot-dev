@@ -55,7 +55,7 @@ In order to use this program, you will need the following installed in your mach
 * [Python (3)](https://www.python.org/downloads/)
 * Python dependencies:
   - (see instructions below)
-* For macOS users, complete either of the next two steps:
+* For macOS users, complete either of the next two steps (if needed):
   - Install [Xcode](http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12)
   - Download the [Command-line Tools for Xcode](http://developer.apple.com/downloads) as a stand-alone package.
 
@@ -63,7 +63,7 @@ In order to use this program, you will need the following installed in your mach
 
 _VOT-CP is available from Github_.
 
-Change the current directory where you would like to place the program files then to install the program for the first time, run the following command in your terminal window: (RM will add this)
+Open a Terminal window and navigate to the directory (ie, folder) where you would like to install the program. Then run the following command: (RM will add this [final address below])
 
   ```
   $ git clone https://github.com/...
@@ -75,7 +75,7 @@ After installing the program, navigate to the directory where the software is in
   $ pip install -r "requirements.txt"
   ```
 
-To update the VOT-CP software when newer versions are released, navigate to the directory where the software is installed and run:
+To update the VOT-CP software when newer versions are released, navigate to the directory where the software is installed and then run:
 
   ```
   $ git pull origin main
@@ -105,7 +105,9 @@ What is **required**:
 * Must have a sample width of 2.
 * Must not be compressed files.
 * Must have stop segments in the 'phone' tier that are at least 25 ms long.
+  -if this is not a severe violation (eg, 22-ms segment), VOT-CP will automatically make corrections.
 * Must have stop segments that are over 20 ms apart from each other.
+  --if this is not a severe violation (eg, 18 ms apart), VOT-CP will automatically make corrections.
 
 #### TextGrid files:
 
@@ -119,7 +121,7 @@ What is **allowed**:
   - 'Word', 'Phone' [both singular]
   - 'words', 'phones' [both plural]
   - 'Mary - words', 'Mary - phones' [consistent spelling and spacing]
-  - 'Word-john', 'phone-John' [both singular; identifying information '-john' is placed and spelled consistently; capitalization is irrelevant]
+  - 'Word-john', 'phone-John' [both singular; identifying information '-john' is placed and spelled consistently; capitalization is irrelevant for tier names]
 
 What is **required**:
 * Must be `.TextGrid` files in [full text format](https://www.fon.hum.uva.nl/praat/manual/TextGrid_file_formats.html)(ie, the default); other formats are not accepted.

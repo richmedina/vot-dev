@@ -139,7 +139,7 @@ def addStopTier(
 		elif tierName == "":
 			logger.error("At least one tier in file {} has no name. Fix the issue before continuing.\n"\
 				.format(TextGrid))
-			RuntimeError("    *** Process incomplete. ***")
+			raise RuntimeError("    *** Process incomplete. ***")
 	
 	# convert tier labels to lowercase
 	tg.tierNameList = [tierName.lower() for tierName in tg.tierNameList]
