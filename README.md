@@ -347,15 +347,15 @@ python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid -
 For this execution, the program will only look for (word-initial) 'p' and 'k' tokens and process them. This execution will ignore any other stops found in the transcription. Note that in this case, all stops are presented without quotes, separated only with commas, not spaces.
 
 \
-**2.2. Single-pair processing with specific stops:**
+**2.2. Single-pair processing with specific stops:** ##check??
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t', 'T', 'tt'])
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --stops t,T,tt
 ```
 
 For this execution, the program will only look for phone labels 't', 'T', and 'tt'. Use this approach if the TextGrid contains labels that are lowercase and uppercase. This is done, for example, in at least one Arabic corpus to distinguish between non-emphatic (ie, plain) and emphatic (ie, pharyngealized) stops, as well as geminate stops.
 
 \
-**2.3. Single-pair processing with specific stops:**
+**2.3. Single-pair processing with specific stops:** ##check??
 ```
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['k', 'kw'])
 ```
@@ -365,11 +365,7 @@ For this execution, the program will only look for the phone labels 'k', and 'kw
 \
 **3. Single-pair processing with a specific output directory name:**
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", [], "vot-predictions")
-```
-or
-```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", outputDirectory="vot-predictions")
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --outputDirectory "vot-predictions"
 ```
 
 Both of these executions provide the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name. Note that you need to include a parameter for `stops`, even if it's an empty list, to avoid writing the parameter names; otherwise use the argument name to specify the specific parameter.
@@ -377,7 +373,7 @@ Both of these executions provide the name "vot-predictions" for the name of the 
 \
 **4. Single-pair processing with added padding:**
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t'], startPadding=-20, endPadding=20)
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --stops t --startPadding 20 --endPadding 20
 ```
 
 This execution moves the start boundary to the left by 20 ms (increasing the window) and the end boundary to the right by 20 ms (increasing the window even further).
@@ -385,7 +381,7 @@ This execution moves the start boundary to the left by 20 ms (increasing the win
 \
 **5. Single-pair processing with specific channel:**
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", preferredChannel = 2)
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --preferredChannel 1
 ```
 
 This execution identifies the second channel in the audio file as the channel to be looked at when obtaining VOT calculations. Regardless of how many speakers are present in the TextGrid (ie, one or more pairs of phone-word tiers), all data will be analyzed using the acoustic information in the second channel. The first channel will be ignored completely.
@@ -393,7 +389,7 @@ This execution identifies the second channel in the audio file as the channel to
 \
 **6. Single-pair processing with distinct channels:**
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", distinctChannels=True)
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --distinctChannels True
 ```
 
 This execution tells VOT-CP that there are multiple channels present in the audio file and multiple speakers represented in the TextGrid. The program will continue by linking the first channel to the first pair of phone-word tiers, the second channel to the second pair of phone-word tiers, and so on. 
@@ -403,7 +399,7 @@ Note that if `distinctChannels` is set to `True` and there isn't an equal number
 \
 **7. Single-pair processing with newly trained model:**
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", trainedModel="myVOTmodel.model")
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --trainedModel "myVOTmodel.model"
 ```
 
 For this execution, VOT-CP will use the model that you have trained for your data and indicated in the function call. Refer to AutoVOT's documentation for more information on how to train your own model.
@@ -411,7 +407,7 @@ For this execution, VOT-CP will use the model that you have trained for your dat
 \
 **8. Batch processing with all default settings:**
 ```
-calculateVOT("input_corpus")
+python calculateVOT.py --inputDirectory "input_corpus"
 ```
 
 For this execution, the program will iterate through all files in the directory `input_corpus/` in order to begin pairing files and processing them. The output files will be returned to the `output/` directory. 
