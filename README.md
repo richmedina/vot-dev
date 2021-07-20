@@ -228,12 +228,12 @@ The following code blocks exemplify how to use the VOT-CP program, under differe
 \
 **1. Single-pair processing with all default settings:**
 ```
-import calculateVOT
+from calculateVOT import * 
 
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid")
 ```
 
-Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
+Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel `1` of the audio for all speakers identified in the TextGrid.
 
 \
 **2.1. Single-pair processing with specific stops:**
@@ -266,7 +266,7 @@ calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", [], "vot-predictions")
 ```
 or
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", outputDirectory="vot-predictions")
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", outputDirectory = "vot-predictions")
 ```
 
 Both of these executions provide the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name. Note that you need to include a parameter for `stops`, even if it's an empty list, to avoid writing the parameter names; otherwise use the argument name to specify the specific parameter.
@@ -277,7 +277,7 @@ Both of these executions provide the name "vot-predictions" for the name of the 
 calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t'], startPadding=-20, endPadding=20)
 ```
 
-This execution moves the start boundary to the left by 20 ms (increasing the window) and the end boundary to the right by 20 ms (increasing the window even further).
+This execution moves the start boundary to the left by 20 ms (increasing the phone window) and the end boundary to the right by 20 ms (increasing the phone window even further).
 
 \
 **5. Single-pair processing with specific channel:**
@@ -300,20 +300,20 @@ Note that if `distinctChannels` is set to `True` and there isn't an equal number
 \
 **7. Single-pair processing with newly trained model:**
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", trainedModel="myVOTmodel.model")
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", trainedModel = "myVOTmodel.model")
 ```
 
-For this execution, VOT-CP will use the model that you have trained for your data and indicated in the function call. Refer to AutoVOT's documentation for more information on how to train your own model.
+For this execution, VOT-CP will use the model that you have trained (using AutoVOT's program) for your data and indicated in the function call. Refer to AutoVOT's documentation for more information on how to train your own model.
 
 \
 **8. Batch processing with all default settings:**
 ```
-calculateVOT("input_corpus")
+calculateVOTBatch("input_corpus")
 ```
 
 For this execution, the program will iterate through all files in the directory `input_corpus/` in order to begin pairing files and processing them. The output files will be returned to the `output/` directory. 
 
-Note that you can adjust the rest of the parameters just as you would with the `calculateVOT` function (ie, single-pair processing).
+Note that you can adjust the rest of the parameters for `calculateVOTBatch` just as you would with the `calculateVOT` function (ie, single-pair processing).
 
 ### Command-line usage
 
