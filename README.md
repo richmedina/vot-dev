@@ -319,7 +319,7 @@ Note that you can adjust the rest of the parameters for `calculateVOTBatch` just
 
 The following code blocks exemplify how to use the VOT-CP program, under different conditions, directly from your terminal window.
 
-Below are the arguments accepted through this mode. The two dashes and lowercase word is a mandatory keyword indicating the argument, and the uppercase word is to be replaced by the argument you are passing for processing.
+Below are the arguments accepted through this mode. The two dashes plus the lowercase word is a mandatory keyword indicating the argument, and the uppercase word is to be replaced by the argument you are passing for processing.
 
 ```
 [--wav WAV]
@@ -333,7 +333,7 @@ Below are the arguments accepted through this mode. The two dashes and lowercase
 [--trainedModel TRAINEDMODEL]
 ```
 
-Although all arguments are marked as optional, the program will automatically engage single-pair processing mode if a wav file and a TextGrid file are *both* submitted for processing. If these arguments are left blank (or at least one) but instead an inputDirectory path is submitted, the program will automatically engage batch processing mode. Note that if all three arguments are submitted (wav, TextGrid, and inputDirectory), the program will first engage single-pair processing, ignoring the inputDirectory. For more help with these and other optional arguments, type 'calculateVOT.py -h' in your terminal.
+Although all arguments are marked as optional, the program will automatically engage single-pair processing mode if a wav file and a TextGrid file are *both* submitted for processing. If these arguments are left blank (or at least one) but instead an inputDirectory path is submitted, the program will automatically engage batch processing mode. Note that if all three arguments are submitted (wav, TextGrid, and inputDirectory), the program will only engage single-pair processing, ignoring the inputDirectory. For more help with these and other optional arguments, type 'calculateVOT.py -h' in your terminal.
 
 To use command-line processing, open a Terminal window and navigate to the directory where you have stored the VOT-CP program.
 
@@ -343,7 +343,7 @@ To use command-line processing, open a Terminal window and navigate to the direc
 python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid
 ```
 
-Note that you first need to import the program. For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
+For this execution, the program will default to (1) all voiceless (singleton and geminate) stops, (2) the `output/` directory, (3) no padding to the start and end boundaries for the stop segments, and (4) channel 1 of the audio for all speakers identified in the TextGrid.
 
 \
 **2.1. Single-pair processing with specific stops:**
