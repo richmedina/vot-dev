@@ -409,7 +409,7 @@ Note that if `distinctChannels` is set to `True` and there isn't an equal number
 python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --trainedModel "myVOTmodel.model"
 ```
 
-For this execution, VOT-CP will use the model that you have trained for your data and indicated in the function call. Refer to AutoVOT's documentation for more information on how to train your own model.
+For this execution, VOT-CP will use the model that you have trained (using AutoVOT's program) for your data and indicated in the command line. Refer to AutoVOT's documentation for more information on how to train your own model.
 
 \
 **8. Batch processing with all default settings:**
@@ -419,7 +419,7 @@ python calculateVOT.py --inputDirectory "input_corpus"
 
 For this execution, the program will iterate through all files in the directory `input_corpus/` in order to begin pairing files and processing them. The output files will be returned to the `output/` directory. 
 
-Note that you can adjust the rest of the parameters just as you would with the `calculateVOT` function (ie, single-pair processing).
+Note that you can adjust the rest of the parameters just as you would with single-pair processing.
 
 ## Citing VOT-CP
 
