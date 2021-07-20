@@ -375,7 +375,7 @@ For this execution, the program will only look for the phone labels 'k', and 'kw
 python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --outputDirectory "vot-predictions"
 ```
 
-Both of these executions provide the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name. Note that you need to include a parameter for `stops`, even if it's an empty list, to avoid writing the parameter names; otherwise use the argument name to specify the specific parameter.
+This execution provides the name "vot-predictions" for the name of the output directory, as opposed to using the default "output" name.
 
 \
 **4. Single-pair processing with added padding:**
