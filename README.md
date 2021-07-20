@@ -364,7 +364,7 @@ For this execution, the program will only look for phone labels 't', 'T', and 't
 \
 **2.3. Single-pair processing with specific stops:**
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['k', 'kw'])
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --stops k kw
 ```
 
 For this execution, the program will only look for the phone labels 'k', and 'kw'. Use this approach if the TextGrid contains labels that specify additional features. This is done, for example, in some corpora to distinguish between plain and labialized stops.
