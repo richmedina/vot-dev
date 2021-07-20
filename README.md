@@ -274,7 +274,7 @@ Both of these executions provide the name "vot-predictions" for the name of the 
 \
 **4. Single-pair processing with added padding:**
 ```
-calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", ['t'], startPadding=-20, endPadding=20)
+calculateVOT("S01_map-task.wav", "S01_map-task.TextGrid", startPadding=-20, endPadding=20)
 ```
 
 This execution moves the start boundary to the left by 20 ms (increasing the phone window) and the end boundary to the right by 20 ms (increasing the phone window even further).
@@ -380,10 +380,10 @@ This execution provides the name "vot-predictions" for the name of the output di
 \
 **4. Single-pair processing with added padding:**
 ```
-python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --stops t --startPadding 20 --endPadding 20
+python calculateVOT.py --wav S01_map-task.wav --TextGrid S01_map-task.TextGrid --startPadding -20 --endPadding 20
 ```
 
-This execution moves the start boundary to the left by 20 ms (increasing the window) and the end boundary to the right by 20 ms (increasing the window even further).
+This execution moves the start boundary to the left by 20 ms (increasing the phone window) and the end boundary to the right by 20 ms (increasing the phone window even further).
 
 \
 **5. Single-pair processing with specific channel:**
