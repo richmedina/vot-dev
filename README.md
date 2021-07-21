@@ -212,7 +212,7 @@ The optional arguments for single-pair processing and batch processing are:
         - If you study a language that does not produce (much) pre-voicing, you can enter voiced labels (eg, 'd' or 'g' produced with short-lag voicing) and ignore the warning.
         - Finally, if you enter voiced stop labels for processing, but they are not found in the corpus, the program will not present the warning.
 
-3. After processing your data, look for any `ERROR` messages printed on the window. They will indicate if any data were not processed and the reason why. Users are specially encouraged to look for error messages during batch processing. Also, look for `WARNING` messages; they will indicate if something was off about your data but corrected by VOT-CP.
+3. After processing your data, look for any `ERROR` messages printed on the screen. They will indicate if any data were not processed and the reason why. Users are specially encouraged to look for error messages during batch processing. Also, look for `WARNING` messages; they will indicate if something was off about your data but corrected by VOT-CP.
 
 4. The user is advised to manually check the output data from this program. Although AutoVOT's model provides high accuracy predictions, occasional manual corrections may be required.
 
